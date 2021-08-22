@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- name속성은 controller의 return 값과 매핑 된다. -->
+
+	<!-- 상권영향분석/상권영향정보 서비스 -->
+	<definition name="default" template="/WEB-INF/views/layouts/default_template.jsp">
+		<put-attribute name="header" />
+		<put-attribute name="contents" />
+		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp"/>
+	</definition>
+	
+	<definition name="/main" extends="default">
+		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>
+		<put-attribute name="contents" value="/WEB-INF/views/main.jsp"/>
+	</definition>
+
+	<definition name="infl/*" extends="default">
+		<put-attribute name="header" value="/WEB-INF/views/layouts/infl/header.jsp"/>
+		<put-attribute name="contents" value="/WEB-INF/views/infl/{1}.jsp"/>
+	</definition>
+
+	<!-- <definition name="user/*" extends="default">
+		<put-attribute name="header" value="/WEB-INF/views/layouts/trd/header.jsp"/>
+		<put-attribute name="contents" value="/WEB-INF/views/user/{1}.jsp"/>
+	</definition>
+	
+	<definition name="mnt" template="/WEB-INF/views/layouts/mnt/default_template.jsp">
+		<put-attribute name="header" />
+		<put-attribute name="contents" />
+		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp"/>
+	</definition>
+	
+	<definition name="mnt/*" extends="mnt">
+		<put-attribute name="header" value="/WEB-INF/views/layouts/mnt/header.jsp"/>			
+		<put-attribute name="contents" value="/WEB-INF/views/mnt/{1}.jsp"/>
+	</definition>	
+	
+	<definition name="manage" template="/WEB-INF/views/layouts/manage/default_template.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layouts/manage/header.jsp"/>
+		<put-attribute name="contents" />
+	</definition>	
+
+	<definition name="manage/*" extends="manage">
+		<put-attribute name="contents" value="/WEB-INF/views/manage/{1}.jsp"/>
+	</definition> -->
+		
+</tiles-definitions>
