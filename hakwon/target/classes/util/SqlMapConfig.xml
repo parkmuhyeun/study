@@ -33,19 +33,12 @@
                 <property name="driver" value="org.sqlite.JDBC" />
                 <property name="url" value="jdbc:sqlite:C:/db/carrot.db" />
             </dataSource>
-
-
-			
 			
 		</environment>
 	</environments>
 
 	<mappers>
-		<!-- <mapper resource="query/teacher.xml" /> -->
 		<mapper resource="query/user.xml" />
-		<!-- <mapper resource="query/book.xml" />
-		<mapper resource="query/class.xml" />
-		<mapper resource="query/question.xml" /> -->
 	</mappers>
 
 </configuration>

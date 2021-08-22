@@ -48,17 +48,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hong.hakwon.common.CmMap;
-import com.hong.hakwon.Beans.TeacherBean;
-import com.hong.hakwon.TeacherDAOImpl;
 import com.hong.hakwon.Beans.UserBean;
 import com.hong.hakwon.UserDAOImpl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.hong.hakwon.BookDAOImpl;
-import com.hong.hakwon.Beans.ClassBean;
-import com.hong.hakwon.Beans.LogBean;
-import com.hong.hakwon.Beans.QuestionBean;
-import com.hong.hakwon.ClassDAOImpl;
 
 
 
@@ -87,46 +80,13 @@ public class MainController {
 	@RequestMapping(value="/login")
 	public ModelAndView login(@ModelAttribute("reqMap") CmMap reqVo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView	mav	= new ModelAndView("/login");
-		
-		List<CmMap> result = uService.get_sido();
-		
-		JSONArray jsonArray = new JSONArray();
-
-		for (Map<String, Object> map : result) {
-			jsonArray.add(convertMapToJson(map));
-		}
-		
-		mav.addObject("sidoList", jsonArray);
 		return mav;
 	}
 	
 	@RequestMapping(value = "/login_process",produces = "application/json") 
 	@ResponseBody
 	public CmMap login_process(@RequestBody CmMap reqVo, HttpServletRequest request, HttpServletResponse response) throws Exception{ 
-	
 		logger.info("reqVo : " + reqVo);
-	
-		String name 	= reqVo.getString("name");
-		String password = reqVo.getString("password");
-		String email 	= reqVo.getString("email");
-		String select_value 	= reqVo.getString("select");
-		
-		UserBean ub = new UserBean();
-		
-		ub.setName(name);
-		ub.setPassword(password);
-		ub.setEmail(email);
-		ub.setSelect_value(select_value);
-		
-		HttpSession ss = request.getSession();
-		
-		if( uService.reg_user(ub) ) {
-			ss.setAttribute("login_dttm", reqVo.getString("login_dttm"));
-		}
-		
-		List<CmMap> rtnList = uService.get_sido();
-		reqVo.put("sidoList", rtnList);
-		
 		return reqVo;
 	}
 
@@ -137,40 +97,35 @@ public class MainController {
 	@RequestMapping(value="/main")
 	public ModelAndView main(@ModelAttribute("reqMap") CmMap reqVo, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		ModelAndView	mav	= new ModelAndView("/main");
-		logger.info("[main] reqVo : " + reqVo);
-		
-		HttpSession ss = request.getSession();
-		
-		mav.addObject("login_dttm", ss.getAttribute("login_dttm").toString());
+		mav.addObject("data", "데이터");
 		return mav;
 	}
 	
-	@RequestMapping(value ="/getSido")
-	@ResponseBody
-	public List<CmMap> getSido(@RequestBody CmMap reqVo, HttpServletRequest request, HttpServletResponse response) throws Exception{
-		List<CmMap> rtnList = uService.get_sido();
-		
-		return rtnList;
-		
-	}
 	
-	@RequestMapping(value ="/getSigungu")
-	@ResponseBody
-	public JSONArray getSigungu(@RequestBody CmMap reqVo, HttpServletRequest request, HttpServletResponse response) throws Exception{
-		
-		List<CmMap> result = uService.get_sido();
-		
-		JSONArray jsonArray = new JSONArray();
-
-		for (Map<String, Object> map : result) {
-			jsonArray.add(convertMapToJson(map));
-		}
-		
-		return jsonArray;
-	}
-	
+//	@RequestMapping(value ="/getSido")
+//	@ResponseBody
+//	public List<CmMap> getSido(@RequestBody CmMap reqVo, HttpServletRequest request, HttpServletResponse response) throws Exception{
+//		List<CmMap> rtnList = uService.get_sido();
+//		return rtnList;
+//	}
+//	
+//	@RequestMapping(value ="/getSigungu")
+//	@ResponseBody
+//	public JSONArray getSigungu(@RequestBody CmMap reqVo, HttpServletRequest request, HttpServletResponse response) throws Exception{
+//		
+//		List<CmMap> result = uService.get_sido();
+//		
+//		JSONArray jsonArray = new JSONArray();
+//
+//		for (Map<String, Object> map : result) {
+//			jsonArray.add(convertMapToJson(map));
+//		}
+//		
+//		return jsonArray;
+//	}
 	
 	
+	 
 	
 //	/*
 //	 * 학생 관리 페이지
