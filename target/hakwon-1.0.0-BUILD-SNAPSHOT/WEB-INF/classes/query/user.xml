@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="euc-kr"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="u">
+
+
+	<select id="selectAllUser" resultType="uBean">
+		SELECT * FROM user
+	</select>
+
+	<select id="selectById" parameterType="int" resultType="uBean">
+		SELECT * FROM user WHERE id=#{id}
+	</select>
+
+	<insert id="saveUser" parameterType="com.hong.hakwon.dto.UserSaveDto" >
+		INSERT INTO /* student.reg_user */
+			user
+		(
+			 userId
+			, password
+			, name
+			, phoneNumber
+			, city
+			, county
+			, district
+			, email
+		)
+	
+		VALUES(
+			  #{userId}
+			, #{password}
+			, #{name}
+			, #{phoneNumber}
+			, #{city}
+			, #{county}
+			, #{district}
+			, #{email}
+		)
+		
+	</insert>
+
+
+
+<!--	&lt;!&ndash; 학생 목록(학급 기준) &ndash;&gt;-->
+<!--	<select id="get_user_c" parameterType="String" resultType="uBean">-->
+<!--		SELECT *-->
+<!--		FROM user-->
+<!--	</select>-->
+<!--	&lt;!&ndash; 시도 목록 가져오기 &ndash;&gt;-->
+<!--	<select id="get_sido" parameterType="String" resultType="java.util.Map">-->
+<!--		SELECT *-->
+<!--		FROM sido-->
+<!--	</select>-->
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<typeAliases>
+		<!-- <typeAlias alias="tBean" type="com.hong.hakwon.Beans.TeacherBean" /> -->
+		<typeAlias alias="uBean" type="com.hong.hakwon.Beans.UserBean" />
+		<!-- <typeAlias alias="bBean" type="com.hong.hakwon.Beans.BookBean" />
+		<typeAlias alias="cBean" type="com.hong.hakwon.Beans.ClassBean" />
+		<typeAlias alias="qBean" type="com.hong.hakwon.Beans.QuestionBean" />
+		<typeAlias alias="lBean" type="com.hong.hakwon.Beans.LogBean" /> -->
+	</typeAliases>
+
+	<!-- real -->
+	<!-- <environments default="development"> <environment id="development"> 
+		<transactionManager type="JDBC"/> <dataSource type="POOLED"> <property name="driver" 
+		value="com.mysql.jdbc.Driver"/> <property name="url" value="jdbc:mysql://localhost:3306/dowkekd9576?serverTimeZone=Asia/Seoul"/> 
+		<property name="username" value="dowkekd9576"/> <property name="password" 
+		value="dnjstngkr1!"/> <property name="poolMaximumCheckoutTime" value="60" 
+		/> <property name="poolPingConnectionsNotUsedFor" value="60" /> <property 
+		name="poolTimeToWait" value="60" /> <property name="poolMaximumActiveConnections" 
+		value="1000" /> <property name="poolMaximumIdleConnections" value="1000" 
+		/> -->
+
+	<!-- local -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			
+			<dataSource type="POOLED">
+                <property name="driver" value="org.sqlite.JDBC" />
+                <property name="url" value="jdbc:sqlite:C:\Users\Muto\Desktop\sqlite/study.db" />
+            </dataSource>
+			
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="query/user.xml" />
+	</mappers>
+
+</configuration>

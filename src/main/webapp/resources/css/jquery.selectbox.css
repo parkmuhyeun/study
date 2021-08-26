@@ -1,0 +1,447 @@
+@CHARSET "UTF-8";
+
+/* box */
+.sbHolder {
+	background-color: #ffffff;
+	border: solid 1px #d9d9d9;
+	font-size: 14px;
+	font-weight: normal;
+	height: 33px;
+	position: relative;
+	width: 200px
+}
+
+.back .sbHolder {
+	z-index: 9
+}
+
+.first .sbHolder {
+	z-index: 9
+}
+
+.sbHolder:hover, .sbHolder.hover {
+	border: 1px solid #c7c7c7
+}
+
+.sbHolder:hover .sbToggle {
+	background-position: 0 -50px
+}
+
+.sbHolder.hover:hover .sbToggle {
+	background-position: 0 -100px
+}
+
+.sbHolder:focus .sbSelector {
+	
+}
+
+/* txt */
+.sbSelector {
+	display: block;
+	height: 33px;
+	left: 0;
+	line-height: 33px;
+	outline: none;
+	overflow: hidden;
+	position: absolute;
+	text-indent: 13px;
+	top: 0;
+	width: 170px
+}
+
+.sbSelector:link, .sbSelector:visited, .sbSelector:hover {
+	color: #888888;
+	outline: none;
+	text-decoration: none
+}
+
+/* arrow */
+.sbToggle {
+	background: url(../images/common/bg_selectbox.png) 0 0 no-repeat;
+	display: block;
+	height: 33px;
+	outline: none;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 37px
+}
+
+.sbHolder .sbToggle:hover {
+	background-position: 0 -50px
+}
+
+.sbHolder .sbToggleOpen {
+	background-position: 0 -100px
+}
+
+.sbHolder .sbToggleOpen:hover {
+	background-position: 0 -100px
+}
+
+/* disabled */
+.sbHolderDisabled {
+	border: 1px solid #d9d9d9;
+	background-color: #efefef;
+	cursor: not-allowed
+}
+
+.sbHolderDisabled:hover {
+	border: 1px solid #d9d9d9
+}
+
+.sbHolderDisabled .sbHolder {
+	
+}
+
+.sbHolderDisabled .sbToggle {
+	background-position: 0 -150px;
+	cursor: not-allowed
+}
+
+.sbHolderDisabled .sbToggle:hover {
+	background-position: 0 -150px
+}
+
+.sbHolderDisabled .sbSelector:link, .sbHolderDisabled .sbSelector:visited,
+	.sbHolderDisabled .sbSelector:hover {
+	color: #acacac;
+	outline: none;
+	text-decoration: none;
+	cursor: not-allowed
+}
+
+.sbHolderDisabled:hover .sbToggle {
+	background-position: 0 -150px
+}
+
+.sbHolderDisabled.hover:hover .sbToggle {
+	background-position: 0 -150px
+}
+
+/* option */
+.sbOptions {
+	background-color: #ffffff;
+	border: 1px solid #d9d9d9;
+	border-top: 1px solid #c7c7c7;
+	list-style: none;
+	left: -1px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 30px;
+	width: 200px;
+	z-index: 11;
+	overflow-y: auto
+}
+
+.sbOptions li {
+	padding: 0
+}
+
+.sbOptions li:first-child {
+	
+}
+
+.sbOptions li:first-child a {
+	border-top: 0
+}
+
+.sbOptions a {
+	border-top: 1px solid #f2f2f2;
+	display: block;
+	outline: none;
+	padding: 8px 13px 7px
+}
+
+.sbOptions a:link, .sbOptions a:visited {
+	color: #888888;
+	text-decoration: none
+}
+
+.sbOptions a:hover, .sbOptions a:focus, .sbOptions a.sbFocus {
+	color: #888888;
+	background: #f9f9f9
+}
+
+.sbOptions li.last a {
+	border-bottom: none
+}
+
+.sbOptions .sbDisabled {
+	border-bottom: dotted 1px #515151;
+	color: #999;
+	display: block;
+	padding: 7px 0 7px 3px
+}
+
+.sbOptions .sbGroup {
+	border-bottom: dotted 1px #515151;
+	color: #888888;
+	display: block;
+	font-weight: bold;
+	padding: 7px 0 7px 3px
+}
+
+.sbOptions .sbSub {
+	padding-left: 17px
+}
+
+/* error */
+.error .sbHolder {
+	border: 1px solid #f89db4
+}
+
+.error .sbHolder:hover, .error .sbHolder.hover {
+	border: 1px solid #f89db4
+}
+
+.error .sbHolder:hover .sbToggle {
+	background-position: 0 -200px
+}
+
+.error .sbHolder.hover:hover .sbToggle {
+	background-position: 0 -250px
+}
+
+.error .sbToggle {
+	background-position: 0 -200px
+}
+
+.error .sbHolder .sbToggle:hover {
+	background-position: 0 -200px
+}
+
+.error .sbHolder .sbToggleOpen {
+	background-position: 0 -250px
+}
+
+.error .sbHolder .sbToggleOpen:hover {
+	background-position: 0 -250px
+}
+
+.error .sbSelector:link, .error .sbSelector:visited, .error .sbSelector:hover
+	{
+	color: #ec6386;
+	outline: none;
+	text-decoration: none
+}
+
+.error .sbOptions {
+	border: 1px solid #f89db4
+}
+
+.error .sbOptions a:link, .error .sbOptions a:visited {
+	color: #ec6386;
+	text-decoration: none
+}
+
+.error .sbOptions a:hover, .error .sbOptions a:focus, .error .sbOptions a.sbFocus
+	{
+	color: #ec6386;
+	background: #fffafa
+}
+
+.selectbox2 .sbHolder:hover, .selectbox2 .sbHolder.hover {
+	border: 1px solid #d9d9d9
+}
+
+.selectbox2 .sbToggle {
+	
+}
+
+.selectbox2 .sbToggle {
+	background: url(../images/common/bg_selectbox2.png) 0 0 no-repeat
+}
+
+.selectbox2 .sbHolder.hover .sbToggle {
+	background-position: 0 -100px
+}
+
+.selectbox2 .sbHolder.hover:hover .sbToggle {
+	background-position: 0 -100px
+}
+
+.selectbox2 .sbOptions {
+	border-top: 1px solid #f2f2f2
+}
+
+.selectbox2 .sbSelector:hover {
+	color: #333
+}
+
+.selectbox2 .sbHolder.hover .sbSelector:link, .selectbox2 .sbHolder.hover .sbSelector:visited
+	{
+	color: #333
+}
+
+.selectbox2 .sbHolder.hover:hover .sbSelector:link, .selectbox2 .sbHolder.hover:hover .sbSelector:visited
+	{
+	color: #333
+}
+
+/* disabled */
+.selectbox2 .sbHolderDisabled {
+	border: 1px solid #d9d9d9;
+	background-color: #efefef
+}
+
+.selectbox2 .sbHolderDisabled:hover {
+	border: 1px solid #d9d9d9
+}
+
+.selectbox2 .sbHolderDisabled .sbHolder {
+	
+}
+
+.selectbox2 .sbHolderDisabled .sbToggle {
+	background-position: 0 -150px
+}
+
+.selectbox2 .sbHolderDisabled .sbToggle:hover {
+	background-position: 0 -150px
+}
+
+.selectbox2 .sbHolderDisabled .sbSelector:link, .selectbox2 .sbHolderDisabled .sbSelector:visited,
+	.selectbox2 .sbHolderDisabled .sbSelector:hover {
+	color: #acacac;
+	outline: none;
+	text-decoration: none
+}
+
+.selectbox2 .sbHolderDisabled:hover .sbToggle {
+	background-position: 0 -150px
+}
+
+.selectbox2 .sbHolderDisabled.hover:hover .sbToggle {
+	background-position: 0 -150px
+}
+
+/* error */
+.selectbox2 .error .sbOptions {
+	border-top: 1px solid #f89db4
+}
+
+.selectbox2 .error .sbHolder:hover, .selectbox2 .error .sbHolder.hover {
+	border: 1px solid #f89db4
+}
+
+.selectbox2 .error .sbSelector:hover {
+	color: #ec6386
+}
+
+.selectbox2 .error .sbHolder.hover .sbSelector:link, .selectbox2 .error .sbHolder.hover .sbSelector:visited
+	{
+	color: #ec6386
+}
+
+.selectbox2 .error .sbHolder.hover:hover .sbSelector:link, .selectbox2 .error .sbHolder.hover:hover .sbSelector:visited
+	{
+	color: #ec6386
+}
+
+/* v2 */
+.selectbox.v2 .sbHolder {
+	height: 25px;
+	font-size: 12px
+}
+
+.selectbox.v2 .sbToggle {
+	width: 26px;
+	height: 25px
+}
+
+.selectbox.v2 .sbSelector {
+	height: 25px;
+	line-height: 25px
+}
+
+.selectbox.v2 .sbOptions a {
+	padding: 4px 13px 4px
+}
+
+.selectbox.v2 .sbToggle {
+	background: url(../images/common/bg_selectbox3.png) 0 0 no-repeat
+}
+
+.selectbox.v2 .sbToggle {
+	background: url(../images/common/bg_selectbox3.png) 0 0 no-repeat
+}
+
+.selectbox.v2 .sbHolder:hover .sbToggle {
+	background-position: 0 -50px
+}
+
+.selectbox.v2 .sbHolder.hover:hover .sbToggle {
+	background-position: 0 -100px
+}
+
+.selectbox.v2 .sbHolderDisabled {
+	border: 1px solid #d9d9d9;
+	background-color: #efefef
+}
+
+.selectbox.v2 .sbHolderDisabled:hover {
+	border: 1px solid #d9d9d9
+}
+
+.selectbox.v2 .sbHolderDisabled .sbHolder {
+	
+}
+
+.selectbox.v2 .sbHolderDisabled .sbToggle {
+	background-position: 0 -150px
+}
+
+.selectbox.v2 .sbHolderDisabled .sbToggle:hover {
+	background-position: 0 -150px
+}
+
+.selectbox.v2 .sbHolderDisabled .sbSelector:link, .selectbox.v2 .sbHolderDisabled .sbSelector:visited,
+	.selectbox.v2 .sbHolderDisabled .sbSelector:hover {
+	color: #acacac;
+	outline: none;
+	text-decoration: none
+}
+
+.selectbox.v2 .sbHolderDisabled:hover .sbToggle {
+	background-position: 0 -150px
+}
+
+.selectbox.v2 .sbHolderDisabled.hover:hover .sbToggle {
+	background-position: 0 -150px
+}
+
+.selectbox.w100 .sbHolder, .selectbox.w100 .sbHolder, .selectbox.w100 .sbSelector,
+	.selectbox.w100 .sbOptions {
+	width: 100px
+}
+
+.selectbox.w140 .sbHolder, .selectbox.w140 .sbHolder, .selectbox.w140 .sbSelector,
+	.selectbox.w140 .sbOptions {
+	width: 140px
+}
+
+.selectbox.w256 .sbHolder, .selectbox.w256 .sbHolder, .selectbox.w256 .sbSelector,
+	.selectbox.w256 .sbOptions {
+	width: 256px
+}
+
+/* option 추가 20170107 */
+.pc_optionnm {
+	display: inline-block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 67%;
+}
+
+.pc_listprice {
+	text-decoration: line-through;
+}
+
+.pc_price {
+	padding: 0 7px 0 10px;
+	color: #0042a3;
+	font-weight: bold;
+}
