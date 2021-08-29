@@ -31,7 +31,7 @@
 			
 			<dataSource type="POOLED">
                 <property name="driver" value="org.sqlite.JDBC" />
-                <property name="url" value="jdbc:sqlite:C:/db/carrot.db" />
+                <property name="url" value="jdbc:sqlite:C:\Users\Muto\Desktop\sqlite/carrot.db" />
             </dataSource>
 			
 		</environment>

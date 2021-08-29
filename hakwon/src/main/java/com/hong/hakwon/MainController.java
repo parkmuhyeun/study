@@ -1,58 +1,34 @@
 
 package com.hong.hakwon;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.channels.FileChannel;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
+import com.hong.hakwon.dto.SiDo;
+import com.hong.hakwon.dto.SiGunGu;
+import com.hong.hakwon.dto.UserSaveDto;
+import com.hong.hakwon.web.validation.RegisterValidator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hong.hakwon.common.CmMap;
-import com.hong.hakwon.Beans.UserBean;
-import com.hong.hakwon.UserDAOImpl;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 
 
 /**
@@ -68,17 +44,87 @@ public class MainController {
 	
 	private Log	logger	= LogFactory.getLog(this.getClass());
 	
-	
+	private RegisterValidator registerValidator;
+
 	@Autowired
-	public void setUserService(UserDAOImpl uService){
-		this.uService=uService;
+	public MainController(UserDAOImpl uService, RegisterValidator registerValidator) {
+		this.uService = uService;
+		this.registerValidator = registerValidator;
+	}
+
+
+	/*
+	 * 회원가입 페이지
+	 */
+	@RequestMapping(value="/join")
+	public ModelAndView join() throws Exception {
+		List<SiDo> sido = uService.get_sido();
+
+		ModelAndView mav = new ModelAndView("/join");
+		mav.addObject("sido", sido);
+		mav.addObject("userSaveDto", new UserSaveDto());
+		return mav;
+	}
+
+	/*
+	 * 비밀번호 실시간 유효성
+	 */
+	@RequestMapping(value ="/join/pwCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean PwCheck(@RequestParam("password") String password) {
+
+		boolean check =false;
+
+		String pw_chk = "^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]*$";
+
+		Pattern passP = Pattern.compile(pw_chk);
+
+		if(password.length() >= 8 && password.length() <= 15){
+			Matcher matcher = passP.matcher(password);
+			if(matcher.matches()){
+				check = true;
+			}
+		}
+
+		return check;
+	}
+
+	/*
+	 * get 시군구
+	 * 시도 바뀔때마다 sido_id로 시군구 조회해서 jsp로 넘겨줌
+	 */
+	@RequestMapping(value="/join/sigungu", method = RequestMethod.POST)
+	@ResponseBody
+	public List<SiGunGu> get_sigungu(@RequestParam("sido_cd") int sido_cd) throws Exception {
+		logger.info( "sido_cd" + sido_cd);
+
+		List<SiGunGu> sigungu = uService.get_sigungu(sido_cd);
+
+		return sigungu;
+	}
+
+
+	/*
+	 * 회원가입 요청
+	 */
+	@RequestMapping(value="/join", method = RequestMethod.POST)
+	public ModelAndView join(@ModelAttribute UserSaveDto userSaveDto, BindingResult bindingResult) {
+		registerValidator.validate(userSaveDto, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			ModelAndView mav = new ModelAndView("/join");
+			return mav;
+		}
+
+		ModelAndView mav = new ModelAndView("/main");
+		return mav;
 	}
 
 	/*
 	 * 로그인 페이지
 	 */
 	@RequestMapping(value="/login")
-	public ModelAndView login(@ModelAttribute("reqMap") CmMap reqVo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView login( @ModelAttribute("reqMap") CmMap reqVo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView	mav	= new ModelAndView("/login");
 		return mav;
 	}
@@ -89,7 +135,6 @@ public class MainController {
 		logger.info("reqVo : " + reqVo);
 		return reqVo;
 	}
-
 	
 	/*
 	 * 메인 페이지

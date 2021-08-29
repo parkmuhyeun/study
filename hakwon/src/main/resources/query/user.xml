@@ -5,44 +5,59 @@
 
 <mapper namespace="u">
 
-	<!-- 학생 목록(학급 기준) -->
-	<select id="get_user_c" parameterType="String" resultType="uBean">
-		SELECT *
-		FROM user
+
+	<select id="selectAllUser" resultType="uBean">
+		SELECT * FROM user
 	</select>
-	
-	<update id="reg_user" parameterType="String" >
+
+	<select id="selectById" parameterType="int" resultType="uBean">
+		SELECT * FROM user WHERE id=#{id}
+	</select>
+
+	<insert id="saveUser" parameterType="uBean" >
 		INSERT INTO /* student.reg_user */
 			user
 		(
-			  name
+			 userId
 			, password
+			, name
+			, phoneNumber
+			, sido
+			, sigungu
 			, email
-			, select_value
-			, reg_dttm
-			, reg_id
-			, mdfy_dttm
-			, mdfy_id
 		)
 	
 		VALUES(
-			  #{name}
+			  #{userId}
 			, #{password}
+			, #{name}
+			, #{phoneNumber}
+			, #{sido}
+			, #{sigungu}
 			, #{email}
-			, #{select_value}
-			, date('now')
-			, 'admin'
-			, date('now')
-			, 'admin'
 		)
 		
-	</update>
-	
+	</insert>
+
+
+
+<!--	&lt;!&ndash; 학생 목록(학급 기준) &ndash;&gt;-->
+<!--	<select id="get_user_c" parameterType="String" resultType="uBean">-->
+<!--		SELECT *-->
+<!--		FROM user-->
+<!--	</select>-->
+
 	<!-- 시도 목록 가져오기 -->
-	<select id="get_sido" parameterType="String" resultType="java.util.Map">
+	<select id="get_sido" resultType="com.hong.hakwon.dto.SiDo">
 		SELECT *
 		FROM sido
 	</select>
-	
+
+	<!-- 시군구 목록 가져오기 -->
+	<select id="get_sigungu" parameterType="int" resultType="com.hong.hakwon.dto.SiGunGu">
+		SELECT *
+		FROM sigungu
+		WHERE sido_cd = #{sido_cd}
+	</select>
 
 </mapper>
