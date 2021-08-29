@@ -2,7 +2,10 @@ package com.hong.hakwon;
 
 import java.io.Reader;
 import java.util.List;
+import java.util.Map;
 
+import com.hong.hakwon.dto.SiDo;
+import com.hong.hakwon.dto.SiGunGu;
 import com.hong.hakwon.dto.UserSaveDto;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -50,10 +53,10 @@ public class UserDAOImpl {
 		return user;
 	}
 
-	public int saveUser(UserSaveDto saveDto) throws Exception {
+	public int saveUser(UserBean userBean) throws Exception {
 		getSession();
 
-		int row = sqlSession.insert("u.saveUser", saveDto);
+		int row = sqlSession.insert("u.saveUser", userBean);
 		if (row > 0) {
 			sqlSession.commit();
 		}
@@ -61,11 +64,18 @@ public class UserDAOImpl {
 		return row;
 	}
 
-	public List <CmMap> get_sido() throws Exception {
+	public List<SiDo> get_sido() throws Exception {
 		getSession();
-		List <CmMap> list = sqlSession.selectList("u.get_sido");
+		List<SiDo> siDoList = sqlSession.selectList("u.get_sido");
 		sqlSession.close();
-		return list;
+		return siDoList;
+	}
+
+	public List<SiGunGu> get_sigungu(int sido_cd) throws Exception {
+		getSession();
+		List<SiGunGu> siGunGuList = sqlSession.selectList("u.get_sigungu", sido_cd);
+		sqlSession.close();
+		return siGunGuList;
 	}
 
 }

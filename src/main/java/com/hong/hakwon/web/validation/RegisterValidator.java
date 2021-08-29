@@ -15,12 +15,14 @@ public class RegisterValidator implements Validator {
     String id_chk = "^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]*$";      //영문자 && 숫자 && 특수문자
     String name_chk = "^[가-힣]*$";      //한글만
     String email_chk = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";       //표준 이메일
-//    String pw_chk = "^[a-zA-Z0-9]*$";
+    String pw_chk = "^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]*$";      //영문자 && 숫자 && 특수문자
+    String number_chk = "^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$";
 
     private Pattern idP = Pattern.compile(id_chk);
     private Pattern nameP = Pattern.compile(name_chk);
     private Pattern emailP = Pattern.compile(email_chk);
-//    private Pattern passP = Pattern.compile(pw_chk);
+    private Pattern passP = Pattern.compile(pw_chk);
+    private Pattern numberP = Pattern.compile(number_chk);
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -50,21 +52,26 @@ public class RegisterValidator implements Validator {
             }
         }
 
-        Matcher matcher = emailP.matcher(userSaveDto.getEmail());
-        if(userSaveDto.getEmail() == null || !matcher.matches()) {
-            errors.rejectValue("email", null, "올바르지 않는 형식입니다. ex) example@email.com");
+        String phoneNumber = userSaveDto.getF_number() +"-"+ userSaveDto.getM_number() +"-"+ userSaveDto.getE_number();
+        Matcher matcherNum = numberP.matcher(phoneNumber);
+        if (!matcherNum.matches()) {
+            errors.rejectValue("f_number", null, phoneNumber + "올바르지 않은 형식입니다.");
         }
 
 
+        Matcher matcherE = emailP.matcher(userSaveDto.getEmail());
+        if(userSaveDto.getEmail() == null || !matcherE.matches()) {
+            errors.rejectValue("email", null, "올바르지 않는 형식입니다. ex) example@email.com");
+        }
 
-//        if(userSaveDto.getPassword() == null || userSaveDto.getPassword().length() < 8 || userSaveDto.getPassword().length() > 15){
-//            errors.rejectValue("password", null, "8 ~ 15 자리 영문 혹은 숫자 입력 해주세요");
-//        } else {
-//            Matcher matcher = passP.matcher(userSaveDto.getPassword());
-//            if(!matcher.matches()){
-//                errors.rejectValue("password", null, "올바르지 않는 형식입니다.");
-//            }
-//        }
+        if(userSaveDto.getPassword() == null || userSaveDto.getPassword().length() < 8 || userSaveDto.getPassword().length() > 15){
+            errors.rejectValue("password", null, "8 ~ 15 자리 영문 혹은 숫자 입력 해주세요");
+        } else {
+            Matcher matcher = passP.matcher(userSaveDto.getPassword());
+            if(!matcher.matches()){
+                errors.rejectValue("password", null, "올바르지 않는 형식입니다.");
+            }
+        }
 
 
     }

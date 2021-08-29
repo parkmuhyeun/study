@@ -5,10 +5,11 @@ public class UserSaveDto {
     private String userId;
     private String password;
     private String name;
-    private String phoneNumber;
-    private String city;
-    private String county;
-    private String district;
+    private String f_number;
+    private String m_number;
+    private String e_number;
+    private String sido;
+    private String sigungu;
     private String email;
 
     public UserSaveDto() {
@@ -38,36 +39,44 @@ public class UserSaveDto {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getF_number() {
+        return f_number;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setF_number(String f_number) {
+        this.f_number = f_number;
     }
 
-    public String getCity() {
-        return city;
+    public String getM_number() {
+        return m_number;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setM_number(String m_number) {
+        this.m_number = m_number;
     }
 
-    public String getCounty() {
-        return county;
+    public String getE_number() {
+        return e_number;
     }
 
-    public void setCounty(String county) {
-        this.county = county;
+    public void setE_number(String e_number) {
+        this.e_number = e_number;
     }
 
-    public String getDistrict() {
-        return district;
+    public String getSido() {
+        return sido;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setSido(String sido) {
+        this.sido = sido;
+    }
+
+    public String getSigungu() {
+        return sigungu;
+    }
+
+    public void setSigungu(String sigungu) {
+        this.sigungu = sigungu;
     }
 
     public String getEmail() {
@@ -78,14 +87,15 @@ public class UserSaveDto {
         this.email = email;
     }
 
-    public UserSaveDto(String userId, String password, String name, String phoneNumber, String city, String county, String district, String email) {
+    public UserSaveDto(String userId, String password, String name, String f_number, String m_number, String e_number, String sido, String sigungu, String email) {
         this.userId = userId;
         this.password = password;
         this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.city = city;
-        this.county = county;
-        this.district = district;
+        this.f_number = f_number;
+        this.m_number = m_number;
+        this.e_number = e_number;
+        this.sido = sido;
+        this.sigungu = sigungu;
         this.email = email;
     }
 }

@@ -1,46 +1,24 @@
 
 package com.hong.hakwon;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.channels.FileChannel;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.hong.hakwon.dto.SiDo;
+import com.hong.hakwon.dto.SiGunGu;
 import com.hong.hakwon.dto.UserSaveDto;
 import com.hong.hakwon.web.validation.RegisterValidator;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,16 +26,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hong.hakwon.common.CmMap;
-import com.hong.hakwon.Beans.UserBean;
-import com.hong.hakwon.UserDAOImpl;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 
 
 /**
@@ -86,8 +57,11 @@ public class MainController {
 	 * 회원가입 페이지
 	 */
 	@RequestMapping(value="/join")
-	public ModelAndView join() {
+	public ModelAndView join() throws Exception {
+		List<SiDo> sido = uService.get_sido();
+
 		ModelAndView mav = new ModelAndView("/join");
+		mav.addObject("sido", sido);
 		mav.addObject("userSaveDto", new UserSaveDto());
 		return mav;
 	}
@@ -114,6 +88,21 @@ public class MainController {
 
 		return check;
 	}
+
+	/*
+	 * get 시군구
+	 * 시도 바뀔때마다 sido_id로 시군구 조회해서 jsp로 넘겨줌
+	 */
+	@RequestMapping(value="/join/sigungu", method = RequestMethod.POST)
+	@ResponseBody
+	public List<SiGunGu> get_sigungu(@RequestParam("sido_cd") int sido_cd) throws Exception {
+		logger.info( "sido_cd" + sido_cd);
+
+		List<SiGunGu> sigungu = uService.get_sigungu(sido_cd);
+
+		return sigungu;
+	}
+
 
 	/*
 	 * 회원가입 요청

@@ -9,10 +9,10 @@ public class UserBean {
 	private String password;
 	private String name;
 	private String phoneNumber;
-	private String city;
-	private String county;
-	private String district;
+	private String sido;
+	private String sigungu;
 	private String email;
+
 
 	public int getId() {
 		return id;
@@ -33,16 +33,12 @@ public class UserBean {
 		return phoneNumber;
 	}
 
-	public String getCity() {
-		return city;
+	public String getSido() {
+		return sido;
 	}
 
-	public String getCounty() {
-		return county;
-	}
-
-	public String getDistrict() {
-		return district;
+	public String getSigungu() {
+		return sigungu;
 	}
 
 	public String getEmail() {
@@ -52,15 +48,14 @@ public class UserBean {
 	public UserBean() {
 	}
 
-	public UserBean(int id, String userId, String password, String name, String phoneNumber, String city, String county, String district, String email) {
+	public UserBean(int id, String userId, String password, String name, String phoneNumber, String sido, String sigungu, String email) {
 		this.id = id;
 		this.userId = userId;
 		this.password = password;
 		this.name = name;
 		this.phoneNumber = phoneNumber;
-		this.city = city;
-		this.county = county;
-		this.district = district;
+		this.sido = sido;
+		this.sigungu = sigungu;
 		this.email = email;
 	}
 }
