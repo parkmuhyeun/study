@@ -4,6 +4,7 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 
+import com.hong.hakwon.dto.History;
 import com.hong.hakwon.dto.SiDo;
 import com.hong.hakwon.dto.SiGunGu;
 import com.hong.hakwon.dto.UserSaveDto;
@@ -16,7 +17,7 @@ import com.hong.hakwon.Beans.UserBean;
 import com.hong.hakwon.common.CmMap;
 import org.springframework.stereotype.Repository;
 
-@Repository
+
 public class UserDAOImpl {
 	Reader reader =null;
 	SqlSessionFactory factory = null;
@@ -46,9 +47,9 @@ public class UserDAOImpl {
 		return list;
 	}
 
-	public UserBean selectById(int id) throws Exception {
+	public UserBean selectByUserId(String userId) throws Exception {
 		getSession();
-		UserBean user = (UserBean) sqlSession.selectOne("u.selectById", id);
+		UserBean user = (UserBean) sqlSession.selectOne("u.selectById", userId);
 		sqlSession.close();
 		return user;
 	}
@@ -64,11 +65,19 @@ public class UserDAOImpl {
 		return row;
 	}
 
-	public List<SiDo> get_sido() throws Exception {
+	public List<SiDo> get_Allsido() throws Exception {
 		getSession();
-		List<SiDo> siDoList = sqlSession.selectList("u.get_sido");
+		List<SiDo> siDoList = sqlSession.selectList("u.get_Allsido");
 		sqlSession.close();
 		return siDoList;
+	}
+
+	public SiDo get_sido(int sido_cd) throws Exception {
+		getSession();
+		SiDo sido = sqlSession.selectOne("u.get_sido", sido_cd);
+		sqlSession.close();
+
+		return sido;
 	}
 
 	public List<SiGunGu> get_sigungu(int sido_cd) throws Exception {
@@ -76,6 +85,30 @@ public class UserDAOImpl {
 		List<SiGunGu> siGunGuList = sqlSession.selectList("u.get_sigungu", sido_cd);
 		sqlSession.close();
 		return siGunGuList;
+	}
+
+	//로그인이력 넣기
+	public void history_save(History history) throws Exception{
+		getSession();
+		sqlSession.insert("saveHistory", history);
+		sqlSession.commit();
+		sqlSession.close();
+	}
+
+
+	//로그인
+	public UserBean login(String loginId, String password) throws Exception {
+
+
+		UserBean user = this.selectByUserId(loginId);
+
+		if (user != null) {
+			if (user.getPassword().equals(password)) {
+				return user;
+			}
+		}
+
+		return null;
 	}
 
 }

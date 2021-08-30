@@ -10,12 +10,12 @@
 </head>
 <body>
     <div>
-        <form:form role="form" commandName="userSaveDto" action = "/join" method="post" >
+        <form:form role="form"  commandName="userSaveDto" action = "/join" method="post" >
             <div>
-                id: <form:input type="text" path="userId"/>
-                <button class = "" type="button">중복 검사</button>              <br>
+                id: <form:input name="id" id="id" type="text" path="userId"/>
+                <button id="idchkbtn" onclick="idCheck()" type="button">중복 검사</button>
+                <b id="idV"> </b>           <br>
                 <form:errors path="userId" cssStyle="color: red"/>
-                <b id="pwCheckV" name = "pwCheckV"></b>
             </div>
             <div>
                 password: <form:password name="password" oninput="pwCheck()" id="password" path="password"/>
@@ -54,13 +54,54 @@
                 <form:errors path="email" cssStyle="color: red"/>
 
             </div>
-            <button id="sub_Btn" class = "" type="submit" >회원 가입</button>
-            <button class = "" onclick="location.href = 'main'" type="button">취소</button>
+            <button id="sub_btn" type="submit" disabled>회원 가입</button>
+            <button onclick="location.href = 'main'" type="button">취소</button>
         </form:form>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
+
+    function idCheck() {
+        var id = $('#id').val();
+        var idV = /^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,15}$/;
+        if ( !idV.test(id)) {
+            alert('8 ~ 15 자리 영문 혹은 숫자 등(한글제외) 입력 해주세요')
+        }
+        else{
+            $.ajax({
+                type:"POST",
+                url: "/join/idCheck",
+                data: { id: id },
+                success:function(response) {
+                    if(response == true){
+                        Swal.fire({
+                            title: '사용하시겠습니까?',
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonText: `Yes`,
+                            denyButtonText: `No`,
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                $('#id').attr("readonly", true);
+                                $('#idchkbtn').prop('disabled', true);
+                                $('#sub_btn').removeAttr('disabled');
+                            } else if (result.isDenied) {
+                                $('#id').focus();
+                            }
+                        })
+                    }else{
+                        alert('이미 존재하는 아이디입니다.')
+                    }
+                }
+            });
+        }
+
+
+    }
+
     function pwCheck() {
         $.ajax({
             type:"POST",
@@ -121,8 +162,10 @@
 
             }
         })
-            //sido id 넘기
+
     }
+
+
 
 </script>
 </html>

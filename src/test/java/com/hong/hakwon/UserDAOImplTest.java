@@ -2,17 +2,9 @@ package com.hong.hakwon;
 
 
 import com.hong.hakwon.Beans.UserBean;
-import com.hong.hakwon.common.CmMap;
 import com.hong.hakwon.dto.SiDo;
 import com.hong.hakwon.dto.SiGunGu;
-import com.hong.hakwon.dto.UserSaveDto;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,14 +17,16 @@ public class UserDAOImplTest {
     public void save_select() throws Exception{
 
 
-        String userId = "test";
+        String userId = "testtest";
         String password = "1234";
         String name = "테스트";
         String phoneNumber = "010-1234-5679";
-        String sido = "대구광역시";
+        int sido_cd = 22;
         String sigungu = "수성구";
         String email = "test@gmail.com";
-        UserBean ub = new UserBean(10, userId, password, name, phoneNumber, sido, sigungu, email);
+
+        SiDo sido = userDAO.get_sido(sido_cd);
+        UserBean ub = new UserBean(10, userId, password, name, phoneNumber, sido.getSido_name(), sigungu, email);
 
         userDAO.saveUser(ub);
 
@@ -48,7 +42,7 @@ public class UserDAOImplTest {
 
     @Test
     public void get_sido() throws Exception {
-        List<SiDo> sido = userDAO.get_sido();
+        List<SiDo> sido = userDAO.get_Allsido();
 
         for (SiDo siDo : sido) {
             System.out.println("siDo.getSido_cd() = " + siDo.getSido_cd());

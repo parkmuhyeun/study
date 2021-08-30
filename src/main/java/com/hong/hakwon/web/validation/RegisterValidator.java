@@ -55,7 +55,7 @@ public class RegisterValidator implements Validator {
         String phoneNumber = userSaveDto.getF_number() +"-"+ userSaveDto.getM_number() +"-"+ userSaveDto.getE_number();
         Matcher matcherNum = numberP.matcher(phoneNumber);
         if (!matcherNum.matches()) {
-            errors.rejectValue("f_number", null, phoneNumber + "올바르지 않은 형식입니다.");
+            errors.rejectValue("f_number", null, "올바르지 않은 형식입니다.");
         }
 
 

@@ -48,6 +48,16 @@ public class UserBean {
 	public UserBean() {
 	}
 
+	public UserBean(String userId, String password, String name, String phoneNumber, String sido, String sigungu, String email) {
+		this.userId = userId;
+		this.password = password;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.sido = sido;
+		this.sigungu = sigungu;
+		this.email = email;
+	}
+
 	public UserBean(int id, String userId, String password, String name, String phoneNumber, String sido, String sigungu, String email) {
 		this.id = id;
 		this.userId = userId;
