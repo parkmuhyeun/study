@@ -2,20 +2,16 @@ package com.hong.hakwon;
 
 import java.io.Reader;
 import java.util.List;
-import java.util.Map;
 
-import com.hong.hakwon.dto.History;
-import com.hong.hakwon.dto.SiDo;
-import com.hong.hakwon.dto.SiGunGu;
-import com.hong.hakwon.dto.UserSaveDto;
+import com.hong.hakwon.web.dto.History;
+import com.hong.hakwon.web.dto.SiDo;
+import com.hong.hakwon.web.dto.SiGunGu;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.hong.hakwon.Beans.UserBean;
-import com.hong.hakwon.common.CmMap;
-import org.springframework.stereotype.Repository;
 
 
 public class UserDAOImpl {

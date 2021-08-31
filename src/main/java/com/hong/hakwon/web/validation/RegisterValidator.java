@@ -1,9 +1,8 @@
 package com.hong.hakwon.web.validation;
 
-import com.hong.hakwon.dto.UserSaveDto;
+import com.hong.hakwon.web.dto.UserSaveDto;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import java.util.regex.Matcher;
@@ -17,12 +16,15 @@ public class RegisterValidator implements Validator {
     String email_chk = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";       //표준 이메일
     String pw_chk = "^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]*$";      //영문자 && 숫자 && 특수문자
     String number_chk = "^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$";
+    String sido_chk = "^[0-9]+$";
 
     private Pattern idP = Pattern.compile(id_chk);
     private Pattern nameP = Pattern.compile(name_chk);
     private Pattern emailP = Pattern.compile(email_chk);
     private Pattern passP = Pattern.compile(pw_chk);
     private Pattern numberP = Pattern.compile(number_chk);
+    private Pattern sidoP = Pattern.compile(sido_chk);
+
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -56,6 +58,14 @@ public class RegisterValidator implements Validator {
         Matcher matcherNum = numberP.matcher(phoneNumber);
         if (!matcherNum.matches()) {
             errors.rejectValue("f_number", null, "올바르지 않은 형식입니다.");
+        }
+
+
+        //시도 시군구 두개다 null이면 오류
+
+        Matcher matchersi = sidoP.matcher(userSaveDto.getSido());
+        if (!matchersi.matches()) {
+            errors.rejectValue("sido",null, "주소를 입력해주세요");
         }
 
 

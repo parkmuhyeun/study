@@ -4,26 +4,32 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Title</title>
-
-
+    <title>회원가입</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    <div>
-        <form:form role="form"  commandName="userSaveDto" action = "/join" method="post" >
-            <div>
-                id: <form:input name="id" id="id" type="text" path="userId"/>
-                <button id="idchkbtn" onclick="idCheck()" type="button">중복 검사</button>
-                <b id="idV"> </b>           <br>
+    <div class="container" style= "margin-top:100px; margin-bottom:100px" >
+        <form:form role="form" onsubmit="submitJoin(this); return false;" commandName="userSaveDto" action = "/join" method="post" style="width: 600px" >
+            <div class="form-group">
+                <label for="id">ID</label>
+                <form:input name="id" id="id" class="form-control" type="text" path="userId" placeholder="ID를 입력하세요"/>
                 <form:errors path="userId" cssStyle="color: red"/>
+                <div class="text-center">
+                    <b id="iddupchk"></b> <br>
+                    <button id="idchkbtn" class="btn btn-primary" onclick="idCheck()" type="button">중복 검사</button>
+                </div>
             </div>
-            <div>
-                password: <form:password name="password" oninput="pwCheck()" id="password" path="password"/>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <form:password  class="form-control" name="password" oninput="pwCheck()" id="password" path="password"/>
                 <b id="pwV" name="pwV"></b>  <br>
                 <form:errors path="password" cssStyle="color: red"/>
             </div>
-            <div>
-                이름: <form:input type="text" id="name" oninput="nameCheck()" path="name" size="4" />          <br>
+
+            <div class="form-group">
+                <label for="name">이름</label>
+                <form:input type="text"  id="name" oninput="nameCheck()" path="name" size="4" />          <br>
                 <form:errors path="name" cssStyle="color: red"/>
             </div>
 
@@ -36,32 +42,51 @@
                 <form:input type="text" name="e_number" id="e_number" path="e_number" size="4" maxlength="4"/>      <br>
                 <form:errors path="f_number" cssStyle="color: red"/>
             </div>
-                  주소: <form:select name="sido" onchange="sidoChange()" id="sido"  path="sido">
-                    <option value="">시/도</option>
-                        <c:forEach var="sidoList" items="${sido}">
-                            <option value="${sidoList.sido_cd}">${sidoList.sido_name}</option>
-                        </c:forEach>
-                    </form:select>
-                  <form:select name="sigungu" id="sigungu"  path="sigungu">
-                  <option value="">시/군/구</option>
-                  </form:select>
-            <div>
 
+            <br>
+
+            <div>
+                주소: <form:select name="sido" onchange="sidoChange()" id="sido"  path="sido">
+                <option value="">시/도</option>
+                <c:forEach var="sidoList" items="${sido}">
+                    <option value="${sidoList.sido_cd}">${sidoList.sido_name}</option>
+                </c:forEach>
+            </form:select>
+                <form:select name="sigungu" id="sigungu"  path="sigungu">
+                    <option value="">시/군/구</option>
+                </form:select>
+                <br>
+                <form:errors path="sido" cssStyle="color: red"/>
             </div>
 
-            <div>
-                email: <form:input type="email" name="email" id="email" path="email"/>         <br>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <form:input type="email" class="form-control" name="email" id="email" path="email"/>         <br>
                 <form:errors path="email" cssStyle="color: red"/>
-
             </div>
-            <button id="sub_btn" type="submit" disabled>회원 가입</button>
-            <button onclick="location.href = 'main'" type="button">취소</button>
+
+            <div class="text-center">
+                <button class="btn btn-primary " id="sub_btn" type="submit" >회원 가입</button>
+            </div>
         </form:form>
+<%--        <button class="btn btn-primary" onclick="location.href = 'main'" >취소</button>--%>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
+
+    var joinFormSubmit = false;
+
+    function submitJoin(form) {
+
+        if (!joinFormSubmit) {
+            $('#iddupchk').text("중복 검사해주세요.");
+            $('#iddupchk').css("color", "red");
+        }else{
+            form.submit();
+        }
+    }
 
     function idCheck() {
         var id = $('#id').val();
@@ -87,7 +112,9 @@
                             if (result.isConfirmed) {
                                 $('#id').attr("readonly", true);
                                 $('#idchkbtn').prop('disabled', true);
-                                $('#sub_btn').removeAttr('disabled');
+                                $('#iddupchk').text("");
+                                // $('#sub_btn').removeAttr('disabled');
+                                joinFormSubmit = true;
                             } else if (result.isDenied) {
                                 $('#id').focus();
                             }

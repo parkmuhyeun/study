@@ -2,8 +2,8 @@ package com.hong.hakwon;
 
 
 import com.hong.hakwon.Beans.UserBean;
-import com.hong.hakwon.dto.SiDo;
-import com.hong.hakwon.dto.SiGunGu;
+import com.hong.hakwon.web.dto.SiDo;
+import com.hong.hakwon.web.dto.SiGunGu;
 import org.junit.Test;
 
 import java.util.List;
@@ -36,6 +36,7 @@ public class UserDAOImplTest {
             System.out.println("user.id = " + user.getUserId());
             System.out.println("user.pass = " + user.getPassword());
             System.out.println("user.phone = " + user.getPhoneNumber());
+
         }
     }
 

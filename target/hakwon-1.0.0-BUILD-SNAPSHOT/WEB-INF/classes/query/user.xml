@@ -48,20 +48,20 @@
 <!--	</select>-->
 
 	<!-- 시도 목록 가져오기 -->
-	<select id="get_Allsido" resultType="com.hong.hakwon.dto.SiDo">
+	<select id="get_Allsido" resultType="com.hong.hakwon.web.dto.SiDo">
 		SELECT *
 		FROM sido
 	</select>
 
 	<!-- 시도 가져오기 -->
-	<select id="get_sido" parameterType="int" resultType="com.hong.hakwon.dto.SiDo">
+	<select id="get_sido" parameterType="int" resultType="com.hong.hakwon.web.dto.SiDo">
 		SELECT *
 		FROM sido
 		WHERE sido_cd = #{sido_cd}
 	</select>
 
 	<!-- 시군구 목록 가져오기 -->
-	<select id="get_sigungu" parameterType="int" resultType="com.hong.hakwon.dto.SiGunGu">
+	<select id="get_sigungu" parameterType="int" resultType="com.hong.hakwon.web.dto.SiGunGu">
 		SELECT *
 		FROM sigungu
 		WHERE sido_cd = #{sido_cd}
@@ -69,7 +69,7 @@
 
 
 	<!-- 로그인 이력 넣기 -->
-	<insert id="saveHistory" parameterType="com.hong.hakwon.dto.History" >
+	<insert id="saveHistory" parameterType="com.hong.hakwon.web.dto.History" >
 		INSERT INTO
 			history
 		(

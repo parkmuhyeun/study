@@ -4,22 +4,37 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 
 //TODO
 
 </script>
+	<title>로그인</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
-	<div>
-		<form:form role="form" commandName="loginForm" name="frm_login" id="frm_login" action ="/login" method="post">
-		id: <form:input type="text" name="id" class="_target" id="id" path="id"/>
-		password:<form:input path="password" type="password"	name="pw" class="_target" id="pw"/>
-		<button class="submit" id="submit" type="submit">제출</button> <br>
-			<form:errors cssStyle="color: red"></form:errors>
+	<div class="container" style= "margin-top:100px; margin-bottom:100px" >
+		<form:form role="form" commandName="loginForm"  action ="/login" method="post" style="width: 600px">
+			<div class="form-group">
+				<label for="id">ID</label>
+				<form:input type="text" name="id" class="form-control" id="id" path="id" placeholder="Id"/>
+			</div>
+			<div class="form-group">
+				<label for="pw">Password</label>
+				<form:input path="password" type="password" name="pw" class="form-control" id="pw" placeholder="Password"/>
+			</div>
+			<div class="text-center">
+				<button class="btn btn-primary" type="submit">로그인</button>
+			</div>
+			<div class="text-center">
+				<form:errors cssStyle="color: red"/>
+			</div>
+
 		</form:form>
+
+<%--		<button class="btn btn-primary" onclick="location.href = 'main'" >취소</button> <br>--%>
+
 	</div>
 </body>
 </html>
