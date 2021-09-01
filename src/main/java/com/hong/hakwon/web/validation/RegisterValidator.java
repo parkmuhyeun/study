@@ -19,12 +19,11 @@ public class RegisterValidator implements Validator {
     String sido_chk = "^[0-9]+$";
 
     private Pattern idP = Pattern.compile(id_chk);
-    private Pattern nameP = Pattern.compile(name_chk);
-    private Pattern emailP = Pattern.compile(email_chk);
     private Pattern passP = Pattern.compile(pw_chk);
+    private Pattern nameP = Pattern.compile(name_chk);
     private Pattern numberP = Pattern.compile(number_chk);
     private Pattern sidoP = Pattern.compile(sido_chk);
-
+    private Pattern emailP = Pattern.compile(email_chk);
 
     @Override
     public boolean supports(Class<?> clazz) {

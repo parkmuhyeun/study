@@ -10,26 +10,27 @@
 <body>
     <div class="container" style= "margin-top:100px; margin-bottom:100px" >
         <form:form role="form" onsubmit="submitJoin(this); return false;" commandName="userSaveDto" action = "/join" method="post" style="width: 600px" >
-            <div class="form-group">
+            <div>
                 <label for="id">ID</label>
-                <form:input name="id" id="id" class="form-control" type="text" path="userId" placeholder="ID를 입력하세요"/>
+                <form:input name="id" id="id" type="text" path="userId" placeholder="ID를 입력하세요"/>
+                <button id="idchkbtn" class="btn btn-primary" onclick="idCheck()" type="button">중복 검사</button>
+                <b id="iddupchk"></b> <br>
+                <span id="iderr" style="color: red"></span>
                 <form:errors path="userId" cssStyle="color: red"/>
-                <div class="text-center">
-                    <b id="iddupchk"></b> <br>
-                    <button id="idchkbtn" class="btn btn-primary" onclick="idCheck()" type="button">중복 검사</button>
-                </div>
             </div>
 
-            <div class="form-group">
+            <div>
                 <label for="password">Password</label>
-                <form:password  class="form-control" name="password" oninput="pwCheck()" id="password" path="password"/>
+                <form:password name="password" oninput="pwCheck()" id="password" path="password"/>
                 <b id="pwV" name="pwV"></b>  <br>
+                <span id="pwerr" style="color: red"></span>
                 <form:errors path="password" cssStyle="color: red"/>
             </div>
 
-            <div class="form-group">
+            <div>
                 <label for="name">이름</label>
                 <form:input type="text"  id="name" oninput="nameCheck()" path="name" size="4" />          <br>
+                <span id="nameerr" style="color: red"></span>
                 <form:errors path="name" cssStyle="color: red"/>
             </div>
 
@@ -40,6 +41,7 @@
                 </form:select>
                 <form:input type="text" name="m_number" id="m_number" path="m_number" onkeyup="moveOnMax(this, 'e_number')" size="4" maxlength="4"/>
                 <form:input type="text" name="e_number" id="e_number" path="e_number" size="4" maxlength="4"/>      <br>
+                <span id="numbererr" style="color: red"></span>
                 <form:errors path="f_number" cssStyle="color: red"/>
             </div>
 
@@ -56,12 +58,14 @@
                     <option value="">시/군/구</option>
                 </form:select>
                 <br>
+                <span id="adderr" style="color: red"></span>
                 <form:errors path="sido" cssStyle="color: red"/>
             </div>
 
-            <div class="form-group">
+            <div>
                 <label for="email">Email</label>
-                <form:input type="email" class="form-control" name="email" id="email" path="email"/>         <br>
+                <form:input type="email" name="email" id="email" path="email"/>         <br>
+                <span id="emailerr" style="color: red"></span>
                 <form:errors path="email" cssStyle="color: red"/>
             </div>
 
@@ -78,21 +82,88 @@
 
     var joinFormSubmit = false;
 
+    var pwPattern = /^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,15}$/;
+    var namePattern = /^[가-힣]{2,30}$/;
+    var numberPattern = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
+    var addressPattern = /^[0-9]+$/;
+    var emailPattern = /^[_a-zA-Z0-9-\.]+@[\.a-zA-Z0-9-]+\.[a-zA-Z]+$/;
+
+
+
     function submitJoin(form) {
 
+        // 중복검사 부터
+        // 그다음 프론트단에서 유효성 검사 후 이상없으면 submit
         if (!joinFormSubmit) {
             $('#iddupchk').text("중복 검사해주세요.");
             $('#iddupchk').css("color", "red");
-        }else{
-            form.submit();
+            return false;
         }
+
+        if(checkPw() & checkName() & checkNum() & checkadd() & checkmail()){
+            form.submit();
+        }else{
+            return false;
+        }
+
+
+        // if (!joinFormSubmit) {
+        //     $('#iddupchk').text("중복 검사해주세요.");
+        //     $('#iddupchk').css("color", "red");
+        //     return false;
+        // }else {
+        //
+        //     if ($('#password').val() == "") {
+        //         $('#pwerr').text('필수 정보입니다.');
+        //         return false;
+        //     }else if (!pwCheck.test($('#password').val())) {
+        //         $('#pwerr').text('8자리에서 15자리 영문, 숫자, 특수문자를 사용하세요.');
+        //         return false;
+        //     }
+        //
+        //     if ($('#name').val() == "") {
+        //         $('#nameerr').text('필수 정보입니다.');
+        //         return false;
+        //     }else if (!nameCheck.test($('#name').val())) {
+        //         $('#nameerr').text('2글자 이상 30글자 이하로 적어주세요.');
+        //         return false;
+        //     }
+        //
+        //     var phonenum = $('#f_number').val() + '-' + $('#m_number').val() + '-' + $('#e_number').val();
+        //     if (!numberCheck.test(phonenum)) {
+        //         $('#numbererr').text('올바른 형식이 아닙니다.');
+        //         return false;
+        //     }
+        //
+        //     if (!addCheck.test($('#sido').val())) {
+        //         $('#adderr').text('주소를 입력해주세요.');
+        //         return false;
+        //     }
+        //
+        //     if ($('#email').val() == "") {
+        //         $('#emailerr').text('필수 정보입니다.');
+        //         return false;
+        //     }else if (!emailCheck.test($('#email').val())) {
+        //         $('#emailerr').text('올바른 형식이 아닙니다.');
+        //         return false;
+        //     }
+        //
+        //     form.submit();
+        // }
+
     }
 
     function idCheck() {
+
         var id = $('#id').val();
-        var idV = /^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,15}$/;
-        if ( !idV.test(id)) {
-            alert('8 ~ 15 자리 영문 혹은 숫자 등(한글제외) 입력 해주세요')
+        var idPattern = /^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,15}$/;
+
+        if ($('#id').val() == "") {
+            $('#iderr').text('필수 정보입니다.');
+        }
+        else if ( !idPattern.test(id)) {
+            // alert('8 ~ 15 자리 영문 혹은 숫자 등(한글제외) 입력 해주세요')
+            $('#iderr').text('8자리에서 15자리 영문, 숫자, 특수문자를 사용하세요.');
         }
         else{
             $.ajax({
@@ -136,9 +207,11 @@
             data : { password: $('#password').val() },
             success:function(result) {
                 if(result == true){
+                    console.log("t");
                     $('#pwV').text("사용 가능");
                     $('#pwV').css("color", "green");
                 }else{
+                    console.log("f");
                     $('#pwV').text("사용 불가능(8 ~ 15자리 입력(한글제외)");
                     $('#pwV').css("color", "red");
                 }
@@ -192,6 +265,62 @@
 
     }
 
+
+    // 유효성 체크function
+    function checkPw(){
+        if ($('#password').val() == "") {
+            $('#pwerr').text('필수 정보입니다.');
+            return false;
+        }else if (!pwPattern.test($('#password').val())) {
+            $('#pwerr').text('8자리에서 15자리 영문, 숫자, 특수문자를 사용하세요.');
+            return false;
+        }
+
+        return true;
+    }
+
+    function checkName(){
+        if ($('#name').val() == "") {
+            $('#nameerr').text('필수 정보입니다.');
+            return false;
+        }else if (!namePattern.test($('#name').val())) {
+            $('#nameerr').text('2글자 이상 30글자 이하로 적어주세요.');
+            return false;
+        }
+
+        return true;
+    }
+
+    function checkNum(){
+        var phonenum = $('#f_number').val() + '-' + $('#m_number').val() + '-' + $('#e_number').val();
+        if (!numberPattern.test(phonenum)) {
+            $('#numbererr').text('올바른 형식이 아닙니다.');
+            return false;
+        }
+
+        return true;
+    }
+
+    function checkadd(){
+        if (!addressPattern.test($('#sido').val())) {
+            $('#adderr').text('주소를 입력해주세요.');
+            return false;
+        }
+
+        return true;
+    }
+
+    function checkmail(){
+        if ($('#email').val() == "") {
+            $('#emailerr').text('필수 정보입니다.');
+            return false;
+        }else if (!emailPattern.test($('#email').val())) {
+            $('#emailerr').text('올바른 형식이 아닙니다.');
+            return false;
+        }
+
+        return true;
+    }
 
 
 </script>
