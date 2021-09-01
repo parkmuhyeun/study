@@ -17,6 +17,21 @@
 		<put-attribute name="contents" value="/WEB-INF/views/main.jsp"/>
 	</definition>
 
+	<definition name="/loginmain" extends="default">
+		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>
+		<put-attribute name="contents" value="/WEB-INF/views/loginmain.jsp"/>
+	</definition>
+
+	<definition name="/join" extends="default">
+		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>
+		<put-attribute name="contents" value="/WEB-INF/views/join.jsp"/>
+	</definition>
+
+	<definition name="/login" extends="default">
+		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>
+		<put-attribute name="contents" value="/WEB-INF/views/login.jsp"/>
+	</definition>
+
 	<definition name="infl/*" extends="default">
 		<put-attribute name="header" value="/WEB-INF/views/layouts/infl/header.jsp"/>
 		<put-attribute name="contents" value="/WEB-INF/views/infl/{1}.jsp"/>
