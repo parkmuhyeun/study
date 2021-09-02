@@ -5,11 +5,10 @@
 <tiles-definitions>
 	<!-- name속성은 controller의 return 값과 매핑 된다. -->
 
-	<!-- 상권영향분석/상권영향정보 서비스 -->
 	<definition name="default" template="/WEB-INF/views/layouts/default_template.jsp">
 		<put-attribute name="header" />
 		<put-attribute name="contents" />
-		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/layouts/default/footer.jsp"/>
 	</definition>
 	
 	<definition name="/main" extends="default">
@@ -18,19 +17,19 @@
 	</definition>
 
 	<definition name="/loginmain" extends="default">
-		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/views/layouts/loginmain/header.jsp"/>
 		<put-attribute name="contents" value="/WEB-INF/views/loginmain.jsp"/>
 	</definition>
 
-	<definition name="/join" extends="default">
-		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>
-		<put-attribute name="contents" value="/WEB-INF/views/join.jsp"/>
-	</definition>
+<!--	<definition name="/join" extends="default">-->
+<!--		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>-->
+<!--		<put-attribute name="contents" value="/WEB-INF/views/join.jsp"/>-->
+<!--	</definition>-->
 
-	<definition name="/login" extends="default">
-		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>
-		<put-attribute name="contents" value="/WEB-INF/views/login.jsp"/>
-	</definition>
+<!--	<definition name="/login" extends="default">-->
+<!--&lt;!&ndash;		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>&ndash;&gt;-->
+<!--		<put-attribute name="contents" value="/WEB-INF/views/login.jsp"/>-->
+<!--	</definition>-->
 
 	<definition name="infl/*" extends="default">
 		<put-attribute name="header" value="/WEB-INF/views/layouts/infl/header.jsp"/>

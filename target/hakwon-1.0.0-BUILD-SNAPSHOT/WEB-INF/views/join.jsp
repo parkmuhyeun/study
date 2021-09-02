@@ -6,74 +6,98 @@
 <head>
     <title>회원가입</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        .container {
+            max-width: 960px;
+        }
+    </style>
 </head>
-<body>
-    <div class="container" style= "margin-top:100px; margin-bottom:100px" >
-        <form:form role="form" onsubmit="submitJoin(this); return false;" commandName="userSaveDto" action = "/join" method="post" style="width: 600px" >
-            <div>
-                <label for="id">ID</label>
-                <form:input name="id" id="id" type="text" path="userId" placeholder="ID를 입력하세요"/>
-                <button id="idchkbtn" class="btn btn-primary" onclick="idCheck()" type="button">중복 검사</button>
-                <b id="iddupchk"></b> <br>
-                <span id="iderr" style="color: red"></span>
-                <form:errors path="userId" cssStyle="color: red"/>
-            </div>
+<%--TODO 전체 배치 중앙정렬 + 칸위치 맞추기 + loginmain고치기--%>
+<body class="bg-light">
+    <div class="container" >
+<%--        <h2 class="text-center">Join Form</h2>--%>
+        <div class="col-md-7 col-lg-8">
+            <form:form role="form" onsubmit="submitJoin(this); return false;" commandName="userSaveDto" action = "/join" method="post" >
+                <div class="row g-3">
+                    <h2 class="text-center">회원가입</h2>
+                    <div class="col-9">
+                        <label for="id" class="form-label">ID</label>
+                        <form:input name="id" id="id" class="form-control" type="text" path="userId" placeholder="ID를 입력하세요"/>
+                    </div>
+                    <div class="col-md-3" style="position:relative">
+                        <button id="idchkbtn" class="btn btn-primary" onclick="idCheck()" type="button" style="position:absolute; bottom: 0">중복 검사</button>
+                    </div>
+                        <b id="iddupchk"></b> <br>
+                        <span id="iderr" style="color: red"></span>
+                        <form:errors path="userId" cssStyle="color: red" />
 
-            <div>
-                <label for="password">Password</label>
-                <form:password name="password" oninput="pwCheck()" id="password" path="password"/>
-                <b id="pwV" name="pwV"></b>  <br>
-                <span id="pwerr" style="color: red"></span>
-                <form:errors path="password" cssStyle="color: red"/>
-            </div>
+                    <div class="col-12">
+                        <label for="password" class="form-label">Password</label>
+                        <form:password name="password" class="form-control" oninput="pwCheck()" id="password" path="password"/>
+                        <b id="pwV" name="pwV"></b>  <br>
+                        <span id="pwerr" style="color: red"></span>
+                        <form:errors path="password" cssStyle="color: red"/>
+                    </div>
 
-            <div>
-                <label for="name">이름</label>
-                <form:input type="text"  id="name" oninput="nameCheck()" path="name" size="4" />          <br>
-                <span id="nameerr" style="color: red"></span>
-                <form:errors path="name" cssStyle="color: red"/>
-            </div>
+                    <div class="col-12">
+                        <label for="name" class="form-label">이름</label>
+                        <form:input type="text"  id="name" class="form-control" oninput="nameCheck()" path="name" size="4" />          <br>
+                        <span id="nameerr" style="color: red"></span>
+                        <form:errors path="name" cssStyle="color: red"/>
+                    </div>
 
-            <div>
-                휴대폰번호: <form:select name="f_number" onchange="fChange()" id="f_number" path="f_number">
-                    <option value="010">010</option>
-                    <option value="019">019</option>
-                </form:select>
-                <form:input type="text" name="m_number" id="m_number" path="m_number" onkeyup="moveOnMax(this, 'e_number')" size="4" maxlength="4"/>
-                <form:input type="text" name="e_number" id="e_number" path="e_number" size="4" maxlength="4"/>      <br>
-                <span id="numbererr" style="color: red"></span>
-                <form:errors path="f_number" cssStyle="color: red"/>
-            </div>
+                    <div class="col-md-4">
+                        <label for="f_number" class="form-label">휴대전화</label>
+                        <form:select name="f_number" class="form-select" onchange="fChange()" id="f_number" path="f_number">
+                            <option value="010">010</option>
+                            <option value="019">019</option>
+                        </form:select>
+                    </div>
 
-            <br>
+                    <div class="col-md-4" style="position:relative">
+                        <form:input type="text" class="form-control" name="m_number" id="m_number" path="m_number" onkeyup="moveOnMax(this, 'e_number')" size="4" maxlength="4" style="position:absolute; bottom: 0"/>
+                    </div>
 
-            <div>
-                주소: <form:select name="sido" onchange="sidoChange()" id="sido"  path="sido">
-                <option value="">시/도</option>
-                <c:forEach var="sidoList" items="${sido}">
-                    <option value="${sidoList.sido_cd}">${sidoList.sido_name}</option>
-                </c:forEach>
-            </form:select>
-                <form:select name="sigungu" id="sigungu"  path="sigungu">
-                    <option value="">시/군/구</option>
-                </form:select>
-                <br>
-                <span id="adderr" style="color: red"></span>
-                <form:errors path="sido" cssStyle="color: red"/>
-            </div>
+                    <div class="col-md-4" style="position:relative; left: 15px">
+                        <form:input type="text" class="form-control" name="e_number" id="e_number" path="e_number" size="4" maxlength="4" style="position:absolute; bottom: 0"/>
+                    </div>
+                    <span id="numbererr" style="color: red"></span>
+                    <form:errors path="f_number" cssStyle="color: red"/>
+                    <br>
 
-            <div>
-                <label for="email">Email</label>
-                <form:input type="email" name="email" id="email" path="email"/>         <br>
-                <span id="emailerr" style="color: red"></span>
-                <form:errors path="email" cssStyle="color: red"/>
-            </div>
+                    <div class="col-md-6">
+                        <label for="sido" class="form-label">주소</label>
+                        <form:select name="sido" class="form-select" onchange="sidoChange()" id="sido"  path="sido">
+                            <option value="">시/도</option>
+                            <c:forEach var="sidoList" items="${sido}">
+                                <option value="${sidoList.sido_cd}">${sidoList.sido_name}</option>
+                            </c:forEach>
+                         </form:select>
+                    </div>
 
-            <div class="text-center">
-                <button class="btn btn-primary " id="sub_btn" type="submit" >회원 가입</button>
-            </div>
-        </form:form>
-<%--        <button class="btn btn-primary" onclick="location.href = 'main'" >취소</button>--%>
+                    <div class="col-md-6" style="position:relative">
+                        <form:select name="sigungu" class="form-select" id="sigungu"  path="sigungu" style="position:absolute; bottom: 0">
+                            <option value="">시/군/구</option>
+                        </form:select>
+
+                    </div>
+                    <div>
+                        <span id="adderr" style="color: red"></span>
+                        <form:errors path="sido" cssStyle="color: red"/>
+                    </div>
+                    <div class="col-12">
+                        <label for="email">Email</label>
+                        <form:input type="email" class="form-control" name="email" id="email" path="email"/>         <br>
+                        <span id="emailerr" style="color: red"></span>
+                        <form:errors path="email" cssStyle="color: red"/>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary col-md-6"  id="sub_btn" type="submit" >회원 가입</button>
+                    </div>
+                </div>
+            </form:form>
+        </div>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -95,6 +119,7 @@
         // 중복검사 부터
         // 그다음 프론트단에서 유효성 검사 후 이상없으면 submit
         if (!joinFormSubmit) {
+            $('#iderr').text('');
             $('#iddupchk').text("중복 검사해주세요.");
             $('#iddupchk').css("color", "red");
             return false;
@@ -159,10 +184,12 @@
         var idPattern = /^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,15}$/;
 
         if ($('#id').val() == "") {
+            $('#iddupchk').text("");
             $('#iderr').text('필수 정보입니다.');
         }
         else if ( !idPattern.test(id)) {
             // alert('8 ~ 15 자리 영문 혹은 숫자 등(한글제외) 입력 해주세요')
+            $('#iddupchk').text("");
             $('#iderr').text('8자리에서 15자리 영문, 숫자, 특수문자를 사용하세요.');
         }
         else{

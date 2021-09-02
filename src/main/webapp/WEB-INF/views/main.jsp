@@ -12,10 +12,10 @@
 			<h2>안녕하세요! 손님</h2>
 		</div>
 
-		<div>
-			<button class="btn btn-primary" onclick="location.href = 'join'" > 회원가입</button>
-			<button class="btn btn-primary" onclick="location.href = 'login'" > 로그인</button>
-		</div>
+<%--		<div>--%>
+<%--			<button class="btn btn-primary" onclick="location.href = 'join'" > 회원가입</button>--%>
+<%--			<button class="btn btn-primary" onclick="location.href = 'login'" > 로그인</button>--%>
+<%--		</div>--%>
 	</div>
 
 <script>

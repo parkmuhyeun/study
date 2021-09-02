@@ -4,38 +4,50 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<script>
-
-//TODO
-
-</script>
 	<title>로그인</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link href="/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/signin.css" rel="stylesheet">
 </head>
+<body class="text-center">
+	<main class="form-signin">
+		<div class="container"  >
+			<form:form role="form" onsubmit="submitJoin(this); return false;" commandName="loginForm"  action ="/login" method="post" >
+				<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-<body>
-	<div class="container" style= "margin-top:100px; margin-bottom:100px" >
-		<form:form role="form" commandName="loginForm"  action ="/login" method="post" style="width: 600px">
-			<div class="form-group">
-				<label for="id">ID</label>
-				<form:input type="text" name="id" class="form-control" id="id" path="id" placeholder="Id"/>
-			</div>
-			<div class="form-group">
-				<label for="pw">Password</label>
-				<form:input path="password" type="password" name="pw" class="form-control" id="pw" placeholder="Password"/>
-			</div>
-			<div class="text-center">
-				<button class="btn btn-primary" type="submit">로그인</button>
-			</div>
-			<div class="text-center">
-				<form:errors cssStyle="color: red"/>
-			</div>
+				<div class="form-floating">
+					<form:input type="text" name="id" class="form-control" id="id" path="id" placeholder="ID"/>
+					<label for="id">ID</label>
+				</div>
+				<div class="form-floating">
+					<form:input path="password" type="password" name="pw" class="form-control" id="pw" placeholder="Password"/>
+					<label for="pw">Password</label>
+				</div>
 
-		</form:form>
+				<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+				<span id="err" style="color: red"></span>
+				<form:errors id="gerr" cssStyle="color: red"/>
+				<p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+			</form:form>
 
-<%--		<button class="btn btn-primary" onclick="location.href = 'main'" >취소</button> <br>--%>
-
-	</div>
+	<%--		<button class="btn btn-primary" onclick="location.href = 'main'" >취소</button> <br>--%>
+		</div>
+	</main>
 </body>
-</html>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	function submitJoin(form) {
 
+		if ($('#id').val() == "") {
+			$('#gerr').text('');
+			$('#err').text('아이디를 입력해주세요.');
+			return false;
+		}else if ($('#pw').val() == "") {
+			$('#gerr').text('');
+			$('#err').text('비밀번호를 입력해주세요.');
+			return false;
+		}
+		$('#err').text('');
+		form.submit();
+	}
+</script>
+</html>

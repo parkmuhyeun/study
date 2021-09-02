@@ -92,7 +92,10 @@ public class UserDAOImpl {
 	}
 
 
-	//로그인
+	/*
+	 * 로그인
+	 * null이면 로그인 실패
+	 */
 	public UserBean login(String loginId, String password) throws Exception {
 
 

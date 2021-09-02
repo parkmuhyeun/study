@@ -10,20 +10,14 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<link rel="stylesheet" type="text/css" href="/css/ui.css">
-<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 
-<script>
 
-</script>
-
+	<link href="/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-	<div id="wrap">
 		<tiles:insertAttribute name="header" />
 		<tiles:insertAttribute name="contents" />
 		<tiles:insertAttribute name="footer" />
-	</div>
 </body>
 </html>
