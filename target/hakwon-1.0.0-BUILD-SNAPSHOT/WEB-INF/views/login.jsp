@@ -22,7 +22,12 @@
 					<form:input path="password" type="password" name="pw" class="form-control" id="pw" placeholder="Password"/>
 					<label for="pw">Password</label>
 				</div>
-
+				<div class="checkbox mb-3">
+					<label>
+						<form:checkbox onchange="ReIdCheck(this)" id="rememberId" name="rememberId" path="rememberId"/>
+						Remember ID
+					</label>
+				</div>
 				<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 				<span id="err" style="color: red"></span>
 				<form:errors id="gerr" cssStyle="color: red"/>
@@ -48,6 +53,15 @@
 		}
 		$('#err').text('');
 		form.submit();
+	}
+
+	function ReIdCheck(box) {
+
+		$.ajax({
+			type:"POST",
+			url: "/login/reid",
+			data: { rid: box.checked}
+		})
 	}
 </script>
 </html>

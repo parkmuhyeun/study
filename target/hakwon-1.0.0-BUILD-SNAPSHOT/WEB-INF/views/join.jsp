@@ -9,15 +9,15 @@
 
     <style>
         .container {
-            max-width: 960px;
+            max-width: 560px;
         }
     </style>
 </head>
-<%--TODO 전체 배치 중앙정렬 + 칸위치 맞추기 + loginmain고치기--%>
+
 <body class="bg-light">
     <div class="container" >
 <%--        <h2 class="text-center">Join Form</h2>--%>
-        <div class="col-md-7 col-lg-8">
+        <div>
             <form:form role="form" onsubmit="submitJoin(this); return false;" commandName="userSaveDto" action = "/join" method="post" >
                 <div class="row g-3">
                     <h2 class="text-center">회원가입</h2>
@@ -26,7 +26,7 @@
                         <form:input name="id" id="id" class="form-control" type="text" path="userId" placeholder="ID를 입력하세요"/>
                     </div>
                     <div class="col-md-3" style="position:relative">
-                        <button id="idchkbtn" class="btn btn-primary" onclick="idCheck()" type="button" style="position:absolute; bottom: 0">중복 검사</button>
+                        <button id="idchkbtn" class="btn btn-primary" onclick="idCheck()" type="button" style="position:absolute; bottom: 0; right: 0">중복 검사</button>
                     </div>
                         <b id="iddupchk"></b> <br>
                         <span id="iderr" style="color: red"></span>
@@ -111,7 +111,6 @@
     var numberPattern = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
     var addressPattern = /^[0-9]+$/;
     var emailPattern = /^[_a-zA-Z0-9-\.]+@[\.a-zA-Z0-9-]+\.[a-zA-Z]+$/;
-
 
 
     function submitJoin(form) {
