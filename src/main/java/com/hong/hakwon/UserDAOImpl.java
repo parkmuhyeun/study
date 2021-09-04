@@ -3,9 +3,9 @@ package com.hong.hakwon;
 import java.io.Reader;
 import java.util.List;
 
-import com.hong.hakwon.web.dto.History;
-import com.hong.hakwon.web.dto.SiDo;
-import com.hong.hakwon.web.dto.SiGunGu;
+import com.hong.hakwon.Beans.History;
+import com.hong.hakwon.Beans.SiDo;
+import com.hong.hakwon.Beans.SiGunGu;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -38,14 +38,14 @@ public class UserDAOImpl {
 
 	public List<UserBean> selectAllUser() throws Exception {
 		getSession();
-		List<UserBean> list = sqlSession.selectList("u.selectAllUser");
+		List<UserBean> list = sqlSession.selectList("u.selectList");
 		sqlSession.close();
 		return list;
 	}
 
 	public UserBean selectByUserId(String userId) throws Exception {
 		getSession();
-		UserBean user = (UserBean) sqlSession.selectOne("u.selectById", userId);
+		UserBean user = (UserBean) sqlSession.selectOne("u.selectByUserId", userId);
 		sqlSession.close();
 		return user;
 	}
@@ -53,7 +53,7 @@ public class UserDAOImpl {
 	public int saveUser(UserBean userBean) throws Exception {
 		getSession();
 
-		int row = sqlSession.insert("u.saveUser", userBean);
+		int row = sqlSession.insert("u.save_user", userBean);
 		if (row > 0) {
 			sqlSession.commit();
 		}
@@ -84,11 +84,14 @@ public class UserDAOImpl {
 	}
 
 	//로그인이력 넣기
-	public void history_save(History history) throws Exception{
+	public int history_save(History history) throws Exception{
 		getSession();
-		sqlSession.insert("saveHistory", history);
-		sqlSession.commit();
-		sqlSession.close();
+		int row = sqlSession.insert("u.saveHistory", history);
+		if (row > 0) {
+			sqlSession.commit();
+		}
+
+		return row;
 	}
 
 

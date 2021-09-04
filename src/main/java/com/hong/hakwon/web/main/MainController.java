@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.hong.hakwon.Beans.UserBean;
+import com.hong.hakwon.SessionConst;
 import com.hong.hakwon.UserDAOImpl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -51,7 +52,7 @@ public class MainController {
 			return mav;
 		}
 
-		UserBean loginMember = (UserBean) session.getAttribute("loginMember");
+		UserBean loginMember = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
 		//세션에 회원 데이터가 없으면 home
 		if (loginMember == null) {

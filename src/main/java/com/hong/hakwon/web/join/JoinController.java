@@ -1,11 +1,12 @@
 package com.hong.hakwon.web.join;
 
 import com.hong.hakwon.Beans.UserBean;
+import com.hong.hakwon.SessionConst;
 import com.hong.hakwon.Sha256;
 import com.hong.hakwon.UserDAOImpl;
-import com.hong.hakwon.web.dto.History;
-import com.hong.hakwon.web.dto.SiDo;
-import com.hong.hakwon.web.dto.SiGunGu;
+import com.hong.hakwon.Beans.History;
+import com.hong.hakwon.Beans.SiDo;
+import com.hong.hakwon.Beans.SiGunGu;
 import com.hong.hakwon.web.dto.UserSaveDto;
 import com.hong.hakwon.web.validation.RegisterValidator;
 import org.apache.commons.logging.Log;
@@ -137,7 +138,7 @@ public class JoinController {
         ModelAndView mav = new ModelAndView("redirect:/main");
 
         HttpSession session = request.getSession();
-        session.setAttribute("loginMember", user);
+        session.setAttribute(SessionConst.LOGIN_MEMBER, user);
 
         History history = new History(user.getUserId(),
                 request.getHeader("user-agent"),

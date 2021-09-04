@@ -7,6 +7,7 @@
 	<typeAliases>
 		<!-- <typeAlias alias="tBean" type="com.hong.hakwon.Beans.TeacherBean" /> -->
 		<typeAlias alias="uBean" type="com.hong.hakwon.Beans.UserBean" />
+		<typeAlias alias="post" type="com.hong.hakwon.Beans.Post" />
 		<!-- <typeAlias alias="bBean" type="com.hong.hakwon.Beans.BookBean" />
 		<typeAlias alias="cBean" type="com.hong.hakwon.Beans.ClassBean" />
 		<typeAlias alias="qBean" type="com.hong.hakwon.Beans.QuestionBean" />
@@ -39,6 +40,7 @@
 
 	<mappers>
 		<mapper resource="query/user.xml" />
+		<mapper resource="query/post.xml" />
 	</mappers>
 
 </configuration>

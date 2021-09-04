@@ -2,8 +2,8 @@ package com.hong.hakwon;
 
 
 import com.hong.hakwon.Beans.UserBean;
-import com.hong.hakwon.web.dto.SiDo;
-import com.hong.hakwon.web.dto.SiGunGu;
+import com.hong.hakwon.Beans.SiDo;
+import com.hong.hakwon.Beans.SiGunGu;
 import org.junit.Test;
 
 import java.util.List;

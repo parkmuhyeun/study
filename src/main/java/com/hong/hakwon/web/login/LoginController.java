@@ -1,9 +1,10 @@
 package com.hong.hakwon.web.login;
 
 import com.hong.hakwon.Beans.UserBean;
+import com.hong.hakwon.SessionConst;
 import com.hong.hakwon.Sha256;
 import com.hong.hakwon.UserDAOImpl;
-import com.hong.hakwon.web.dto.History;
+import com.hong.hakwon.Beans.History;
 import com.hong.hakwon.web.dto.LoginForm;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -97,7 +98,7 @@ public class LoginController {
         //세션있으면 세션 반환, 없으면 신규 세션 생성
         HttpSession session = request.getSession();
         //세션에 로그인 회원 정보 보관
-        session.setAttribute("loginMember", loginMember);
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
         //로그인이력
         History history = new History(loginMember.getUserId(),
