@@ -9,7 +9,13 @@
 <body>
 	<div class="container text-center" style="margin-top: 100px; margin-bottom: 100px">
 		<div>
-			<h2>안녕하세요! 손님</h2>
+			<c:if test="${empty memberName}">
+				<h2 id="wel">안녕하세요! 손님</h2>
+			</c:if>
+			<c:if test="${not empty memberName}">
+				<h2 id="wel">안녕하세요! ${memberName}</h2>
+			</c:if>
+
 		</div>
 
 <%--		<div>--%>
@@ -18,9 +24,6 @@
 <%--		</div>--%>
 	</div>
 
-<script>
-
-</script>
 </body>
 
 </html>

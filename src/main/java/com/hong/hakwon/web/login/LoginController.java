@@ -64,6 +64,7 @@ public class LoginController {
             form.setRememberId(true);
         }
 
+
         ModelAndView mav = new ModelAndView("/login");
         return mav;
     }
@@ -107,6 +108,8 @@ public class LoginController {
 
         uService.history_save(history);
 
+
+        logger.info("lo");
         ModelAndView mav = new ModelAndView("redirect:/main");
         return mav;
     }

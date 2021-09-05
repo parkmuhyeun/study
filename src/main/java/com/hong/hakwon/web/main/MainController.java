@@ -45,25 +45,34 @@ public class MainController {
 	@RequestMapping(value = "/main")
 	public ModelAndView main(@ModelAttribute("reqMap") CmMap reqVo, HttpServletRequest request) {
 
+		ModelAndView mav = new ModelAndView("/main");
+
 		//세션 없으면 home
 		HttpSession session = request.getSession(false);
 		if (session == null) {
-			ModelAndView mav = new ModelAndView("/main");
 			return mav;
 		}
 
 		UserBean loginMember = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-		//세션에 회원 데이터가 없으면 home
-		if (loginMember == null) {
-			ModelAndView mav = new ModelAndView("/main");
-			return mav;
+//		//세션에 회원 데이터가 없으면 home
+//		if (loginMember == null) {
+//			ModelAndView mav = new ModelAndView("/main");
+//			return mav;
+//		}
+//
+//		//세션이 유지되면 로그인으로 이동
+//		ModelAndView mav = new ModelAndView("/loginmain");
+//		mav.addObject("member", loginMember);
+//		return mav;
+
+		if (loginMember != null) {
+			ModelAndView chk = new ModelAndView("/layouts/default/header");
+			mav.addObject("memberName", loginMember.getName());
 		}
 
-		//세션이 유지되면 로그인으로 이동
-		ModelAndView mav = new ModelAndView("/loginmain");
-		mav.addObject("member", loginMember);
 		return mav;
+
 	}
 	
 	

@@ -6,22 +6,22 @@
 <mapper namespace="u">
 
 
-	<select id="selectAllUser" resultType="uBean">
+	<select id="selectList" resultType="uBean">
 		SELECT * FROM user
 	</select>
 
-	<select id="selectById" parameterType="String" resultType="uBean">
-		SELECT * FROM user WHERE userId=#{userId}
+	<select id="selectByUserId" parameterType="String" resultType="uBean">
+		SELECT * FROM user WHERE user_id=#{userId}
 	</select>
 
-	<insert id="saveUser" parameterType="uBean" >
+	<insert id="save_user" parameterType="uBean" >
 		INSERT INTO /* student.reg_user */
 			user
 		(
-			 userId
+			 user_id
 			, password
 			, name
-			, phoneNumber
+			, phone_number
 			, sido
 			, sigungu
 			, email
@@ -69,20 +69,22 @@
 
 
 	<!-- 로그인 이력 넣기 -->
-	<insert id="saveHistory" parameterType="com.hong.hakwon.Beans.History" >
+	<insert id="save_history" parameterType="com.hong.hakwon.Beans.History" >
 		INSERT INTO
 			history
 		(
-			userId
+			 userId
 			, agent
 			, datetime
 		)
 
 		VALUES(
-				#{userId}
-			  , #{agent}
-			  , #{datetime}
-			  )
+			  #{userId}
+			, #{agent}
+			, #{datetime}
+		)
+
+
 
 	</insert>
 

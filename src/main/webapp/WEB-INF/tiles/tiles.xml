@@ -16,10 +16,16 @@
 		<put-attribute name="contents" value="/WEB-INF/views/main.jsp"/>
 	</definition>
 
-	<definition name="/loginmain" extends="default">
-		<put-attribute name="header" value="/WEB-INF/views/layouts/loginmain/header.jsp"/>
-		<put-attribute name="contents" value="/WEB-INF/views/loginmain.jsp"/>
+<!--	<definition name="/loginmain" extends="default">-->
+<!--		<put-attribute name="header" value="/WEB-INF/views/layouts/loginmain/header.jsp"/>-->
+<!--		<put-attribute name="contents" value="/WEB-INF/views/loginmain.jsp"/>-->
+<!--	</definition>-->
+
+	<definition name="/posts" extends="default">
+		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>
+		<put-attribute name="contents" value="/WEB-INF/views/posts.jsp"/>
 	</definition>
+
 
 <!--	<definition name="/join" extends="default">-->
 <!--		<put-attribute name="header" value="/WEB-INF/views/layouts/default/header.jsp"/>-->

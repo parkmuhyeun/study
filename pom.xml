@@ -41,6 +41,13 @@
 			<version>${org.aspectj-version}</version>
 		</dependency>
 
+		<!-- JQuery-->
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.4.1 </version>
+		</dependency>
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -183,7 +190,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.7</version>
+			<version>4.9</version>
 			<scope>test</scope>
 		</dependency>
 		

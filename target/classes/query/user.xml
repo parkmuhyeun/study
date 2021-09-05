@@ -11,7 +11,7 @@
 	</select>
 
 	<select id="selectByUserId" parameterType="String" resultType="uBean">
-		SELECT * FROM user WHERE userId=#{userId}
+		SELECT * FROM user WHERE user_id=#{userId}
 	</select>
 
 	<insert id="save_user" parameterType="uBean" >
@@ -73,16 +73,18 @@
 		INSERT INTO
 			history
 		(
-			userId
+			 userId
 			, agent
 			, datetime
 		)
 
 		VALUES(
-				#{userId}
-			  , #{agent}
-			  , #{datetime}
-			  )
+			  #{userId}
+			, #{agent}
+			, #{datetime}
+		)
+
+
 
 	</insert>
 

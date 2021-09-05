@@ -13,6 +13,8 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- <bean id="tService" class="com.hong.hakwon.TeacherDAOImpl" /> -->
 	<bean id="uService" class="com.hong.hakwon.UserDAOImpl" />
+	<bean id="postRepository" class="com.hong.hakwon.repository.PostRepository" />
+
 	<!-- <bean id="bService" class="com.hong.hakwon.BookDAOImpl" />
 	<bean id="cService" class="com.hong.hakwon.ClassDAOImpl" />
 	<bean id="qService" class="com.hong.hakwon.QuestionDAOImpl" /> -->

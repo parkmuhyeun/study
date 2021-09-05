@@ -86,7 +86,7 @@ public class UserDAOImpl {
 	//로그인이력 넣기
 	public int history_save(History history) throws Exception{
 		getSession();
-		int row = sqlSession.insert("u.saveHistory", history);
+		int row = sqlSession.insert("u.save_history", history);
 		if (row > 0) {
 			sqlSession.commit();
 		}
@@ -100,7 +100,6 @@ public class UserDAOImpl {
 	 * null이면 로그인 실패
 	 */
 	public UserBean login(String loginId, String password) throws Exception {
-
 
 		UserBean user = this.selectByUserId(loginId);
 
