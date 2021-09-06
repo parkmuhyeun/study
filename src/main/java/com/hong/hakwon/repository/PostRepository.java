@@ -1,0 +1,91 @@
+package com.hong.hakwon.repository;
+
+import com.hong.hakwon.Beans.AttachmentFile;
+import com.hong.hakwon.Beans.Post;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.stereotype.Repository;
+
+import java.io.Reader;
+import java.util.List;
+import java.util.logging.Logger;
+
+
+@Repository
+public class PostRepository {
+
+    Reader reader =null;
+    SqlSessionFactory factory = null;
+    SqlSession sqlSession =null;
+
+    private Log logger	= LogFactory.getLog(this.getClass());
+
+    public void getSession() throws Exception{
+        String resource="util/SqlMapConfig.xml";
+        reader= Resources.getResourceAsReader(resource);
+
+        if(factory == null)
+            factory = new SqlSessionFactoryBuilder().build(reader);
+
+        sqlSession =factory.openSession(true);
+    }
+
+    public int post_save(Post post) throws Exception {
+        getSession();
+
+        int row = sqlSession.insert("p.save_post", post);
+
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+    public int file_save(AttachmentFile file) throws Exception {
+        getSession();
+
+        int row = sqlSession.insert("p.save_file", file);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+    public AttachmentFile get_file(int id) throws Exception {
+        getSession();
+        AttachmentFile file = (AttachmentFile) sqlSession.selectOne("p.get_file", id);
+        logger.info("처음 file uuid" + file.getUuidName());
+        logger.info("처음 file name"+ file.getFileName());
+        logger.info(file.getCreator());
+        sqlSession.close();
+        return file;
+    }
+
+    //포스트 하나
+    public Post get_post(int id) throws Exception {
+        getSession();
+        Post post = (Post) sqlSession.selectOne("p.selectById", id);
+        logger.info(post.getCreatedDate());
+        logger.info("한건 조회");
+        sqlSession.close();
+        return post;
+    }
+
+    //포스트 전부
+    public List<Post> get_allPostDesc() throws Exception {
+        getSession();
+        List<Post> list = sqlSession.selectList("p.selectList");
+        logger.info("처음");
+        logger.info(list.get(0).getCreatedDate());
+        sqlSession.close();
+        return list;
+    }
+
+
+}

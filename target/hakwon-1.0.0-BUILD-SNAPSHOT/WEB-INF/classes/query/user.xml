@@ -14,7 +14,7 @@
 		SELECT * FROM user WHERE user_id=#{userId}
 	</select>
 
-	<insert id="save_user" parameterType="uBean" >
+	<insert id="save_user" parameterType="uBean" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO /* student.reg_user */
 			user
 		(
@@ -69,7 +69,7 @@
 
 
 	<!-- 로그인 이력 넣기 -->
-	<insert id="save_history" parameterType="com.hong.hakwon.Beans.History" >
+	<insert id="save_history" parameterType="com.hong.hakwon.Beans.History" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO
 			history
 		(
