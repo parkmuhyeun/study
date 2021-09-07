@@ -32,8 +32,6 @@
 
     $(document).ready(function () {
 
-
-
             $("#postTable").DataTable({
                 serverSide: false,
             ajax : {

@@ -6,9 +6,9 @@ public class PostResponseDto {
     private String title;
     private String content;
     private String filePath;
-    private Long createdDate;
+    private String createdDate;
     private String creator;
-    private Long modifiedDate;
+    private String modifiedDate;
     private String modifier;
 
     public PostResponseDto() {
@@ -34,10 +34,6 @@ public class PostResponseDto {
         return creator;
     }
 
-    public Long getCreatedDate() {
-        return createdDate;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -54,31 +50,35 @@ public class PostResponseDto {
         this.filePath = filePath;
     }
 
-    public void setCreatedDate(Long createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public void setCreator(String creator) {
         this.creator = creator;
-    }
-
-    public void setModifiedDate(Long modifiedDate) {
-        this.modifiedDate = modifiedDate;
     }
 
     public void setModifier(String modifier) {
         this.modifier = modifier;
     }
 
-    public Long getModifiedDate() {
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getModifiedDate() {
         return modifiedDate;
+    }
+
+    public void setModifiedDate(String modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
     public String getModifier() {
         return modifier;
     }
 
-    public PostResponseDto(int id, String title, String content, String filePath, Long createdDate, String creator, Long modifiedDate, String modifier) {
+    public PostResponseDto(int id, String title, String content, String filePath, String createdDate, String creator, String modifiedDate, String modifier) {
         this.id = id;
         this.title = title;
         this.content = content;

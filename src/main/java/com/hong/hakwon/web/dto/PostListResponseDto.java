@@ -4,7 +4,7 @@ public class PostListResponseDto {
 
     private int id;
     private String title;
-    private Long createdDate;
+    private String createdDate;
     private String creator;
 
     public PostListResponseDto() {
@@ -18,7 +18,7 @@ public class PostListResponseDto {
         return title;
     }
 
-    public Long getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
@@ -30,7 +30,7 @@ public class PostListResponseDto {
         this.title = title;
     }
 
-    public void setCreatedDate(Long createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -42,7 +42,7 @@ public class PostListResponseDto {
         return creator;
     }
 
-    public PostListResponseDto(int id, String title, Long createdDate, String creator) {
+    public PostListResponseDto(int id, String title, String createdDate, String creator) {
         this.id = id;
         this.title = title;
         this.createdDate = createdDate;

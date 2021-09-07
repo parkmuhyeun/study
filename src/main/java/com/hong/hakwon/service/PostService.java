@@ -41,22 +41,25 @@ public class PostService {
     //등록
     public int save(PostSaveRequestDto requestDto, HttpSession session) throws Exception {
         Date today = new Date();
-//        SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd a HH:mm:ss");
-//        String now = date.format(today);
+        SimpleDateFormat date = new SimpleDateFormat("MM.dd");
+        String now = date.format(today);
+
+        String storeFileName = createUuidFileName(requestDto.getFile().getOriginalFilename());
 
         String fullPath = "";
         if (!requestDto.getFile().isEmpty()) {
-            fullPath = fileDir +  createUuidFileName(requestDto.getFile().getOriginalFilename());
-            requestDto.getFile().transferTo(new File(fullPath));
+            fullPath = fileDir + now;
+
+            CreateFolder(fullPath);     //fullPath 경로로 폴더 생성
+            requestDto.getFile().transferTo(new File(fullPath + '/' + storeFileName));
         }
 
         UserBean user = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
         Post post = new Post(requestDto.getTitle(),
                 requestDto.getContent(),
-                fullPath, today.getTime(),
+                fullPath,
                 user.getName(),
-                today.getTime(),
                 user.getName()
         );
 
@@ -65,7 +68,7 @@ public class PostService {
         //TODO 일단 datetime 안되서 임시처방
         if(!requestDto.getFile().isEmpty()){
             AttachmentFile file = new AttachmentFile(post.getId(),
-                    createUuidFileName(requestDto.getFile().getOriginalFilename()) ,
+                    storeFileName ,
                     requestDto.getFile().getOriginalFilename(),
                     today.toString(), user.getName(),
                     today.toString(),
@@ -75,6 +78,13 @@ public class PostService {
         }
 
         return res;
+    }
+
+    private void CreateFolder(String fullPath) {
+        File folder = new File(fullPath);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
     }
 
     public FileResponseDto get_file(int id) throws Exception {

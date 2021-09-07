@@ -50,7 +50,7 @@ public class PostRepositoryTest {
         String modifier = "테스트계정";
 
 //        Post post = new Post(title, content, path, createdDate, creator, modifiedDate, modifier);
-        Post post = new Post(title, content, path, creator, modifiedDate, modifier);
+        Post post = new Post(title, content, path, creator, modifier);
 
         //when
         postRepository.post_save(post);

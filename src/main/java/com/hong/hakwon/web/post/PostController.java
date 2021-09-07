@@ -20,10 +20,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -44,26 +47,32 @@ public class PostController {
      * 게시판 페이지
      */
     @RequestMapping(value = "/posts")
-    public ModelAndView posts(HttpServletRequest request) throws Exception {
+    public ModelAndView posts(HttpServletRequest request, RedirectAttributes redirectAttributes) throws Exception {
 
-        ModelAndView mav = new ModelAndView("/posts");
-
-        //세션 없으면 home
+        String requestURI = request.getRequestURI();
+        //로그인 안되있으면 login페이지로
         HttpSession session = request.getSession(false);
-        if (session == null) {
+        UserBean loginMember = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        if (loginMember == null) {
+            //다시 돌아올 requestURI 추가
+            redirectAttributes.addAttribute("redirectURL", requestURI);
+            ModelAndView mav = new ModelAndView("redirect:/login");
             return mav;
         }
 
-        UserBean loginMember = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
-
-        if (loginMember != null) {
+        ModelAndView mav = new ModelAndView("/posts");
             ModelAndView chk = new ModelAndView("/layouts/default/header");
             mav.addObject("memberName", loginMember.getName());
-        }
+
 
         return mav;
     }
 
+
+    /*
+     * datatable 값 넘기기
+     */
     @ResponseBody
     @RequestMapping(value = "/posts/dataTable")
     public List<PostListResponseDto> postAll() throws Exception {
@@ -111,6 +120,9 @@ public class PostController {
      */
     @RequestMapping(value = "/posts/{id}")
     public ModelAndView Post(@PathVariable("id") int id) throws Exception {
+
+        //TODO 첨부파일: 업로드파일명으로 바꾸기
+
         ModelAndView mav = new ModelAndView("post");
         PostResponseDto post = postService.get_post(id);
         mav.addObject("post", post);
@@ -126,7 +138,11 @@ public class PostController {
         String storeFileName = file.getUuidName();
         String uploadFileName = file.getFileName();
 
-        UrlResource resource = new UrlResource("file:" + fileDir + storeFileName);
+        Date today = new Date();
+        SimpleDateFormat date = new SimpleDateFormat("MM.dd");
+        String now = date.format(today);
+
+        UrlResource resource = new UrlResource("file:" + fileDir + now + '/' + storeFileName);
         String contentDisposition = "attachment; filename=\"" + uploadFileName + "\"";
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition)

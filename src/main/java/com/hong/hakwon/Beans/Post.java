@@ -6,9 +6,9 @@ public class Post {
     private String title;
     private String content;
     private String filePath;
-    private Long createdDate;
+    private String createdDate;
     private String creator;
-    private Long modifiedDate;
+    private String modifiedDate;
     private String modifier;
 
     public Post() {
@@ -30,11 +30,11 @@ public class Post {
         return filePath;
     }
 
-    public Long getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public Long getModifiedDate() {
+    public String getModifiedDate() {
         return modifiedDate;
     }
 
@@ -46,22 +46,12 @@ public class Post {
         return modifier;
     }
 
-    public Post(String title, String content, String filePath, Long createdDate, String creator, Long modifiedDate, String modifier) {
+    public Post(String title, String content, String filePath, String creator, String modifier) {
         this.title = title;
         this.content = content;
         this.filePath = filePath;
-        this.createdDate = createdDate;
         this.creator = creator;
-        this.modifiedDate = modifiedDate;
         this.modifier = modifier;
     }
 
-    public Post(String title, String content, String filePath, String creator, Long modifiedDate, String modifier) {
-        this.title = title;
-        this.content = content;
-        this.filePath = filePath;
-        this.creator = creator;
-        this.modifiedDate = modifiedDate;
-        this.modifier = modifier;
-    }
 }

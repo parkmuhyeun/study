@@ -25,6 +25,22 @@ public class FileResponseDto {
         return fileName;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setPost_number(int post_number) {
+        this.post_number = post_number;
+    }
+
+    public void setUuidName(String uuidName) {
+        this.uuidName = uuidName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public FileResponseDto(int post_number, String uuidName, String fileName) {
         this.post_number = post_number;
         this.uuidName = uuidName;

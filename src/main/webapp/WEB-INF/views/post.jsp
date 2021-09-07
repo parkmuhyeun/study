@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>\
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -18,12 +19,17 @@
     </div>
     <!-- file있으면 링크 없으면 x -->
     <div>
-        <a href="/attach/${post.id}" > 파일</a>
+        <span> 첨부파일: </span>
+        <c:if test="${not empty post.filePath}">
+            <a href="/attach/${post.id}" >파일</a>
+        </c:if>
+        <c:if test="${empty post.filePath}">
+            <span> 첨부파일이 없습니다.</span>
+        </c:if>
     </div>
     <div>
         <span> 내용: ${post.content}</span>
     </div>
-</div>
 </div>
 </body>
 </html>

@@ -56,14 +56,12 @@ public class LoginController {
      * 로그인 페이지
      */
     @RequestMapping(value="/login")
-    public ModelAndView loginForm(@CookieValue(name = "cid", required = false) String userId, @ModelAttribute("loginForm") LoginForm form, HttpServletResponse response)  {
+    public ModelAndView loginForm(@CookieValue(name = "cid", required = false) String userId, @ModelAttribute("loginForm") LoginForm form, HttpServletResponse response )  {
         //쿠키 존재하면
         if(userId != null){
-            logger.info("in");
             form.setId(userId);
             form.setRememberId(true);
         }
-
 
         ModelAndView mav = new ModelAndView("/login");
         return mav;
@@ -73,8 +71,13 @@ public class LoginController {
      * 로그인
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(@ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView login(@ModelAttribute LoginForm form,
+                              BindingResult bindingResult,
+                              HttpServletRequest request,
+                              HttpServletResponse response,
+                              @RequestParam(defaultValue = "/main") String redirectURL) throws Exception {
 
+       // TODO redirectURL 수정
 
         UserBean loginMember = uService.login(form.getId(), Sha256.encrypt(form.getPassword()));
 
@@ -87,14 +90,7 @@ public class LoginController {
         //로그인 성공 처리
 
         //Id remember by cookie
-        Cookie rCookie = new Cookie("cid", form.getId());
-        if(form.getRememberId()){
-            rCookie.setMaxAge(60 * 60 * 24 * 7);
-        }else {
-            rCookie.setMaxAge(0);
-        }
-        rCookie.setPath("/");
-        response.addCookie(rCookie);
+        CreateCookie(form, response);
 
         //세션있으면 세션 반환, 없으면 신규 세션 생성
         HttpSession session = request.getSession();
@@ -107,11 +103,20 @@ public class LoginController {
                 session.getCreationTime());
 
         uService.history_save(history);
-
-
-        logger.info("lo");
-        ModelAndView mav = new ModelAndView("redirect:/main");
+        logger.info("리다  " + redirectURL);
+        ModelAndView mav = new ModelAndView("redirect:" + redirectURL);
         return mav;
+    }
+
+    private void CreateCookie(LoginForm form, HttpServletResponse response) {
+        Cookie rCookie = new Cookie("cid", form.getId());
+        if(form.getRememberId()){
+            rCookie.setMaxAge(60 * 60 * 24 * 7);
+        }else {
+            rCookie.setMaxAge(0);
+        }
+        rCookie.setPath("/");
+        response.addCookie(rCookie);
     }
 
     /*

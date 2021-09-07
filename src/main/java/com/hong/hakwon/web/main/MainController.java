@@ -74,7 +74,16 @@ public class MainController {
 		return mav;
 
 	}
-	
+
+
+	/*
+	 * 연습(타임아웃)
+	 */
+	@RequestMapping(value = "/timeout")
+	public ModelAndView timeout() {
+		ModelAndView mav = new ModelAndView("timeout");
+		return mav;
+	}
 	
 //	@RequestMapping(value ="/getSido")
 //	@ResponseBody

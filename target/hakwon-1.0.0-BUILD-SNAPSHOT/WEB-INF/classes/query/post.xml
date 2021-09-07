@@ -56,32 +56,41 @@
     </insert>
 
  <select id="get_file" parameterType="int" resultType="file">
-     SELECT * FROM attachment_file WHERE post_number=#{id}
+     SELECT id
+          , post_number as postNumber
+          , uuid_name as uuidName
+          , file_name as fileName
+          , created_date as createdDate
+          , creator
+          , modified_date as modifiedDate
+          , modifier
+
+     FROM attachment_file WHERE post_number=#{id}
  </select>
 
     <!-- 게시글 하나 조회-->
     <select id="selectById" parameterType="int" resultType="post">
-        SELECT id,
-               title,
-               content,
-               file_path,
-               datetime(created_date),
-               creator,
-               modified_date,
-               modifier
+        SELECT id
+               , title
+               , content
+               , file_path as filePath
+               , strftime('%Y-%m-%d %H:%M',created_date) as createdDate
+               , creator
+               , strftime('%Y-%m-%d %H:%M',modified_date) as modifiedDate
+               , modifier
         FROM post WHERE id=#{id}
     </select>
 
     <!-- 게시글 전체 조회-->
     <select id="selectList" resultType="post">
-        SELECT id,
-               title,
-               content,
-               file_path,
-               datetime(created_date),
-               creator,
-               modified_date,
-               modifier
+        SELECT id
+               , title
+               , content
+               , file_path as filePath
+               , strftime('%Y-%m-%d %H:%M',created_date) as createdDate
+               , creator
+               , strftime('%Y-%m-%d %H:%M',modified_date) as modifiedDate
+               , modifier
 
          FROM post
         order by id desc
