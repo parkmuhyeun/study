@@ -55,6 +55,7 @@
               )
     </insert>
 
+    <!-- 첨부파일 조회-->
  <select id="get_file" parameterType="int" resultType="file">
      SELECT id
           , post_number as postNumber
@@ -95,5 +96,33 @@
          FROM post
         order by id desc
     </select>
+
+    <!-- post_hashtag(중간다리) 저장 -->
+    <insert id="save_post_hashtag" parameterType="postHashTag" useGeneratedKeys="true" keyProperty="hashtag_id">
+        INSERT INTO
+            post_hashtag
+        (
+            post_id
+        )
+
+        VALUES(
+                    #{post_id}
+              )
+    </insert>
+
+    <!-- 해시태그 저장 -->
+    <insert id="save_hashtag" parameterType="HashTag" useGeneratedKeys="true" keyProperty="hashtag_id">
+        INSERT INTO
+            hashtag
+        (
+            hashtag_id,
+            hashtag_cont
+        )
+
+        VALUES(
+                #{id},
+                #{content}
+              )
+    </insert>
 
 </mapper>

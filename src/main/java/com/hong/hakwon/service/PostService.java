@@ -1,8 +1,6 @@
 package com.hong.hakwon.service;
 
-import com.hong.hakwon.Beans.AttachmentFile;
-import com.hong.hakwon.Beans.Post;
-import com.hong.hakwon.Beans.UserBean;
+import com.hong.hakwon.Beans.*;
 import com.hong.hakwon.SessionConst;
 import com.hong.hakwon.UserDAOImpl;
 import com.hong.hakwon.repository.PostRepository;
@@ -38,7 +36,9 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    //등록
+    /*
+     * 게시글 등록
+     */
     public int save(PostSaveRequestDto requestDto, HttpSession session) throws Exception {
         Date today = new Date();
         SimpleDateFormat date = new SimpleDateFormat("MM.dd");
@@ -77,6 +77,15 @@ public class PostService {
             postRepository.file_save(file);
         }
 
+        if (requestDto.getHashTagContent() != null) {
+            //post_hashtag(중간다리)저장
+            PostHashTag postHashTag = new PostHashTag(post.getId());
+            postRepository.post_hashtag_save(postHashTag);
+
+            //해시태그에 저장
+            postRepository.hashtag_save(new HashTag( postHashTag.getHashtag_id(), requestDto.getHashTagContent()));
+        }
+
         return res;
     }
 
@@ -103,7 +112,9 @@ public class PostService {
         return originalFilename.substring(pos+1);
     }
 
-    //한건 조회
+    /*
+     * 게시글 한개 조회
+     */
     public PostResponseDto get_post(int id) throws Exception {
         Post post = postRepository.get_post(id);
         return new PostResponseDto(post.getId(),
@@ -116,7 +127,9 @@ public class PostService {
                 post.getModifier());
     }
 
-    //전체 조회
+    /*
+     * 게시글 전체 조회
+     */
     public List<PostListResponseDto> get_allPostDesc() throws Exception {
         List<Post> posts = postRepository.get_allPostDesc();
 
@@ -136,4 +149,18 @@ public class PostService {
 
         return responseDtoList;
     }
+
+//    /*
+//     * post_hashtag(중간다리) 저장
+//     */
+//    public int post_hashtag_save(int post_id) throws Exception {
+//        return postRepository.post_hashtag_save(post_id);
+//    }
+//
+//    /*
+//     * 해시태그 저장
+//     */
+//    public int hashtag_save() {
+//
+//    }
 }

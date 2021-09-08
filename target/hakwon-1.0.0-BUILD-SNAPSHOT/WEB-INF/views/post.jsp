@@ -31,6 +31,5 @@
         <span> 내용: ${post.content}</span>
     </div>
 </div>
-</div>
 </body>
 </html>

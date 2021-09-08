@@ -1,7 +1,9 @@
 package com.hong.hakwon.repository;
 
 import com.hong.hakwon.Beans.AttachmentFile;
+import com.hong.hakwon.Beans.HashTag;
 import com.hong.hakwon.Beans.Post;
+import com.hong.hakwon.Beans.PostHashTag;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.io.Resources;
@@ -34,6 +36,9 @@ public class PostRepository {
         sqlSession =factory.openSession(true);
     }
 
+    /*
+     * 게시글 저장
+     */
     public int post_save(Post post) throws Exception {
         getSession();
 
@@ -46,6 +51,9 @@ public class PostRepository {
         return row;
     }
 
+    /*
+     * 첨부파일저장
+     */
     public int file_save(AttachmentFile file) throws Exception {
         getSession();
 
@@ -57,6 +65,9 @@ public class PostRepository {
         return row;
     }
 
+    /*
+     * 첨부파일 불러오기
+     */
     public AttachmentFile get_file(int id) throws Exception {
         getSession();
         AttachmentFile file = (AttachmentFile) sqlSession.selectOne("p.get_file", id);
@@ -67,7 +78,9 @@ public class PostRepository {
         return file;
     }
 
-    //포스트 하나
+    /*
+     * 게시글 한개 조회
+     */
     public Post get_post(int id) throws Exception {
         getSession();
         Post post = (Post) sqlSession.selectOne("p.selectById", id);
@@ -77,7 +90,9 @@ public class PostRepository {
         return post;
     }
 
-    //포스트 전부
+    /*
+     * 게시글 전부조회
+     */
     public List<Post> get_allPostDesc() throws Exception {
         getSession();
         List<Post> list = sqlSession.selectList("p.selectList");
@@ -87,5 +102,29 @@ public class PostRepository {
         return list;
     }
 
+    /*
+     * post_hashtag(중간다리)에 저장
+     */
+    public int post_hashtag_save(PostHashTag postHashTag) throws Exception {
+        getSession();
+        int row = sqlSession.insert("p.save_post_hashtag", postHashTag);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
 
+    /*
+     * hashtag 저장
+     */
+    public int hashtag_save(HashTag tag) throws Exception{
+        getSession();
+        int row = sqlSession.insert("p.save_hashtag", tag);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
 }

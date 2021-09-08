@@ -28,6 +28,10 @@
                         <label for="content">내용</label>
                         <form:input type="text" class="form-control" name="content" id="content" placeholder="내용을 입력하세요" path="content"/>
                     </div>
+                    <div class="form-group">
+                        <label for="hashTagContent">해시태그</label>
+                        <form:input type="text" class="form-control" name="hashTagContent" id="hashTagContent" placeholder="해시태그를 입력하세요" path="hashTagContent"/>
+                    </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary" id="btn-save">등록</button>
                         <a href="/posts" role="button" class="btn btn-secondary">취소</a>

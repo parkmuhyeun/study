@@ -6,6 +6,7 @@ public class PostSaveRequestDto {
     private String title;
     private MultipartFile file;
     private String content;
+    private String hashTagContent;
 
     public PostSaveRequestDto() {
     }
@@ -34,9 +35,18 @@ public class PostSaveRequestDto {
         this.content = content;
     }
 
-    public PostSaveRequestDto(String title, MultipartFile file, String content) {
+    public String getHashTagContent() {
+        return hashTagContent;
+    }
+
+    public void setHashTagContent(String hashTagContent) {
+        this.hashTagContent = hashTagContent;
+    }
+
+    public PostSaveRequestDto(String title, MultipartFile file, String content, String hashTagContent) {
         this.title = title;
         this.file = file;
         this.content = content;
+        this.hashTagContent = hashTagContent;
     }
 }

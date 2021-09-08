@@ -9,6 +9,8 @@
 		<typeAlias alias="uBean" type="com.hong.hakwon.Beans.UserBean" />
 		<typeAlias alias="post" type="com.hong.hakwon.Beans.Post" />
 		<typeAlias alias="file" type="com.hong.hakwon.Beans.AttachmentFile" />
+		<typeAlias alias="postHashTag" type="com.hong.hakwon.Beans.PostHashTag" />
+		<typeAlias alias="HashTag" type="com.hong.hakwon.Beans.HashTag" />
 		<!-- <typeAlias alias="bBean" type="com.hong.hakwon.Beans.BookBean" />
 		<typeAlias alias="cBean" type="com.hong.hakwon.Beans.ClassBean" />
 		<typeAlias alias="qBean" type="com.hong.hakwon.Beans.QuestionBean" />

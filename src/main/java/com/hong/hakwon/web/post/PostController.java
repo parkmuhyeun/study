@@ -105,10 +105,6 @@ public class PostController {
     @RequestMapping(value = "/posts/save", method = RequestMethod.POST)
     public ModelAndView Save(@ModelAttribute PostSaveRequestDto requestDto, HttpSession session) throws Exception {
 
-        logger.info(requestDto.getTitle());
-        logger.info(requestDto.getContent());
-        logger.info(requestDto.getFile().isEmpty());
-
         postService.save(requestDto, session);
 
         ModelAndView mav = new ModelAndView("redirect:/posts");
