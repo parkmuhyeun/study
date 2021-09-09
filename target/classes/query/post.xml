@@ -125,4 +125,13 @@
               )
     </insert>
 
+    <!-- 해시태그 조회 -->
+    <select id="get_hashtag" parameterType="int" resultType="HashTag">
+        SELECT hashtag.hashtag_cont as content
+        FROM post_hashtag
+        JOIN hashtag
+        ON post_hashtag.hashtag_id = hashtag.hashtag_id
+        WHERE post_id = #{post_id}
+    </select>
+
 </mapper>

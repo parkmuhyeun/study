@@ -1,15 +1,19 @@
 package com.hong.hakwon.web.dto;
 
+import java.util.List;
+
 public class PostResponseDto {
 
     private int id;
     private String title;
     private String content;
     private String filePath;
+    private List<String> tagList;
     private String createdDate;
     private String creator;
     private String modifiedDate;
     private String modifier;
+
 
     public PostResponseDto() {
     }
@@ -50,6 +54,14 @@ public class PostResponseDto {
         this.filePath = filePath;
     }
 
+    public List<String> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<String> tagList) {
+        this.tagList = tagList;
+    }
+
     public void setCreator(String creator) {
         this.creator = creator;
     }
@@ -78,11 +90,12 @@ public class PostResponseDto {
         return modifier;
     }
 
-    public PostResponseDto(int id, String title, String content, String filePath, String createdDate, String creator, String modifiedDate, String modifier) {
+    public PostResponseDto(int id, String title, String content, String filePath, List<String> tagList, String createdDate, String creator, String modifiedDate, String modifier) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.filePath = filePath;
+        this.tagList = tagList;
         this.createdDate = createdDate;
         this.creator = creator;
         this.modifiedDate = modifiedDate;

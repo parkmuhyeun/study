@@ -127,4 +127,14 @@ public class PostRepository {
         sqlSession.close();
         return row;
     }
+
+    /*
+     * hashtag 조회
+     */
+    public List<HashTag> get_hashtag(int post_id) throws Exception {
+        getSession();
+        List<HashTag> list = sqlSession.selectList("p.get_hashtag", post_id);
+        sqlSession.close();
+        return list;
+    }
 }

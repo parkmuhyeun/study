@@ -2,11 +2,13 @@ package com.hong.hakwon.web.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public class PostSaveRequestDto {
     private String title;
     private MultipartFile file;
     private String content;
-    private String hashTagContent;
+    private List<String> hashTagContent;
 
     public PostSaveRequestDto() {
     }
@@ -35,15 +37,15 @@ public class PostSaveRequestDto {
         this.content = content;
     }
 
-    public String getHashTagContent() {
+    public List<String> getHashTagContent() {
         return hashTagContent;
     }
 
-    public void setHashTagContent(String hashTagContent) {
+    public void setHashTagContent(List<String> hashTagContent) {
         this.hashTagContent = hashTagContent;
     }
 
-    public PostSaveRequestDto(String title, MultipartFile file, String content, String hashTagContent) {
+    public PostSaveRequestDto(String title, MultipartFile file, String content, List<String> hashTagContent) {
         this.title = title;
         this.file = file;
         this.content = content;

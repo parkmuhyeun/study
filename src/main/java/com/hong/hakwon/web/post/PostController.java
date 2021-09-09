@@ -78,6 +78,7 @@ public class PostController {
     public List<PostListResponseDto> postAll() throws Exception {
         List<PostListResponseDto> allPost = postService.get_allPostDesc();
 
+
         logger.info(allPost.get(0).getCreatedDate());
 //        JSONArray jsonArray = new JSONArray();
 //        for (int i = 0; i < allPost.size(); i++) {

@@ -9,23 +9,23 @@
 
 <button onclick="location.href = 'posts/save'"> 글쓰기 </button>
 
+<table border="0" cellspacing="5" cellpadding="5">
+    <tbody><tr>
+        <td>Tag :</td>
+        <td><input type="text" id="tag" name="tag" placeholder="태그로 검색!"></td>
+    </tr>
+    </tbody>
+</table>
 <table id="postTable" class="table table-bordered">
     <thead>
     <tr>
         <th>게시물번호</th>
         <th>제목</th>
+        <th>태그</th>
         <th>글쓴이</th>
         <th>날짜</th>
     </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>테스트</td>
-            <td>테스트계정</td>
-            <td>월요일</td>
-        </tr>
-    </tbody>
 </table>
 
 <script type="text/javascript" >
@@ -44,12 +44,12 @@
                     "render": function (data, type, row, meta) {
                         let path = row["id"];
                         if (type === 'display') {
-                            console.log(row["id"])
                             data = '<a href="/posts/'+path+'">' + data +'</a>';   // /posts/{id}
                         }
                         return data;
                     }
                 },
+                {data: "tag[[]]"},
                 {data: "creator"},
                 {data: "createdDate"}
             ]

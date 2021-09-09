@@ -30,6 +30,13 @@
     <div>
         <span> 내용: ${post.content}</span>
     </div>
+    <div>
+        연관 태그:
+        <c:forEach var="tag" items="${post.tagList}">
+        <span> #${tag}</span>
+    </c:forEach>
+    </div>
+
 </div>
 </body>
 </html>

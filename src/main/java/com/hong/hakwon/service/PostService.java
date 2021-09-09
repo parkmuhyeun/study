@@ -78,12 +78,20 @@ public class PostService {
         }
 
         if (requestDto.getHashTagContent() != null) {
-            //post_hashtag(중간다리)저장
-            PostHashTag postHashTag = new PostHashTag(post.getId());
-            postRepository.post_hashtag_save(postHashTag);
+//            //post_hashtag(중간다리)저장
+//            PostHashTag postHashTag = new PostHashTag(post.getId());
+//            postRepository.post_hashtag_save(postHashTag);
 
-            //해시태그에 저장
-            postRepository.hashtag_save(new HashTag( postHashTag.getHashtag_id(), requestDto.getHashTagContent()));
+            for (int i = 0; i < requestDto.getHashTagContent().size(); i++) {
+                //post_hashtag(중간다리)저장
+                PostHashTag postHashTag = new PostHashTag(post.getId());
+                postRepository.post_hashtag_save(postHashTag);
+
+                //해시태그에 저장
+                HashTag hashTag = new HashTag(postHashTag.getHashtag_id(), requestDto.getHashTagContent().get(i));
+                postRepository.hashtag_save(hashTag);
+            }
+
         }
 
         return res;
@@ -117,10 +125,18 @@ public class PostService {
      */
     public PostResponseDto get_post(int id) throws Exception {
         Post post = postRepository.get_post(id);
+        List<HashTag> tagList = postRepository.get_hashtag(id);
+        List<String> dtoTagList = new ArrayList<String>();
+        for (int i = 0; i < tagList.size(); i++) {
+            String tagContent = tagList.get(i).getContent();
+            dtoTagList.add(tagContent);
+        }
+
         return new PostResponseDto(post.getId(),
                 post.getTitle(),
                 post.getContent(),
                 post.getFilePath(),
+                dtoTagList,
                 post.getCreatedDate(),
                 post.getCreator(),
                 post.getModifiedDate(),
@@ -133,34 +149,44 @@ public class PostService {
     public List<PostListResponseDto> get_allPostDesc() throws Exception {
         List<Post> posts = postRepository.get_allPostDesc();
 
+
+        List<List<String>> tagList = new ArrayList<List<String>>();
+
+
+        for (Post post : posts) {
+            List<HashTag> hashtag = postRepository.get_hashtag(post.getId());
+            List<String> tagL = new ArrayList<String>();
+            for (HashTag hashTag : hashtag) {
+                tagL.add(hashTag.getContent());
+            }
+            tagList.add(tagL);
+            for (List<String> strings : tagList) {
+                for (String string : strings) {
+                    logger.info(string);
+                }
+            }
+//            tagL.clear();
+        }
+
+        logger.info("후");
+        for (List<String> strings : tagList) {
+            for (String string : strings) {
+                logger.info(string);
+            }
+        }
+
         List<PostListResponseDto> responseDtoList = new ArrayList<PostListResponseDto>();
-        logger.info(posts.get(0).getCreatedDate());
-        logger.info("전 조회");
 
         for (int i = 0; i < posts.size(); i++) {
             PostListResponseDto dto = new PostListResponseDto(posts.get(i).getId(),
                     posts.get(i).getTitle(),
                     posts.get(i).getCreatedDate(),
-                    posts.get(i).getCreator());
+                    posts.get(i).getCreator(),
+                    tagList);
             responseDtoList.add(dto);
         }
-        logger.info(responseDtoList.get(0).getCreatedDate());
-        logger.info("후 조회");
 
         return responseDtoList;
     }
 
-//    /*
-//     * post_hashtag(중간다리) 저장
-//     */
-//    public int post_hashtag_save(int post_id) throws Exception {
-//        return postRepository.post_hashtag_save(post_id);
-//    }
-//
-//    /*
-//     * 해시태그 저장
-//     */
-//    public int hashtag_save() {
-//
-//    }
 }

@@ -1,11 +1,14 @@
 package com.hong.hakwon.web.dto;
 
+import java.util.List;
+
 public class PostListResponseDto {
 
     private int id;
     private String title;
     private String createdDate;
     private String creator;
+    private List<List<String>> tag;
 
     public PostListResponseDto() {
     }
@@ -42,10 +45,19 @@ public class PostListResponseDto {
         return creator;
     }
 
-    public PostListResponseDto(int id, String title, String createdDate, String creator) {
+    public List<List<String>> getTag() {
+        return tag;
+    }
+
+    public void setTag(List<List<String>> tag) {
+        this.tag = tag;
+    }
+
+    public PostListResponseDto(int id, String title, String createdDate, String creator, List<List<String>> tag) {
         this.id = id;
         this.title = title;
         this.createdDate = createdDate;
         this.creator = creator;
+        this.tag = tag;
     }
 }
