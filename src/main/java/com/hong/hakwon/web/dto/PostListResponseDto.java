@@ -8,7 +8,8 @@ public class PostListResponseDto {
     private String title;
     private String createdDate;
     private String creator;
-    private List<List<String>> tag;
+    private List<String> tag;
+    private Long views;
 
     public PostListResponseDto() {
     }
@@ -45,19 +46,28 @@ public class PostListResponseDto {
         return creator;
     }
 
-    public List<List<String>> getTag() {
+    public List<String> getTag() {
         return tag;
     }
 
-    public void setTag(List<List<String>> tag) {
+    public void setTag(List<String> tag) {
         this.tag = tag;
     }
 
-    public PostListResponseDto(int id, String title, String createdDate, String creator, List<List<String>> tag) {
+    public Long getViews() {
+        return views;
+    }
+
+    public void setViews(Long views) {
+        this.views = views;
+    }
+
+    public PostListResponseDto(int id, String title, String createdDate, String creator, List<String> tag, Long views) {
         this.id = id;
         this.title = title;
         this.createdDate = createdDate;
         this.creator = creator;
         this.tag = tag;
+        this.views = views;
     }
 }

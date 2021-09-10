@@ -52,10 +52,8 @@
 
     function submitPost(form) {
         $("#btn-save").click(function () {
-            console.log("버튼");
             var array = tagArray();
             $("#f_hashTagContent").val(array);
-            console.log("버튼");
             form.submit();
         });
     }

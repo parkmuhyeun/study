@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -123,7 +126,42 @@ public class PostService {
     /*
      * 게시글 한개 조회
      */
-    public PostResponseDto get_post(int id) throws Exception {
+    public PostResponseDto get_post(int id, HttpServletRequest request,HttpServletResponse response) throws Exception {
+
+
+        String sid = Integer.toString(id);
+        //쿠키가 같지않은경우 조회수 상승
+        Cookie[] cookies = request.getCookies();
+
+        Cookie viewCookie = null;
+
+        if (cookies != null && cookies.length > 0) {
+            for (int i = 0; i < cookies.length; i++) {
+                if (cookies[i].getName().equals("recent_board_read"+sid)) {
+                    viewCookie = cookies[i];
+                }
+            }
+        }
+
+        if (viewCookie == null) {
+            postRepository.update_views(id);
+            Cookie readCookie =  new Cookie("recent_board_read"+sid, sid);
+            readCookie.setPath("/");
+            response.addCookie(readCookie);
+        }
+//
+//        //쿠키가 없는경우 + 쿠키가 다른경우
+//        Cookie readCookie =  new Cookie("recent_board_read", sid);
+//        readCookie.setMaxAge(60 * 60 * 24);
+//        readCookie.setPath("/");
+//        response.addCookie(readCookie);
+
+//        HttpSession session = request.getSession();
+//        if (!session.getAttribute("recent_board_read").equals(id)) {
+//            postRepository.update_views(id);
+//        }
+//        session.setAttribute("recent_board_read", id);
+
         Post post = postRepository.get_post(id);
         List<HashTag> tagList = postRepository.get_hashtag(id);
         List<String> dtoTagList = new ArrayList<String>();
@@ -152,7 +190,6 @@ public class PostService {
 
         List<List<String>> tagList = new ArrayList<List<String>>();
 
-
         for (Post post : posts) {
             List<HashTag> hashtag = postRepository.get_hashtag(post.getId());
             List<String> tagL = new ArrayList<String>();
@@ -160,20 +197,9 @@ public class PostService {
                 tagL.add(hashTag.getContent());
             }
             tagList.add(tagL);
-            for (List<String> strings : tagList) {
-                for (String string : strings) {
-                    logger.info(string);
-                }
-            }
-//            tagL.clear();
+
         }
 
-        logger.info("후");
-        for (List<String> strings : tagList) {
-            for (String string : strings) {
-                logger.info(string);
-            }
-        }
 
         List<PostListResponseDto> responseDtoList = new ArrayList<PostListResponseDto>();
 
@@ -182,7 +208,8 @@ public class PostService {
                     posts.get(i).getTitle(),
                     posts.get(i).getCreatedDate(),
                     posts.get(i).getCreator(),
-                    tagList);
+                    tagList.get(i),
+                    posts.get(i).getViews());
             responseDtoList.add(dto);
         }
 

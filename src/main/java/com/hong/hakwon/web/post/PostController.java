@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -116,12 +117,12 @@ public class PostController {
      * 개별 게시글 페이지
      */
     @RequestMapping(value = "/posts/{id}")
-    public ModelAndView Post(@PathVariable("id") int id) throws Exception {
+    public ModelAndView Post(@PathVariable("id") int id, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         //TODO 첨부파일: 업로드파일명으로 바꾸기
 
         ModelAndView mav = new ModelAndView("post");
-        PostResponseDto post = postService.get_post(id);
+        PostResponseDto post = postService.get_post(id,request, response);
         mav.addObject("post", post);
         return mav;
     }

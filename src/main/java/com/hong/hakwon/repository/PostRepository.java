@@ -137,4 +137,14 @@ public class PostRepository {
         sqlSession.close();
         return list;
     }
+
+    /*
+     * 조회수 update
+     */
+    public int update_views(int id) throws Exception {
+        getSession();
+        int row = sqlSession.update("p.update_views", id);
+        sqlSession.close();
+        return row;
+    }
 }

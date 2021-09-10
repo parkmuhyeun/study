@@ -17,6 +17,7 @@
         , creator
         , modified_date
         , modifier
+        , views
         )
 
         VALUES(
@@ -25,8 +26,9 @@
               , #{filePath}
               , datetime('now', 'localtime')
               , #{creator}
-              , #{modifiedDate}
+              , datetime('now', 'localtime')
               , #{modifier}
+              , 0
               )
     </insert>
 
@@ -79,6 +81,7 @@
                , creator
                , strftime('%Y-%m-%d %H:%M',modified_date) as modifiedDate
                , modifier
+               , views
         FROM post WHERE id=#{id}
     </select>
 
@@ -92,7 +95,7 @@
                , creator
                , strftime('%Y-%m-%d %H:%M',modified_date) as modifiedDate
                , modifier
-
+               , views
          FROM post
         order by id desc
     </select>
@@ -133,5 +136,12 @@
         ON post_hashtag.hashtag_id = hashtag.hashtag_id
         WHERE post_id = #{post_id}
     </select>
+
+    <!-- 조회수 업데이트-->
+    <update id="update_views" parameterType="int">
+        UPDATE post SET
+        views = views + 1
+        WHERE id = #{id}
+    </update>
 
 </mapper>

@@ -10,6 +10,7 @@ public class Post {
     private String creator;
     private String modifiedDate;
     private String modifier;
+    private Long views;
 
     public Post() {
     }
@@ -44,6 +45,10 @@ public class Post {
 
     public String getModifier() {
         return modifier;
+    }
+
+    public Long getViews() {
+        return views;
     }
 
     public Post(String title, String content, String filePath, String creator, String modifier) {
