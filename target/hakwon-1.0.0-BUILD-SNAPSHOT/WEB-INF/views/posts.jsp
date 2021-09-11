@@ -35,7 +35,6 @@
 
 
             $("#postTable").DataTable({
-                stateSave:true,
             ajax : {
                 "url":"/posts/dataTable",
                 'dataSrc' :''
@@ -66,12 +65,6 @@
                 .search(this.value)
                 .draw();
         });
-
-        $('#abcd').click( function (){
-            $('#postTable').DataTable().clear().draw();
-            window.location.reload();
-            console.log("무선일이고?")
-        })
     });
 
 </script>

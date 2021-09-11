@@ -4,10 +4,7 @@ package com.hong.hakwon.web.post;
 import com.hong.hakwon.Beans.UserBean;
 import com.hong.hakwon.SessionConst;
 import com.hong.hakwon.service.PostService;
-import com.hong.hakwon.web.dto.FileResponseDto;
-import com.hong.hakwon.web.dto.PostListResponseDto;
-import com.hong.hakwon.web.dto.PostResponseDto;
-import com.hong.hakwon.web.dto.PostSaveRequestDto;
+import com.hong.hakwon.web.dto.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONArray;
@@ -95,9 +92,12 @@ public class PostController {
      * 게시글등록 페이지
      */
     @RequestMapping(value = "/posts/save")
-    public ModelAndView SaveForm() {
+    public ModelAndView SaveForm() throws Exception {
+        CategoryListDto all_category = postService.get_all_category();
+
         ModelAndView mav = new ModelAndView("/posts-save");
         mav.addObject("postSaveRequestDto", new PostSaveRequestDto());
+        mav.addObject("all_category", all_category.getCategoryNames());
         return mav;
     }
 

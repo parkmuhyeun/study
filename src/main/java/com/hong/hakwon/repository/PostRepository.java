@@ -1,9 +1,6 @@
 package com.hong.hakwon.repository;
 
-import com.hong.hakwon.Beans.AttachmentFile;
-import com.hong.hakwon.Beans.HashTag;
-import com.hong.hakwon.Beans.Post;
-import com.hong.hakwon.Beans.PostHashTag;
+import com.hong.hakwon.Beans.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.io.Resources;
@@ -84,8 +81,6 @@ public class PostRepository {
     public Post get_post(int id) throws Exception {
         getSession();
         Post post = (Post) sqlSession.selectOne("p.selectById", id);
-        logger.info(post.getCreatedDate());
-        logger.info("한건 조회");
         sqlSession.close();
         return post;
     }
@@ -96,8 +91,6 @@ public class PostRepository {
     public List<Post> get_allPostDesc() throws Exception {
         getSession();
         List<Post> list = sqlSession.selectList("p.selectList");
-        logger.info("처음");
-        logger.info(list.get(0).getCreatedDate());
         sqlSession.close();
         return list;
     }
@@ -146,5 +139,38 @@ public class PostRepository {
         int row = sqlSession.update("p.update_views", id);
         sqlSession.close();
         return row;
+    }
+
+    /*
+     * 카테고리 등록
+     */
+    public int save_category(Category category) throws Exception {
+        getSession();
+        int row = sqlSession.insert("p.save_category", category);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+    /*
+     * 카테고리 한개조회
+     */
+    public Category get_category(String category_name) throws Exception {
+        getSession();
+        Category category = (Category) sqlSession.selectOne("p.get_category", category_name);
+        sqlSession.close();
+        return category;
+    }
+
+    /*
+     * 카테고리 전부 조회
+     */
+    public List<Category> get_all_category() throws Exception {
+        getSession();
+        List<Category> list = sqlSession.selectList("p.get_all_category");
+        sqlSession.close();
+        return list;
     }
 }

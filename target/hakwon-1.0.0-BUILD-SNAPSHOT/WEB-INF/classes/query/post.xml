@@ -18,6 +18,7 @@
         , modified_date
         , modifier
         , views
+        , category_name
         )
 
         VALUES(
@@ -29,6 +30,7 @@
               , datetime('now', 'localtime')
               , #{modifier}
               , 0
+              , #{categoryName}
               )
     </insert>
 
@@ -82,6 +84,7 @@
                , strftime('%Y-%m-%d %H:%M',modified_date) as modifiedDate
                , modifier
                , views
+               , category_name as categoryName
         FROM post WHERE id=#{id}
     </select>
 
@@ -96,6 +99,7 @@
                , strftime('%Y-%m-%d %H:%M',modified_date) as modifiedDate
                , modifier
                , views
+               , category_name as categoryName
          FROM post
         order by id desc
     </select>
@@ -143,5 +147,41 @@
         views = views + 1
         WHERE id = #{id}
     </update>
+
+    <!-- 카테고리 등록-->
+    <insert id="save_category" parameterType="Category">
+        INSERT INTO
+            category
+        (
+         category_name,
+         is_use,
+         orders
+        )
+
+        VALUES(
+               #{categoryName},
+               #{isUse},
+               #{orders}
+              )
+    </insert>
+
+    <!-- 카테고리 한개조회-->
+    <select id="get_category" parameterType="String" resultType="Category">
+         SELECT id,
+                category_name as categoryName,
+                is_use as isUse,
+                orders
+        FROM category
+        WHERE category_name = #{category_name}
+    </select>
+
+    <!-- 카테고리 전부조회-->
+    <select id="get_all_category" resultType="Category">
+        SELECT id,
+               category_name as categoryName,
+               is_use as isUse,
+               orders
+        FROM category
+    </select>
 
 </mapper>

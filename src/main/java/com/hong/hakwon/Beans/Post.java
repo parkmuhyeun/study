@@ -11,6 +11,7 @@ public class Post {
     private String modifiedDate;
     private String modifier;
     private Long views;
+    private String categoryName;
 
     public Post() {
     }
@@ -51,12 +52,16 @@ public class Post {
         return views;
     }
 
-    public Post(String title, String content, String filePath, String creator, String modifier) {
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public Post(String title, String content, String filePath, String creator, String modifier, String categoryName) {
         this.title = title;
         this.content = content;
         this.filePath = filePath;
         this.creator = creator;
         this.modifier = modifier;
+        this.categoryName = categoryName;
     }
-
 }

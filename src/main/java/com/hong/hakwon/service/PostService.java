@@ -4,10 +4,7 @@ import com.hong.hakwon.Beans.*;
 import com.hong.hakwon.SessionConst;
 import com.hong.hakwon.UserDAOImpl;
 import com.hong.hakwon.repository.PostRepository;
-import com.hong.hakwon.web.dto.FileResponseDto;
-import com.hong.hakwon.web.dto.PostListResponseDto;
-import com.hong.hakwon.web.dto.PostResponseDto;
-import com.hong.hakwon.web.dto.PostSaveRequestDto;
+import com.hong.hakwon.web.dto.*;
 import com.hong.hakwon.web.validation.RegisterValidator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -63,7 +60,8 @@ public class PostService {
                 requestDto.getContent(),
                 fullPath,
                 user.getName(),
-                user.getName()
+                user.getName(),
+                requestDto.getCategoryName()
         );
 
         int res = postRepository.post_save(post);
@@ -215,5 +213,22 @@ public class PostService {
 
         return responseDtoList;
     }
+
+    /*
+     * 카테고리 이름 전체 조회
+     */
+    public CategoryListDto get_all_category() throws Exception {
+        List<Category> all_category = postRepository.get_all_category();
+        List<String> all_category_name = new ArrayList<String>();
+
+        for (Category category : all_category) {
+            all_category_name.add(category.getCategoryName());
+        }
+        CategoryListDto dto = new CategoryListDto(all_category_name);
+
+        return dto;
+    }
+
+
 
 }
