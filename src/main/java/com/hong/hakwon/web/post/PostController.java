@@ -97,7 +97,7 @@ public class PostController {
 
         ModelAndView mav = new ModelAndView("/posts-save");
         mav.addObject("postSaveRequestDto", new PostSaveRequestDto());
-        mav.addObject("all_category", all_category.getCategoryNames());
+        mav.addObject("all_category", all_category);
         return mav;
     }
 

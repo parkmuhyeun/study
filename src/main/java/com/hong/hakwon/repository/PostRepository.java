@@ -1,6 +1,7 @@
 package com.hong.hakwon.repository;
 
 import com.hong.hakwon.Beans.*;
+import com.hong.hakwon.web.dto.CategoryUpdateDto;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.io.Resources;
@@ -157,9 +158,9 @@ public class PostRepository {
     /*
      * 카테고리 한개조회
      */
-    public Category get_category(String category_name) throws Exception {
+    public Category get_category(Long category_id) throws Exception {
         getSession();
-        Category category = (Category) sqlSession.selectOne("p.get_category", category_name);
+        Category category = (Category) sqlSession.selectOne("p.get_category", category_id);
         sqlSession.close();
         return category;
     }
@@ -173,4 +174,45 @@ public class PostRepository {
         sqlSession.close();
         return list;
     }
+
+    /*
+     * 카테고리 수정
+     */
+    public int update_category(CategoryUpdateDto updateDto) throws Exception {
+        getSession();
+        int row = sqlSession.update("p.update_category", updateDto);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+    /*
+     * 카테고리 삭제
+     */
+    public int delete_category(Long id) throws  Exception {
+        getSession();
+        int row = sqlSession.delete("p.delete_category", id);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+    /*
+     * 카테고리 삭제시 관련게시물삭제
+     */
+    public int delete_refpost(Long id) throws Exception {
+        getSession();
+        int row = sqlSession.delete("p.delete_refpost", id);
+        if(row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
 }
+

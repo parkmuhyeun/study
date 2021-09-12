@@ -61,7 +61,7 @@ public class PostService {
                 fullPath,
                 user.getName(),
                 user.getName(),
-                requestDto.getCategoryName()
+                requestDto.getCategory()
         );
 
         int res = postRepository.post_save(post);
@@ -220,15 +220,19 @@ public class PostService {
     public CategoryListDto get_all_category() throws Exception {
         List<Category> all_category = postRepository.get_all_category();
         List<String> all_category_name = new ArrayList<String>();
+        List<Long> all_category_id = new ArrayList<Long>();
 
         for (Category category : all_category) {
             all_category_name.add(category.getCategoryName());
+            all_category_id.add(category.getId());
         }
-        CategoryListDto dto = new CategoryListDto(all_category_name);
+        CategoryListDto dto = new CategoryListDto(all_category_id, all_category_name);
 
         return dto;
     }
 
-
+    /*
+     *
+     */
 
 }

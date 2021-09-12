@@ -19,10 +19,10 @@
 
             <form:form onsubmit="submitPost(this); return false;" role="form" action="/posts/save" method="post" commandName="postSaveRequestDto" enctype="multipart/form-data">
                 <div class="form_group">
-                    <form:select class="form-select" path="categoryName">
+                    <form:select class="form-select" path="category">
                         <option value="">선택</option>
                         <c:forEach var="categoryList" items="${all_category}">
-                            <option value="${categoryList}">${categoryList}</option>
+                            <option value="${categoryList.id}">${categoryList.categoryNames}</option>
                         </c:forEach>
                     </form:select>
                 </div>

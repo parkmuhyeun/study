@@ -150,23 +150,27 @@
 
     <!-- 카테고리 등록-->
     <insert id="save_category" parameterType="Category">
+        num = select max(id) FROM category;
+
         INSERT INTO
             category
         (
          category_name,
          is_use,
-         orders
+         orders,
+         parent
         )
 
         VALUES(
                #{categoryName},
                #{isUse},
                #{orders}
+               #{parent}
               )
     </insert>
 
     <!-- 카테고리 한개조회-->
-    <select id="get_category" parameterType="String" resultType="Category">
+    <select id="get_category" parameterType="Long" resultType="Category">
          SELECT id,
                 category_name as categoryName,
                 is_use as isUse,
@@ -186,8 +190,23 @@
 
 
     <!-- 카테고리 수정-->
+    <update id="update_category" parameterType="com.hong.hakwon.web.dto.CategoryUpdateDto">
+        UPDATE category set category_name = #{categoryName} where id = #{id}
+    </update>
 
+<!--    &lt;!&ndash; 카테고리 수정시 게시판 업데이트&ndash;&gt;-->
+<!--    <update id="update_refpost" parameterType="">-->
+<!--        UPDATE post set category = #{change_id} where category = #{before_id}-->
+<!--    </update>-->
 
     <!-- 카테고리 삭제-->
+    <delete id="delete_category" parameterType="Long">
+        DELETE FROM category WHERE id = #{id}
+    </delete>
+
+    <!-- 카테고리 삭제시 게시판 삭제-->
+    <delete id="delete_refpost" parameterType="Long">
+        DELETE FROM post WHERE category = #{id}
+    </delete>
 
 </mapper>

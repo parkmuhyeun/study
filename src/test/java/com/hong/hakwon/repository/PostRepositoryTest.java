@@ -49,7 +49,7 @@ public class PostRepositoryTest {
         String creator = "테스트계정";
         Long modifiedDate = today.getTime();
         String modifier = "테스트계정";
-        String category = "일반게시판";
+        Long category = 1L;
 
 //        Post post = new Post(title, content, path, createdDate, creator, modifiedDate, modifier);
         Post post = new Post(title, content, path, creator, modifier, category);
@@ -72,7 +72,7 @@ public class PostRepositoryTest {
         System.out.println("getPost.filepath = " + posts.getFilePath());
         System.out.println("getPost.createdDate = " + posts.getCreatedDate());
         System.out.println("getPost.creator = " + posts.getCreator());
-        System.out.println("posts.getCategoryName() = " + posts.getCategoryName());
+        System.out.println("posts.getCategoryName() = " + posts.getCategory());
 
     }
 

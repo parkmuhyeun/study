@@ -9,7 +9,7 @@ public class PostSaveRequestDto {
     private MultipartFile file;
     private String content;
     private List<String> hashTagContent;
-    private String categoryName;
+    private Long category;
 
     public PostSaveRequestDto() {
     }
@@ -38,12 +38,12 @@ public class PostSaveRequestDto {
         this.content = content;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public Long getCategory() {
+        return category;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategory(Long category) {
+        this.category = category;
     }
 
     public List<String> getHashTagContent() {
@@ -54,11 +54,11 @@ public class PostSaveRequestDto {
         this.hashTagContent = hashTagContent;
     }
 
-    public PostSaveRequestDto(String title, MultipartFile file, String content, List<String> hashTagContent, String categoryName) {
+    public PostSaveRequestDto(String title, MultipartFile file, String content, List<String> hashTagContent, Long category) {
         this.title = title;
         this.file = file;
         this.content = content;
         this.hashTagContent = hashTagContent;
-        this.categoryName = categoryName;
+        this.category = category;
     }
 }
