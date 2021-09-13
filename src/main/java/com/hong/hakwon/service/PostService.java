@@ -185,11 +185,14 @@ public class PostService {
     public List<PostListResponseDto> get_allPostDesc() throws Exception {
         List<Post> posts = postRepository.get_allPostDesc();
 
-
         List<List<String>> tagList = new ArrayList<List<String>>();
-
+        List<String> cateName = new ArrayList<String>();
         for (Post post : posts) {
             List<HashTag> hashtag = postRepository.get_hashtag(post.getId());
+            Category category = postRepository.get_category(post.getCategory());
+
+            cateName.add(category.getCategoryName());
+            logger.info(category.getCategoryName());
             List<String> tagL = new ArrayList<String>();
             for (HashTag hashTag : hashtag) {
                 tagL.add(hashTag.getContent());
@@ -207,7 +210,8 @@ public class PostService {
                     posts.get(i).getCreatedDate(),
                     posts.get(i).getCreator(),
                     tagList.get(i),
-                    posts.get(i).getViews());
+                    posts.get(i).getViews(),
+                    cateName.get(i));
             responseDtoList.add(dto);
         }
 
@@ -225,6 +229,9 @@ public class PostService {
         for (Category category : all_category) {
             all_category_name.add(category.getCategoryName());
             all_category_id.add(category.getId());
+            logger.info(category.getId());
+            logger.info(category.getCategoryName());
+
         }
         CategoryListDto dto = new CategoryListDto(all_category_id, all_category_name);
 
@@ -232,7 +239,40 @@ public class PostService {
     }
 
     /*
-     *
+     * 카테고리 저장
      */
+    public int save_category(CategorySaveDto saveDto) throws Exception {
+        Category category = new Category(saveDto.getCategoryName(), saveDto.getIsUse(), saveDto.getOrder());
+        return postRepository.save_category(category);
+    }
+
+    /*
+     * 카테고리 수정
+     */
+    public int update_category(CategoryUpdateDto updateDto) throws Exception {
+        return postRepository.update_category(updateDto);
+    }
+
+
+    /*
+     * 카테고리 전체 조회(관리자페이지)
+     */
+    public MCategoryListDto m_get_all_category() throws Exception {
+        List<Category> all_category = postRepository.get_all_category();
+        List<String> all_category_name = new ArrayList<String>();
+        List<Long> all_category_id = new ArrayList<Long>();
+        List<Long> all_category_use = new ArrayList<Long>();
+        List<Long> all_category_order = new ArrayList<Long>();
+
+        for (Category category : all_category) {
+            all_category_name.add(category.getCategoryName());
+            all_category_id.add(category.getId());
+            all_category_use.add(category.getIsUse());
+            all_category_order.add(category.getOrders());
+        }
+        MCategoryListDto dto = new MCategoryListDto(all_category_id, all_category_name, all_category_use, all_category_order);
+
+        return dto;
+    }
 
 }

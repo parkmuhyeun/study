@@ -18,7 +18,7 @@
         , modified_date
         , modifier
         , views
-        , category_name
+        , category
         )
 
         VALUES(
@@ -30,7 +30,7 @@
               , datetime('now', 'localtime')
               , #{modifier}
               , 0
-              , #{categoryName}
+              , #{category}
               )
     </insert>
 
@@ -54,7 +54,7 @@
               , #{fileName}
               , datetime('now', 'localtime')
               , #{creator}
-              , #{modifiedDate}
+              , datetime('now', 'localtime')
               , #{modifier}
               )
     </insert>
@@ -84,7 +84,7 @@
                , strftime('%Y-%m-%d %H:%M',modified_date) as modifiedDate
                , modifier
                , views
-               , category_name as categoryName
+               , category
         FROM post WHERE id=#{id}
     </select>
 
@@ -99,7 +99,7 @@
                , strftime('%Y-%m-%d %H:%M',modified_date) as modifiedDate
                , modifier
                , views
-               , category_name as categoryName
+               , category
          FROM post
         order by id desc
     </select>
@@ -150,22 +150,18 @@
 
     <!-- 카테고리 등록-->
     <insert id="save_category" parameterType="Category">
-        num = select max(id) FROM category;
-
         INSERT INTO
             category
         (
          category_name,
          is_use,
-         orders,
-         parent
+         orders
         )
 
         VALUES(
                #{categoryName},
                #{isUse},
                #{orders}
-               #{parent}
               )
     </insert>
 
@@ -176,7 +172,7 @@
                 is_use as isUse,
                 orders
         FROM category
-        WHERE category_name = #{category_name}
+        WHERE id = #{category_id}
     </select>
 
     <!-- 카테고리 전부조회-->
@@ -191,7 +187,7 @@
 
     <!-- 카테고리 수정-->
     <update id="update_category" parameterType="com.hong.hakwon.web.dto.CategoryUpdateDto">
-        UPDATE category set category_name = #{categoryName} where id = #{id}
+        UPDATE category set  category_name = #{categoryName} , is_use = #{isUse}, orders = #{order} WHERE id={#id}
     </update>
 
 <!--    &lt;!&ndash; 카테고리 수정시 게시판 업데이트&ndash;&gt;-->

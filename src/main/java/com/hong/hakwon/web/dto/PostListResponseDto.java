@@ -10,6 +10,7 @@ public class PostListResponseDto {
     private String creator;
     private List<String> tag;
     private Long views;
+    private String categoryName;
 
     public PostListResponseDto() {
     }
@@ -62,12 +63,21 @@ public class PostListResponseDto {
         this.views = views;
     }
 
-    public PostListResponseDto(int id, String title, String createdDate, String creator, List<String> tag, Long views) {
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public PostListResponseDto(int id, String title, String createdDate, String creator, List<String> tag, Long views, String categoryName) {
         this.id = id;
         this.title = title;
         this.createdDate = createdDate;
         this.creator = creator;
         this.tag = tag;
         this.views = views;
+        this.categoryName = categoryName;
     }
 }

@@ -18,7 +18,7 @@
         , modified_date
         , modifier
         , views
-        , category_name
+        , category
         )
 
         VALUES(
@@ -30,7 +30,7 @@
               , datetime('now', 'localtime')
               , #{modifier}
               , 0
-              , #{categoryName}
+              , #{category}
               )
     </insert>
 
@@ -54,7 +54,7 @@
               , #{fileName}
               , datetime('now', 'localtime')
               , #{creator}
-              , #{modifiedDate}
+              , datetime('now', 'localtime')
               , #{modifier}
               )
     </insert>
@@ -84,7 +84,7 @@
                , strftime('%Y-%m-%d %H:%M',modified_date) as modifiedDate
                , modifier
                , views
-               , category_name as categoryName
+               , category
         FROM post WHERE id=#{id}
     </select>
 
@@ -99,7 +99,7 @@
                , strftime('%Y-%m-%d %H:%M',modified_date) as modifiedDate
                , modifier
                , views
-               , category_name as categoryName
+               , category
          FROM post
         order by id desc
     </select>
@@ -166,13 +166,13 @@
     </insert>
 
     <!-- 카테고리 한개조회-->
-    <select id="get_category" parameterType="String" resultType="Category">
+    <select id="get_category" parameterType="Long" resultType="Category">
          SELECT id,
                 category_name as categoryName,
                 is_use as isUse,
                 orders
         FROM category
-        WHERE category_name = #{category_name}
+        WHERE id = #{category_id}
     </select>
 
     <!-- 카테고리 전부조회-->
@@ -183,5 +183,26 @@
                orders
         FROM category
     </select>
+
+
+    <!-- 카테고리 수정-->
+    <update id="update_category" parameterType="com.hong.hakwon.web.dto.CategoryUpdateDto">
+        UPDATE category set  category_name = #{categoryName} , is_use = #{isUse}, orders = #{order} WHERE id={#id}
+    </update>
+
+<!--    &lt;!&ndash; 카테고리 수정시 게시판 업데이트&ndash;&gt;-->
+<!--    <update id="update_refpost" parameterType="">-->
+<!--        UPDATE post set category = #{change_id} where category = #{before_id}-->
+<!--    </update>-->
+
+    <!-- 카테고리 삭제-->
+    <delete id="delete_category" parameterType="Long">
+        DELETE FROM category WHERE id = #{id}
+    </delete>
+
+    <!-- 카테고리 삭제시 게시판 삭제-->
+    <delete id="delete_refpost" parameterType="Long">
+        DELETE FROM post WHERE category = #{id}
+    </delete>
 
 </mapper>

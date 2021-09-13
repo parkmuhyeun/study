@@ -20,6 +20,7 @@
     <thead>
     <tr>
         <th>게시물번호</th>
+        <th>카테고리</th>
         <th>제목</th>
         <th>태그</th>
         <th>글쓴이</th>
@@ -29,18 +30,22 @@
     </thead>
 </table>
 
+<a role="button" href="/posts/mng_category"> 카테고리 관리페이지</a>
+
 <script type="text/javascript" >
+
 
     $(document).ready(function () {
 
 
-            $("#postTable").DataTable({
+        $("#postTable").DataTable({
             ajax : {
                 "url":"/posts/dataTable",
                 'dataSrc' :''
             },
             columns:[
                 {data: "id"},
+                {data: "categoryName"},
                 {data: "title",
                     "render": function (data, type, row, meta) {
                         let path = row["id"];
@@ -66,5 +71,4 @@
                 .draw();
         });
     });
-
 </script>

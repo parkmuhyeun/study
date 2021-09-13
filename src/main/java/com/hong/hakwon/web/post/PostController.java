@@ -76,15 +76,6 @@ public class PostController {
     public List<PostListResponseDto> postAll() throws Exception {
         List<PostListResponseDto> allPost = postService.get_allPostDesc();
 
-
-        logger.info(allPost.get(0).getCreatedDate());
-//        JSONArray jsonArray = new JSONArray();
-//        for (int i = 0; i < allPost.size(); i++) {
-//            JSONObject data = new JSONObject();
-//            data.put("data", allPost.get(i));
-//            jsonArray.add(i, data);
-//        }
-
         return allPost;
     }
 
@@ -98,6 +89,7 @@ public class PostController {
         ModelAndView mav = new ModelAndView("/posts-save");
         mav.addObject("postSaveRequestDto", new PostSaveRequestDto());
         mav.addObject("all_category", all_category);
+
         return mav;
     }
 
@@ -145,6 +137,48 @@ public class PostController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition)
                 .body(resource);
+    }
+
+
+    /*
+     * 카테고리 관리자페이지
+     */
+    @RequestMapping("/posts/mng_category")
+    public ModelAndView mng_category() throws Exception {
+        ModelAndView mav = new ModelAndView("mng_category");
+        MCategoryListDto mCategoryListDto = postService.m_get_all_category();
+        mav.addObject("categoryList", mCategoryListDto);
+        return mav;
+    }
+
+    /*
+     * 카테고리 추가
+     */
+    @RequestMapping(value = "/mng_category/add", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean save_category(@RequestBody CategorySaveDto saveDto) throws Exception {
+
+        boolean check = false;
+        int row = postService.save_category(saveDto);
+        if (row > 0) {
+            check = true;
+        }
+        return check;
+    }
+
+    /*
+     * 카테고리 수정
+     */
+    @RequestMapping(value = "/mng_category/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean update_category(@RequestBody CategoryUpdateDto updateDto) throws Exception {
+
+        boolean check = false;
+        int row = postService.update_category(updateDto);
+        if (row > 0) {
+            check = true;
+        }
+        return check;
     }
 }
 
