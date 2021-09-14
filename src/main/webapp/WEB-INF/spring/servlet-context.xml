@@ -49,11 +49,37 @@
 		<beans:property name="maxUploadSize" value="10000000" />
 	</beans:bean>
 
+	<!-- argumentResolver(login) -->
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<beans:bean class="com.hong.hakwon.argumentresolver.LoginMemberArgumentResolver"></beans:bean>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
 	<!-- Interceptor -->
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<beans:bean id="homeInterceptor" class="com.hong.hakwon.common.LoggerInterceptor"></beans:bean>
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/"/>
+			<mvc:exclude-mapping path="/main/**"/>
+			<mvc:exclude-mapping path="/login/**"/>
+			<mvc:exclude-mapping path="/join/**"/>
+			<mvc:exclude-mapping path="/logout/**"/>
+			<mvc:exclude-mapping path="/css/**"/>
+			<mvc:exclude-mapping path="/*.ico"/>
+			<mvc:exclude-mapping path="/error"/>
+			<mvc:exclude-mapping path="/resources/**"/>
+			<beans:bean id="loginInterceptor" class="com.hong.hakwon.common.LoginCheckInterceptor"></beans:bean>
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/posts/mng_category" />
+			<beans:bean id="adminInterceptor" class="com.hong.hakwon.common.AdminInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 

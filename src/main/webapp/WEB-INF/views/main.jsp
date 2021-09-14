@@ -9,11 +9,11 @@
 <body>
 	<div class="container text-center" style="margin-top: 100px; margin-bottom: 100px">
 		<div>
-			<c:if test="${empty memberName}">
+			<c:if test="${empty member}">
 				<h2 id="wel">안녕하세요! 손님</h2>
 			</c:if>
-			<c:if test="${not empty memberName}">
-				<h2 id="wel">안녕하세요! ${memberName}</h2>
+			<c:if test="${not empty member}">
+				<h2 id="wel">안녕하세요! ${member.name}</h2>
 			</c:if>
 
 		</div>

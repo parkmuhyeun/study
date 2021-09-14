@@ -26,7 +26,7 @@ public class UserDAOImplTest {
         String email = "test@gmail.com";
 
         SiDo sido = userDAO.get_sido(sido_cd);
-        UserBean ub = new UserBean(10, userId, password, name, phoneNumber, sido.getSido_name(), sigungu, email);
+        UserBean ub = new UserBean( userId, password, name, phoneNumber, sido.getSido_name(), sigungu, email);
 
         userDAO.saveUser(ub);
 

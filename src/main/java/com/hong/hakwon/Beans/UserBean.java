@@ -12,7 +12,7 @@ public class UserBean {
 	private String sido;
 	private String sigungu;
 	private String email;
-
+	private String role;
 
 	public int getId() {
 		return id;
@@ -45,6 +45,10 @@ public class UserBean {
 		return email;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
 	public UserBean() {
 	}
 
@@ -58,14 +62,5 @@ public class UserBean {
 		this.email = email;
 	}
 
-	public UserBean(int id, String userId, String password, String name, String phoneNumber, String sido, String sigungu, String email) {
-		this.id = id;
-		this.userId = userId;
-		this.password = password;
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.sido = sido;
-		this.sigungu = sigungu;
-		this.email = email;
-	}
+
 }

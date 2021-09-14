@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <head>
@@ -30,7 +31,9 @@
     </thead>
 </table>
 
-<a role="button" href="/posts/mng_category"> 카테고리 관리페이지</a>
+<c:if test="${member.role == 'admin'}">
+    <a role="button" href="/posts/mng_category"> 카테고리 관리페이지</a>
+</c:if>
 
 <script type="text/javascript" >
 
@@ -39,6 +42,7 @@
 
 
         $("#postTable").DataTable({
+           ordering: false,
             ajax : {
                 "url":"/posts/dataTable",
                 'dataSrc' :''
@@ -66,7 +70,7 @@
 
         $('#tag').keyup( function() {
             table
-                .columns(2)
+                .columns(3)               //태그 검색(3)
                 .search(this.value)
                 .draw();
         });

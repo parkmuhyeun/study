@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import com.hong.hakwon.Beans.UserBean;
 import com.hong.hakwon.SessionConst;
 import com.hong.hakwon.UserDAOImpl;
+import com.hong.hakwon.argumentresolver.Login;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONObject;
@@ -43,32 +44,22 @@ public class MainController {
 	 * 메인 페이지
 	 */
 	@RequestMapping(value = "/main")
-	public ModelAndView main(@ModelAttribute("reqMap") CmMap reqVo, HttpServletRequest request) {
+	public ModelAndView main(@ModelAttribute("reqMap") CmMap reqVo, HttpServletRequest request, @Login UserBean loginMember) {
 
 		ModelAndView mav = new ModelAndView("/main");
 
 		//세션 없으면 home
-		HttpSession session = request.getSession(false);
-		if (session == null) {
+//		HttpSession session = request.getSession(false);
+		if (loginMember == null) {
 			return mav;
 		}
 
-		UserBean loginMember = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
-
-//		//세션에 회원 데이터가 없으면 home
-//		if (loginMember == null) {
-//			ModelAndView mav = new ModelAndView("/main");
-//			return mav;
-//		}
-//
-//		//세션이 유지되면 로그인으로 이동
-//		ModelAndView mav = new ModelAndView("/loginmain");
-//		mav.addObject("member", loginMember);
-//		return mav;
+//		UserBean loginMember = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
 		if (loginMember != null) {
 			ModelAndView chk = new ModelAndView("/layouts/default/header");
-			mav.addObject("memberName", loginMember.getName());
+//			mav.addObject("memberName", loginMember.getName());
+			mav.addObject("member", loginMember);
 		}
 
 		return mav;

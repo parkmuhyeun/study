@@ -192,7 +192,7 @@ public class PostService {
             Category category = postRepository.get_category(post.getCategory());
 
             cateName.add(category.getCategoryName());
-            logger.info(category.getCategoryName());
+
             List<String> tagL = new ArrayList<String>();
             for (HashTag hashTag : hashtag) {
                 tagL.add(hashTag.getContent());
@@ -229,8 +229,6 @@ public class PostService {
         for (Category category : all_category) {
             all_category_name.add(category.getCategoryName());
             all_category_id.add(category.getId());
-            logger.info(category.getId());
-            logger.info(category.getCategoryName());
 
         }
         CategoryListDto dto = new CategoryListDto(all_category_id, all_category_name);
@@ -253,6 +251,15 @@ public class PostService {
         return postRepository.update_category(updateDto);
     }
 
+    /*
+     * 카테고리 삭제
+     */
+    public int delete_category(Long id) throws Exception {
+        //카테고리 관련게시판 삭제
+        postRepository.delete_refpost(id);
+
+        return postRepository.delete_category(id);
+    }
 
     /*
      * 카테고리 전체 조회(관리자페이지)

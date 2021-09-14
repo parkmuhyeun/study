@@ -21,14 +21,13 @@
 			<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
 				<input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
 			</form>
-
-			<c:if test="${empty memberName}">
+			<c:if test="${empty member}">
 				<div class="text-end">
 					<button type="button" onclick="location.href = 'login'" class="btn btn-outline-light me-2">Login</button>
 					<button type="button" onclick="location.href = 'join'" class="btn btn-warning">Sign-up</button>
 				</div>
 			</c:if>
-			<c:if test="${not empty memberName}">
+			<c:if test="${not empty member}">
 				<form action="/logout" method="post">
 					<button class="btn btn-outline-light me-2" onclick="location.href = 'main'" type="submit">Log Out</button>
 				</form>

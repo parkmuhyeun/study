@@ -3,6 +3,7 @@ package com.hong.hakwon.web.post;
 
 import com.hong.hakwon.Beans.UserBean;
 import com.hong.hakwon.SessionConst;
+import com.hong.hakwon.argumentresolver.Login;
 import com.hong.hakwon.service.PostService;
 import com.hong.hakwon.web.dto.*;
 import org.apache.commons.logging.Log;
@@ -45,24 +46,24 @@ public class PostController {
      * 게시판 페이지
      */
     @RequestMapping(value = "/posts")
-    public ModelAndView posts(HttpServletRequest request, RedirectAttributes redirectAttributes) throws Exception {
+    public ModelAndView posts(HttpServletRequest request, RedirectAttributes redirectAttributes, @Login UserBean loginMember) throws Exception {
 
         String requestURI = request.getRequestURI();
         //로그인 안되있으면 login페이지로
-        HttpSession session = request.getSession(false);
-        UserBean loginMember = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
+//        HttpSession session = request.getSession(false);
+//        UserBean loginMember = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-        if (loginMember == null) {
-            //다시 돌아올 requestURI 추가
-            redirectAttributes.addAttribute("redirectURL", requestURI);
-            ModelAndView mav = new ModelAndView("redirect:/login");
-            return mav;
-        }
+//        if (loginMember == null) {
+//            //다시 돌아올 requestURI 추가
+//            redirectAttributes.addAttribute("redirectURL", requestURI);
+//            ModelAndView mav = new ModelAndView("redirect:/login");
+//            return mav;
+//        }
 
         ModelAndView mav = new ModelAndView("/posts");
-            ModelAndView chk = new ModelAndView("/layouts/default/header");
-            mav.addObject("memberName", loginMember.getName());
-
+        ModelAndView chk = new ModelAndView("/layouts/default/header");
+//        mav.addObject("memberName", loginMember.getName());
+        mav.addObject("member", loginMember);
 
         return mav;
     }
@@ -180,5 +181,21 @@ public class PostController {
         }
         return check;
     }
+
+    /*
+     * 카테고리 삭제
+     */
+    @RequestMapping(value = "/mng_category/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean update_category(@RequestParam("id") Long id) throws Exception {
+
+        boolean check = false;
+        int row = postService.delete_category(id);
+        if (row > 0) {
+            check = true;
+        }
+        return check;
+    }
+
 }
 

@@ -25,6 +25,7 @@
 			, sido
 			, sigungu
 			, email
+			, role
 		)
 	
 		VALUES(
@@ -35,6 +36,7 @@
 			, #{sido}
 			, #{sigungu}
 			, #{email}
+			, "user"
 		)
 		
 	</insert>
