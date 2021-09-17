@@ -1,6 +1,7 @@
 package com.hong.hakwon.web.post;
 
 
+import com.hong.hakwon.Beans.Post;
 import com.hong.hakwon.Beans.UserBean;
 import com.hong.hakwon.SessionConst;
 import com.hong.hakwon.argumentresolver.Login;
@@ -72,13 +73,38 @@ public class PostController {
     /*
      * datatable 값 넘기기
      */
-    @ResponseBody
-    @RequestMapping(value = "/posts/dataTable")
-    public List<PostListResponseDto> postAll() throws Exception {
-        List<PostListResponseDto> allPost = postService.get_allPostDesc();
+//    @ResponseBody
+//    @RequestMapping(value = "/posts/dataTable")
+//    public List<PostListResponseDto> postAll() throws Exception {
+//        List<PostListResponseDto> allPost = postService.get_allPostDesc();
+//
+//        return allPost;
+//    }
 
-        return allPost;
+    /*
+     * datatable 값 넘기기(서버사이드에서 페이징)
+     */
+    @ResponseBody
+    @RequestMapping(value = "posts/dataTable")
+    public PostListDto postDatatable(@RequestParam("start") int start,
+                                     @RequestParam("length") int length,
+                                     @RequestParam("draw") int draw,
+                                     @RequestParam("order[0][column]") int sortColIndex,
+                                     @RequestParam("order[0][dir]") String order,
+                                     @RequestParam("columns[0][data]") String col0DataAttrName
+                                     ) throws Exception {
+
+        int totalPosts = postService.count_post();
+        List<PostListResponseDto> postList = postService.get_post_with_page(new PostPage(start, length));
+        PostListDto postListDto = new PostListDto(
+                draw,
+                totalPosts,
+                totalPosts,
+                postList);
+
+        return postListDto;
     }
+
 
     /*
      * 게시글등록 페이지

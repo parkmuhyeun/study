@@ -282,4 +282,49 @@ public class PostService {
         return dto;
     }
 
+    /*
+     * 전체 게시판 수
+     */
+    public int count_post() throws Exception {
+        return postRepository.count_post();
+    }
+
+    /*
+     * 게시판 with page
+     */
+    public List<PostListResponseDto> get_post_with_page(PostPage page) throws Exception {
+        List<Post> posts = postRepository.get_post_with_page(page);
+
+        List<List<String>> tagList = new ArrayList<List<String>>();
+        List<String> cateName = new ArrayList<String>();
+        for (Post post : posts) {
+            List<HashTag> hashtag = postRepository.get_hashtag(post.getId());
+            Category category = postRepository.get_category(post.getCategory());
+
+            cateName.add(category.getCategoryName());
+
+            List<String> tagL = new ArrayList<String>();
+            for (HashTag hashTag : hashtag) {
+                tagL.add(hashTag.getContent());
+            }
+            tagList.add(tagL);
+
+        }
+
+        List<PostListResponseDto> responseDtoList = new ArrayList<PostListResponseDto>();
+
+        for (int i = 0; i < posts.size(); i++) {
+            PostListResponseDto dto = new PostListResponseDto(posts.get(i).getId(),
+                    posts.get(i).getTitle(),
+                    posts.get(i).getCreatedDate(),
+                    posts.get(i).getCreator(),
+                    tagList.get(i),
+                    posts.get(i).getViews(),
+                    cateName.get(i));
+            responseDtoList.add(dto);
+        }
+
+        return responseDtoList;
+    }
+
 }

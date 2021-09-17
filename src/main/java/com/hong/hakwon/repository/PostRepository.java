@@ -2,6 +2,7 @@ package com.hong.hakwon.repository;
 
 import com.hong.hakwon.Beans.*;
 import com.hong.hakwon.web.dto.CategoryUpdateDto;
+import com.hong.hakwon.web.dto.PostPage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.io.Resources;
@@ -212,6 +213,27 @@ public class PostRepository {
         }
         sqlSession.close();
         return row;
+    }
+
+
+    /*
+     * 전체 게시판 수
+     */
+    public int count_post() throws Exception{
+        getSession();
+        int count = sqlSession.selectOne("p.count_post");
+        sqlSession.close();
+        return count;
+    }
+
+    /*
+     * 게시판 with page
+     */
+    public List<Post> get_post_with_page(PostPage page) throws Exception {
+        getSession();
+        List<Post> list = sqlSession.selectList("p.get_post_with_page", page);
+        sqlSession.close();
+        return list;
     }
 
 }

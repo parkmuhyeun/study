@@ -42,10 +42,12 @@
 
 
         $("#postTable").DataTable({
-           ordering: false,
+            // ordering: false,
+            processing: true,
+            serverSide: true,
+            // paging:false,
             ajax : {
-                "url":"/posts/dataTable",
-                'dataSrc' :''
+                "url":"/posts/dataTable"
             },
             columns:[
                 {data: "id"},

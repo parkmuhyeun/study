@@ -203,4 +203,30 @@
         DELETE FROM post WHERE category = #{id}
     </delete>
 
+    <!-- 전체 게시판 수-->
+    <select id="count_post" resultType="int">
+        SELECT count(*) FROM post
+        JOIN category on post.category = category.id
+        WHERE category.is_use = 1
+    </select>
+
+    <!-- 게시판 with page-->
+    <select id="get_post_with_page" parameterType="com.hong.hakwon.web.dto.PostPage" resultType="post">
+        SELECT post.id
+             , post.title
+             , post.content
+             , post.file_path as filePath
+             , strftime('%Y-%m-%d %H:%M', post.created_date) as createdDate
+             , post.creator
+             , strftime('%Y-%m-%d %H:%M', post.modified_date) as modifiedDate
+             , post.modifier
+             , post.views
+             , post.category
+        FROM post
+        JOIN category on post.category = category.id
+        WHERE category.is_use = 1
+        order by category.orders ASC, post.id ASC
+        LIMIT #{start}, #{length}
+    </select>
+
 </mapper>
