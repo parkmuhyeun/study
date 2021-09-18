@@ -85,13 +85,14 @@ public class PostController {
      * datatable 값 넘기기(서버사이드에서 페이징)
      */
     @ResponseBody
-    @RequestMapping(value = "posts/dataTable")
+    @RequestMapping(value = "posts/dataTable", method = RequestMethod.POST)
     public PostListDto postDatatable(@RequestParam("start") int start,
                                      @RequestParam("length") int length,
                                      @RequestParam("draw") int draw,
                                      @RequestParam("order[0][column]") int sortColIndex,
                                      @RequestParam("order[0][dir]") String order,
-                                     @RequestParam("columns[0][data]") String col0DataAttrName
+                                     @RequestParam("columns[0][data]") String col0DataAttrName,
+                                     HttpServletRequest request
                                      ) throws Exception {
 
         int totalPosts = postService.count_post();
@@ -101,6 +102,29 @@ public class PostController {
                 totalPosts,
                 totalPosts,
                 postList);
+
+
+        //태그 검색
+        String TagParam = request.getParameter("columns[3][search][value]");
+        if (TagParam != "") {
+            int total = postService.count_search_by_tag(TagParam);
+            List<PostListResponseDto> search_postList = postService.search_post_by_tag(new SearchRequestDto(TagParam, start, length));
+            PostListDto search_postListDto = new PostListDto(draw, total, total, search_postList);
+            return search_postListDto;
+        }
+
+
+
+        //통합검색(제목, 글쓴이)
+        String SearchParam = request.getParameter("columns[2][search][value]");
+//        String creatorParam = request.getParameter("columns[4][search][value]");
+
+        if (SearchParam != "") {
+            int total = postService.count_search(SearchParam);
+            List<PostListResponseDto> search_postList= postService.search_post(new SearchRequestDto(SearchParam, start, length));
+            PostListDto search_postListDto = new PostListDto(draw, total, total, search_postList);
+            return search_postListDto;
+        }
 
         return postListDto;
     }

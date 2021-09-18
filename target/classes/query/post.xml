@@ -229,4 +229,64 @@
         LIMIT #{start}, #{length}
     </select>
 
+    <!-- 검색(제목, 작성자)-->
+    <select id="search_post" parameterType="com.hong.hakwon.web.dto.SearchRequestDto" resultType="post">
+        SELECT post.id
+             , post.title
+             , post.content
+             , post.file_path as filePath
+             , strftime('%Y-%m-%d %H:%M', post.created_date) as createdDate
+             , post.creator
+             , strftime('%Y-%m-%d %H:%M', post.modified_date) as modifiedDate
+             , post.modifier
+             , post.views
+             , post.category
+        FROM post
+        JOIN category on post.category = category.id
+        WHERE (post.title || post.creator)  like ("%" || #{data} || "%")
+        and category.is_use = 1
+        order by category.orders ASC, post.id ASC
+        LIMIT #{start}, #{length}
+    </select>
+
+    <!-- 검색 카운트 수-->
+    <select id="count_search" parameterType="String" resultType="int">
+        SELECT count(*) FROM post
+        JOIN category on post.category = category.id
+        WHERE (post.title || post.creator)  like ("%" || #{data} || "%")
+        and category.is_use = 1
+    </select>
+
+    <!-- 검색(by 태그)-->
+    <select id="search_post_by_tag" parameterType="com.hong.hakwon.web.dto.SearchRequestDto" resultType="post">
+        SELECT post.id
+             , post.title
+             , post.content
+             , post.file_path as filePath
+             , strftime('%Y-%m-%d %H:%M', post.created_date) as createdDate
+             , post.creator
+             , strftime('%Y-%m-%d %H:%M', post.modified_date) as modifiedDate
+             , post.modifier
+             , post.views
+             , post.category
+        FROM post
+        JOIN category on post.category = category.id
+        JOIN post_hashtag on post.id = post_hashtag.post_id
+        JOIN hashtag on post_hashtag.hashtag_id = hashtag.hashtag_id
+        WHERE hashtag.hashtag_cont like ("%" || #{data} || "%")
+        and category.is_use = 1
+        order by category.orders ASC, post.id ASC
+        LIMIT #{start}, #{length}
+
+    </select>
+
+    <!-- 검색 카운트 수(by 태그)-->
+    <select id="count_search_by_tag" parameterType="String" resultType="int">
+        SELECT count(*) FROM post
+        JOIN category on post.category = category.id
+        JOIN post_hashtag on post.id = post_hashtag.post_id
+        JOIN hashtag on post_hashtag.hashtag_id = hashtag.hashtag_id
+        WHERE hashtag.hashtag_cont like ("%" || #{data} || "%")
+        and category.is_use = 1
+    </select>
 </mapper>

@@ -12,8 +12,12 @@
 
 <table border="0" cellspacing="5" cellpadding="5" align="right">
     <tbody><tr>
-        <td>Tag :</td>
+        <td align="right">Tag:</td>
         <td><input type="text" id="tag" name="tag" placeholder="태그로 검색!"></td>
+    </tr>
+    <tr>
+        <td>Search:</td>
+        <td><input type="text" id="tsearch" name="tsearch" placeholder="제목, 글쓴이로 검색!"></td>
     </tr>
     </tbody>
 </table>
@@ -42,12 +46,13 @@
 
 
         $("#postTable").DataTable({
-            // ordering: false,
+            dom: 'rtip',
+            
             processing: true,
             serverSide: true,
-            // paging:false,
             ajax : {
-                "url":"/posts/dataTable"
+                "url":"/posts/dataTable",
+                "type": "POST"
             },
             columns:[
                 {data: "id"},
@@ -70,11 +75,27 @@
 
         var table = $('#postTable').DataTable();
 
-        $('#tag').keyup( function() {
-            table
-                .columns(3)               //태그 검색(3)
-                .search(this.value)
-                .draw();
+        $('#tag').keyup( function(key) {
+            //엔터시
+            if(key.keyCode == 13)
+            {
+                table
+                    .columns(3)               //태그 검색(3)
+                    .search(this.value)
+                    .draw();
+            }
         });
+
+        $('#tsearch').keyup( function(key) {
+            //엔터시
+            if(key.keyCode == 13)
+            {
+                table
+                    .columns(2)               //제목, 글쓴이 검색(2, 4)
+                    .search($("#tsearch").val())
+                    .draw();
+            }
+        });
+
     });
 </script>

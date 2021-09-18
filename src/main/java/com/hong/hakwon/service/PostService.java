@@ -327,4 +327,95 @@ public class PostService {
         return responseDtoList;
     }
 
+    /*
+     * 검색(by 제목,글쓴이)
+     */
+    public List<PostListResponseDto> search_post(SearchRequestDto searchRequestDto) throws Exception {
+        List<Post> posts = postRepository.search_post(searchRequestDto);
+
+        List<List<String>> tagList = new ArrayList<List<String>>();
+        List<String> cateName = new ArrayList<String>();
+        for (Post post : posts) {
+            List<HashTag> hashtag = postRepository.get_hashtag(post.getId());
+            Category category = postRepository.get_category(post.getCategory());
+
+            cateName.add(category.getCategoryName());
+
+            List<String> tagL = new ArrayList<String>();
+            for (HashTag hashTag : hashtag) {
+                tagL.add(hashTag.getContent());
+            }
+            tagList.add(tagL);
+
+        }
+
+        List<PostListResponseDto> responseDtoList = new ArrayList<PostListResponseDto>();
+
+        for (int i = 0; i < posts.size(); i++) {
+            PostListResponseDto dto = new PostListResponseDto(posts.get(i).getId(),
+                    posts.get(i).getTitle(),
+                    posts.get(i).getCreatedDate(),
+                    posts.get(i).getCreator(),
+                    tagList.get(i),
+                    posts.get(i).getViews(),
+                    cateName.get(i));
+            responseDtoList.add(dto);
+        }
+
+        return responseDtoList;
+    }
+
+    /*
+     * 전체 검색 수 (by 제목,글쓴이)
+     */
+    public int count_search(String param) throws Exception {
+        return postRepository.count_search(param);
+    }
+
+    /*
+     * 검색(by 태그)
+     */
+    public List<PostListResponseDto> search_post_by_tag(SearchRequestDto searchRequestDto) throws Exception {
+        List<Post> posts = postRepository.search_post_by_tag(searchRequestDto);
+
+        List<List<String>> tagList = new ArrayList<List<String>>();
+        List<String> cateName = new ArrayList<String>();
+        for (Post post : posts) {
+            List<HashTag> hashtag = postRepository.get_hashtag(post.getId());
+            Category category = postRepository.get_category(post.getCategory());
+
+            cateName.add(category.getCategoryName());
+
+            List<String> tagL = new ArrayList<String>();
+            for (HashTag hashTag : hashtag) {
+                tagL.add(hashTag.getContent());
+            }
+            tagList.add(tagL);
+
+        }
+
+        List<PostListResponseDto> responseDtoList = new ArrayList<PostListResponseDto>();
+
+        for (int i = 0; i < posts.size(); i++) {
+            PostListResponseDto dto = new PostListResponseDto(posts.get(i).getId(),
+                    posts.get(i).getTitle(),
+                    posts.get(i).getCreatedDate(),
+                    posts.get(i).getCreator(),
+                    tagList.get(i),
+                    posts.get(i).getViews(),
+                    cateName.get(i));
+            responseDtoList.add(dto);
+        }
+
+        return responseDtoList;
+    }
+
+    /*
+     * 전체 검색 수 (by 태그)
+     */
+    public int count_search_by_tag(String param) throws Exception {
+        return postRepository.count_search_by_tag(param);
+    }
+
+
 }

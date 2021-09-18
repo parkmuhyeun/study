@@ -3,6 +3,7 @@ package com.hong.hakwon.repository;
 import com.hong.hakwon.Beans.*;
 import com.hong.hakwon.web.dto.CategoryUpdateDto;
 import com.hong.hakwon.web.dto.PostPage;
+import com.hong.hakwon.web.dto.SearchRequestDto;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.io.Resources;
@@ -236,5 +237,44 @@ public class PostRepository {
         return list;
     }
 
+    /*
+     * 검색 (제목, 글쓴이)
+     */
+    public List<Post> search_post(SearchRequestDto searchRequestDto) throws Exception {
+        getSession();
+        List<Post> list = sqlSession.selectList("p.search_post", searchRequestDto);
+        sqlSession.close();
+        return list;
+    }
+
+    /*
+     * 검색 수 (제목, 글쓴이)
+     */
+    public int count_search(String param) throws Exception{
+        getSession();
+        int count = sqlSession.selectOne("p.count_search", param);
+        sqlSession.close();
+        return count;
+    }
+
+    /*
+     * 검색 (by 태그)
+     */
+    public List<Post> search_post_by_tag(SearchRequestDto searchRequestDto) throws Exception {
+        getSession();
+        List<Post> list = sqlSession.selectList("p.search_post_by_tag", searchRequestDto);
+        sqlSession.close();
+        return list;
+    }
+
+    /*
+     * 검색 수 (by 태그)
+     */
+    public int count_search_by_tag(String param) throws Exception{
+        getSession();
+        int count = sqlSession.selectOne("p.count_search_by_tag", param);
+        sqlSession.close();
+        return count;
+    }
 }
 
