@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Reader;
 import java.util.List;
-import java.util.logging.Logger;
 
 
 @Repository
@@ -275,6 +274,24 @@ public class PostRepository {
         int count = sqlSession.selectOne("p.count_search_by_tag", param);
         sqlSession.close();
         return count;
+    }
+
+    /*
+     * 계층형 카테고리 저장
+     */
+//    public int save_Tcategory(Tree tree) throws Exception {
+//        getSession();
+//        sqlSession.insert()
+//    }
+
+    /*
+     * 계층형 카테고리 출력
+     */
+    public List<Tree> select_Tcategory() throws Exception {
+        getSession();
+        List<Tree> list = sqlSession.selectList("p.select_Tcategory");
+        sqlSession.close();
+        return list;
     }
 }
 

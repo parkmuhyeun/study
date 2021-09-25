@@ -41,13 +41,11 @@
 
 <script type="text/javascript" >
 
-
     $(document).ready(function () {
 
 
         $("#postTable").DataTable({
             dom: 'rtip',
-            
             processing: true,
             serverSide: true,
             ajax : {

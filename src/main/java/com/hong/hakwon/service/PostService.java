@@ -417,5 +417,24 @@ public class PostService {
         return postRepository.count_search_by_tag(param);
     }
 
+    /*
+     * 계층형 카테고리 출력
+     */
+    public List<TCategoryResponseDto> select_Tcategory() throws Exception {
+        List<TCategoryResponseDto> tCategoryResponseDtos = new ArrayList<TCategoryResponseDto>();
+        List<Tree> trees = postRepository.select_Tcategory();
+        for (int i = 0; i < trees.size(); i++) {
+            TCategoryResponseDto categoryResponseDto = new TCategoryResponseDto(
+                    trees.get(i).getNm(),
+                    trees.get(i).getParent_id(),
+                    trees.get(i).getNm(),
+                    trees.get(i).getLv()
+            );
+
+            tCategoryResponseDtos.add(categoryResponseDto);
+        }
+
+        return tCategoryResponseDtos;
+    }
 
 }

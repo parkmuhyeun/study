@@ -2,6 +2,7 @@ package com.hong.hakwon.web.post;
 
 
 import com.hong.hakwon.Beans.Post;
+import com.hong.hakwon.Beans.Tree;
 import com.hong.hakwon.Beans.UserBean;
 import com.hong.hakwon.SessionConst;
 import com.hong.hakwon.argumentresolver.Login;
@@ -247,5 +248,17 @@ public class PostController {
         return check;
     }
 
+    @RequestMapping(value = "/tree")
+    public ModelAndView tree_page() {
+        ModelAndView mav = new ModelAndView("tree");
+        return mav;
+    }
+
+    @RequestMapping(value = "/get_tree")
+    @ResponseBody
+    public List<TCategoryResponseDto> getTree() throws Exception {
+        List<TCategoryResponseDto> tCategoryResponseDtos = postService.select_Tcategory();
+        return tCategoryResponseDtos;
+    }
 }
 

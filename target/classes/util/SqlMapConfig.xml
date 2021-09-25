@@ -12,6 +12,7 @@
 		<typeAlias alias="postHashTag" type="com.hong.hakwon.Beans.PostHashTag" />
 		<typeAlias alias="HashTag" type="com.hong.hakwon.Beans.HashTag" />
 		<typeAlias alias="Category" type="com.hong.hakwon.Beans.Category" />
+		<typeAlias alias="Tree" type="com.hong.hakwon.Beans.Tree" />
 		<!-- <typeAlias alias="bBean" type="com.hong.hakwon.Beans.BookBean" />
 		<typeAlias alias="cBean" type="com.hong.hakwon.Beans.ClassBean" />
 		<typeAlias alias="qBean" type="com.hong.hakwon.Beans.QuestionBean" />

@@ -289,4 +289,43 @@
         WHERE hashtag.hashtag_cont like ("%" || #{data} || "%")
         and category.is_use = 1
     </select>
+
+    <!-- 계층형 카테고리 등록-->
+    <insert id="save_Tcategory" parameterType="Tree">
+        INSERT INTO
+            tree
+        (
+         parent_id,
+         lv,
+         nm,
+         reg_dttm,
+         reg_id,
+         mdfy_dttm,
+         mdfy_id
+        )
+
+        VALUES(
+               #{parent_id},
+               ifnull((select distinct lv from tree where nm = #{parent_id}) + 1, 1),
+               #{nm},
+               date('now'),
+               #{reg_id},
+               date('now'),
+               #{mdfy_id}
+              )
+    </insert>
+
+    <!-- 계층형 카테고리 출력-->
+    <select id="select_Tcategory" resultType="Tree">
+        select
+               seq,
+               ifnull(parent_id, '#') as parent_id,
+               lv,
+               nm,
+               reg_dttm,
+               reg_id,
+               mdfy_dttm,
+               mdfy_id
+        from tree
+    </select>
 </mapper>
