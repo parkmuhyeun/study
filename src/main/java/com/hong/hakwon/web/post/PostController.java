@@ -94,7 +94,7 @@ public class PostController {
                                      @RequestParam("order[0][dir]") String order,
                                      @RequestParam("columns[0][data]") String col0DataAttrName,
                                      HttpServletRequest request
-                                     ) throws Exception {
+    ) throws Exception {
 
         int totalPosts = postService.count_post();
         List<PostListResponseDto> postList = postService.get_post_with_page(new PostPage(start, length));
@@ -115,14 +115,13 @@ public class PostController {
         }
 
 
-
         //통합검색(제목, 글쓴이)
         String SearchParam = request.getParameter("columns[2][search][value]");
 //        String creatorParam = request.getParameter("columns[4][search][value]");
 
         if (SearchParam != "") {
             int total = postService.count_search(SearchParam);
-            List<PostListResponseDto> search_postList= postService.search_post(new SearchRequestDto(SearchParam, start, length));
+            List<PostListResponseDto> search_postList = postService.search_post(new SearchRequestDto(SearchParam, start, length));
             PostListDto search_postListDto = new PostListDto(draw, total, total, search_postList);
             return search_postListDto;
         }
@@ -166,7 +165,7 @@ public class PostController {
         //TODO 첨부파일: 업로드파일명으로 바꾸기
 
         ModelAndView mav = new ModelAndView("post");
-        PostResponseDto post = postService.get_post(id,request, response);
+        PostResponseDto post = postService.get_post(id, request, response);
         mav.addObject("post", post);
         return mav;
     }
@@ -187,7 +186,7 @@ public class PostController {
         UrlResource resource = new UrlResource("file:" + fileDir + now + '/' + storeFileName);
         String contentDisposition = "attachment; filename=\"" + uploadFileName + "\"";
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition)
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                 .body(resource);
     }
 
@@ -248,17 +247,41 @@ public class PostController {
         return check;
     }
 
+    /*
+     * 계층형 카테고리 페이지
+     */
     @RequestMapping(value = "/tree")
     public ModelAndView tree_page() {
         ModelAndView mav = new ModelAndView("tree");
         return mav;
     }
 
-    @RequestMapping(value = "/get_tree")
+    /*
+     * 계층형 카테고리 출력
+     */
+    @RequestMapping(value = "/tree/get_tree")
     @ResponseBody
     public List<TCategoryResponseDto> getTree() throws Exception {
         List<TCategoryResponseDto> tCategoryResponseDtos = postService.select_Tcategory();
         return tCategoryResponseDtos;
+    }
+
+    /*
+     * 계층형 카테고리 저장
+     */
+    @RequestMapping(value = "/save_tree", method = RequestMethod.POST)
+    public ModelAndView saveTree(@ModelAttribute TCategorySaveDto tCategorySaveDto, HttpServletRequest request) throws Exception {
+
+        HttpSession session = request.getSession(false);
+        UserBean user = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        tCategorySaveDto.setMdfy_id(user.getName());
+        tCategorySaveDto.setReg_id(user.getName());
+
+        postService.save_Tcategory(tCategorySaveDto);
+
+        ModelAndView mav = new ModelAndView("redirect:/tree");
+        return mav;
     }
 }
 

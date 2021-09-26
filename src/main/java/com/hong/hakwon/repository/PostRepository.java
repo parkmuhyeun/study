@@ -279,10 +279,15 @@ public class PostRepository {
     /*
      * 계층형 카테고리 저장
      */
-//    public int save_Tcategory(Tree tree) throws Exception {
-//        getSession();
-//        sqlSession.insert()
-//    }
+    public int save_Tcategory(Tree tree) throws Exception {
+        getSession();
+        int row = sqlSession.insert("p.save_Tcategory", tree);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
 
     /*
      * 계층형 카테고리 출력

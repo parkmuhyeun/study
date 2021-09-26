@@ -315,6 +315,30 @@
               )
     </insert>
 
+
+    <!-- 계층형 카테고리 수정-->
+    <update id="update_Tcategory" parameterType="String">
+        UPDATE tree
+        set nm = #{nm}, mdfy_dttm = date('now')
+        WHERE seq = #{seq}
+    </update>
+
+<!--    &lt;!&ndash; 계층형 카테고리 수정&ndash;&gt;-->
+<!--    <update id="update_Tcategory" parameterType="Tree">-->
+<!--        UPDATE tree-->
+<!--        set parent_id = #{parent_id}, lv = #{lv}, nm = #{nm}, mdfy_dttm = #{mdfy_dttm}, mdfy_id = #{mdfy_id}-->
+<!--        WHERE seq = #{seq}-->
+<!--    </update>-->
+
+    <!-- 계층형 카테고리 삭제-->
+    <delete id="delete_Tcategory" >
+        DELETE FROM tree
+        WHERE nm in
+        <foreach collection="array" item="arr" open="(" close=")" separator=",">
+            #{arr}
+        </foreach>
+    </delete>
+
     <!-- 계층형 카테고리 출력-->
     <select id="select_Tcategory" resultType="Tree">
         select

@@ -437,4 +437,16 @@ public class PostService {
         return tCategoryResponseDtos;
     }
 
+    /*
+     * 계층형 카테고리 저장
+     */
+    public int save_Tcategory(TCategorySaveDto tCategorySaveDto) throws Exception {
+        Tree tree = new Tree(tCategorySaveDto.getParent_id(),
+                tCategorySaveDto.getLv(),
+                tCategorySaveDto.getNm(),
+                tCategorySaveDto.getReg_id(),
+                tCategorySaveDto.getMdfy_id());
+
+        return postRepository.save_Tcategory(tree);
+    }
 }
