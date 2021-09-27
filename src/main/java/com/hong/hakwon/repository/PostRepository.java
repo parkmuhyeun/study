@@ -1,9 +1,7 @@
 package com.hong.hakwon.repository;
 
 import com.hong.hakwon.Beans.*;
-import com.hong.hakwon.web.dto.CategoryUpdateDto;
-import com.hong.hakwon.web.dto.PostPage;
-import com.hong.hakwon.web.dto.SearchRequestDto;
+import com.hong.hakwon.web.dto.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.io.Resources;
@@ -290,6 +288,32 @@ public class PostRepository {
     }
 
     /*
+     * 계층형 카테고리 수정
+     */
+    public int update_Tcategory(TCategoryUpdateDto tCategoryUpdateDto) throws Exception {
+        getSession();
+        int row = sqlSession.update("p.update_Tcategory", tCategoryUpdateDto);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+    /*
+     * 계층형 카테고리 자식수정
+     */
+    public int update_child_Tcategory(TCategoryUpdateDto tCategoryUpdateDto) throws Exception {
+        getSession();
+        int row = sqlSession.update("p.update_child_Tcategory", tCategoryUpdateDto);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+    /*
      * 계층형 카테고리 출력
      */
     public List<Tree> select_Tcategory() throws Exception {
@@ -297,6 +321,19 @@ public class PostRepository {
         List<Tree> list = sqlSession.selectList("p.select_Tcategory");
         sqlSession.close();
         return list;
+    }
+
+    /*
+     * 계층형 카테고리 삭제
+     */
+    public int delete_Tcategory(List<String> nms) throws Exception {
+        getSession();
+        int row = sqlSession.delete("p.delete_Tcategory", nms);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
     }
 }
 

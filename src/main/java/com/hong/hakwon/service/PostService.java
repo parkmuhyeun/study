@@ -449,4 +449,20 @@ public class PostService {
 
         return postRepository.save_Tcategory(tree);
     }
+
+    /*
+     * 계층형 카테고리 수정
+     */
+    public int update_Tcategory(TCategoryUpdateDto tCategoryUpdateDto) throws Exception {
+        postRepository.update_child_Tcategory(tCategoryUpdateDto);
+
+        return postRepository.update_Tcategory(tCategoryUpdateDto);
+    }
+
+    /*
+     * 계층형 카테고리 삭제
+     */
+    public int delete_Tcategory(TCategoryDeleteDto tCategoryDeleteDto) throws Exception {
+        return postRepository.delete_Tcategory(tCategoryDeleteDto.getNms());
+    }
 }

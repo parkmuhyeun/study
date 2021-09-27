@@ -269,7 +269,7 @@ public class PostController {
     /*
      * 계층형 카테고리 저장
      */
-    @RequestMapping(value = "/save_tree", method = RequestMethod.POST)
+    @RequestMapping(value = "/tree/save_tree", method = RequestMethod.POST)
     public ModelAndView saveTree(@ModelAttribute TCategorySaveDto tCategorySaveDto, HttpServletRequest request) throws Exception {
 
         HttpSession session = request.getSession(false);
@@ -280,8 +280,38 @@ public class PostController {
 
         postService.save_Tcategory(tCategorySaveDto);
 
-        ModelAndView mav = new ModelAndView("redirect:/tree");
+        ModelAndView mav = new ModelAndView("tree");
         return mav;
     }
+
+    /*
+     * 계층형 카테고리 수정
+     */
+    @RequestMapping(value = "/tree/update_tree", method = RequestMethod.POST)
+    public ModelAndView updateTree(@ModelAttribute TCategoryUpdateDto tCategoryUpdateDto, HttpServletRequest request) throws Exception {
+
+        HttpSession session = request.getSession(false);
+        UserBean user = (UserBean) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        tCategoryUpdateDto.setMdfy_id(user.getName());
+
+        postService.update_Tcategory(tCategoryUpdateDto);
+
+        ModelAndView mav = new ModelAndView("tree");
+        return mav;
+    }
+
+    @RequestMapping(value = "/tree/delete_tree", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean deleteTree(@RequestBody TCategoryDeleteDto tCategoryDeleteDto) throws Exception {
+
+        boolean check = false;
+        int row = postService.delete_Tcategory(tCategoryDeleteDto);
+        if (row > 0) {
+            check = true;
+        }
+        return check;
+    }
+
 }
 

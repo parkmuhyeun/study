@@ -317,10 +317,17 @@
 
 
     <!-- 계층형 카테고리 수정-->
-    <update id="update_Tcategory" parameterType="String">
+    <update id="update_Tcategory" parameterType="com.hong.hakwon.web.dto.TCategoryUpdateDto">
         UPDATE tree
-        set nm = #{nm}, mdfy_dttm = date('now')
-        WHERE seq = #{seq}
+        set nm = #{post_nm}, mdfy_dttm = date('now'), mdfy_id = #{mdfy_id}
+        WHERE nm = #{prev_nm}
+    </update>
+
+    <!-- 계층형 카테고리 자식수정-->
+    <update id="update_child_Tcategory" parameterType="com.hong.hakwon.web.dto.TCategoryUpdateDto">
+        UPDATE tree
+        set parent_id = #{post_nm}
+        WHERE parent_id = #{prev_nm};
     </update>
 
 <!--    &lt;!&ndash; 계층형 카테고리 수정&ndash;&gt;-->
@@ -331,10 +338,10 @@
 <!--    </update>-->
 
     <!-- 계층형 카테고리 삭제-->
-    <delete id="delete_Tcategory" >
+    <delete id="delete_Tcategory" parameterType="java.util.List">
         DELETE FROM tree
         WHERE nm in
-        <foreach collection="array" item="arr" open="(" close=")" separator=",">
+        <foreach collection="list" item="arr" open="(" close=")" separator=",">
             #{arr}
         </foreach>
     </delete>
