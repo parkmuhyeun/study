@@ -301,6 +301,9 @@ public class PostController {
         return mav;
     }
 
+    /*
+     * 계층형 카테고리 삭제
+     */
     @RequestMapping(value = "/tree/delete_tree", method = RequestMethod.POST)
     @ResponseBody
     public Boolean deleteTree(@RequestBody TCategoryDeleteDto tCategoryDeleteDto) throws Exception {
@@ -313,5 +316,23 @@ public class PostController {
         return check;
     }
 
+    /*
+     * 계층형 카테고리 drag
+     */
+    @RequestMapping(value = "/tree/drag_tree", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean dragTree(@RequestBody TCategoryDragDto tCategoryDragDto) throws Exception {
+        logger.info(tCategoryDragDto.getM_node());
+        logger.info(tCategoryDragDto.getP_node());
+        logger.info(tCategoryDragDto.getN_node());
+        logger.info(tCategoryDragDto.getC_list());
+
+        boolean check = false;
+        int row = postService.drag_Tcategory(tCategoryDragDto);
+        if (row > 0) {
+            check = true;
+        }
+        return check;
+    }
 }
 

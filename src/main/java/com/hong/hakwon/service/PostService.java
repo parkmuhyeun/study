@@ -465,4 +465,29 @@ public class PostService {
     public int delete_Tcategory(TCategoryDeleteDto tCategoryDeleteDto) throws Exception {
         return postRepository.delete_Tcategory(tCategoryDeleteDto.getNms());
     }
+
+    /*
+     * 계층형 카테고리 drag
+     */
+    public int drag_Tcategory(TCategoryDragDto tCategoryDragDto) throws Exception {
+        if (tCategoryDragDto.getN_node() != null) {
+//            List<Integer> n_seqs = postRepository.n_seqs(tCategoryDragDto.getN_node());
+            postRepository.Tcategory_nposition(tCategoryDragDto.getN_node());
+        }else{
+//            List<Integer> pr_seqs = postRepository.pr_seqs(tCategoryDragDto.getPr_node());
+            postRepository.Tcategory_prposition(tCategoryDragDto.getPr_node());
+        }
+
+        if (tCategoryDragDto.getC_list().size() != 0) {
+            postRepository.drag_child_Tcategory1(tCategoryDragDto.getC_list());
+        }
+
+        int result = postRepository.drag_Tcategory(tCategoryDragDto);
+
+        if (tCategoryDragDto.getC_list().size() != 0) {
+            postRepository.drag_child_Tcategory2(tCategoryDragDto.getC_list());
+        }
+
+        return result;
+    }
 }

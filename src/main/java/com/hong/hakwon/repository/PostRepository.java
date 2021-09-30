@@ -335,5 +335,91 @@ public class PostRepository {
         sqlSession.close();
         return row;
     }
+
+    /*
+     * 계층형 카테고리 drag
+     */
+    public int drag_Tcategory(TCategoryDragDto tCategoryDragDto) throws Exception {
+        getSession();
+        int row = sqlSession.update("p.drag_Tcategory", tCategoryDragDto);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+    /*
+     * 계층형 카테고리 drag(자식lv - parentlv set)
+     */
+    public int drag_child_Tcategory1(List<String> nms) throws Exception {
+        getSession();
+        int row = sqlSession.update("p.drag_child_Tcategory1", nms);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+    /*
+     * 계층형 카테고리 drag(자식lv + parentlv set)
+     */
+    public int drag_child_Tcategory2(List<String> nms) throws Exception {
+        getSession();
+        int row = sqlSession.update("p.drag_child_Tcategory2", nms);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+    /*
+     * drag position(n_node)
+     */
+    public int Tcategory_nposition(String n_node) throws Exception {
+        getSession();
+        int row = sqlSession.update("p.Tcategory_nposition", n_node);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+
+    /*
+     * drag position(pr_node)
+     */
+    public int Tcategory_prposition(String pr_node) throws Exception {
+        getSession();
+        int row = sqlSession.update("p.Tcategory_prposition", pr_node);
+        if (row > 0) {
+            sqlSession.commit();
+        }
+        sqlSession.close();
+        return row;
+    }
+
+//    /*
+//     * pr_seqs
+//     */
+//    public List<Integer> pr_seqs(String pr_node) throws Exception {
+//        getSession();
+//        List<Integer> list = sqlSession.selectList("p.pr_seqs", pr_node);
+//        sqlSession.close();
+//        return list;
+//    }
+//
+//    /*
+//     * n_seqs
+//     */
+//    public List<Integer> n_seqs(String pr_node) throws Exception {
+//        getSession();
+//        List<Integer> list = sqlSession.selectList("p.n_seqs", pr_node);
+//        sqlSession.close();
+//        return list;
+//    }
 }
 

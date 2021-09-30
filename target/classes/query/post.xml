@@ -330,13 +330,6 @@
         WHERE parent_id = #{prev_nm};
     </update>
 
-<!--    &lt;!&ndash; 계층형 카테고리 수정&ndash;&gt;-->
-<!--    <update id="update_Tcategory" parameterType="Tree">-->
-<!--        UPDATE tree-->
-<!--        set parent_id = #{parent_id}, lv = #{lv}, nm = #{nm}, mdfy_dttm = #{mdfy_dttm}, mdfy_id = #{mdfy_id}-->
-<!--        WHERE seq = #{seq}-->
-<!--    </update>-->
-
     <!-- 계층형 카테고리 삭제-->
     <delete id="delete_Tcategory" parameterType="java.util.List">
         DELETE FROM tree
@@ -359,4 +352,59 @@
                mdfy_id
         from tree
     </select>
+
+    <!-- 계층형 카테고리 drag(drag한 node)-->
+    <update id="drag_Tcategory" parameterType="com.hong.hakwon.web.dto.TCategoryDragDto">
+        UPDATE tree
+        set seq = ifnull((select a.seq-101 from tree as a where a.nm = #{n_node}), (select c.seq+1 from tree as c where c.nm = #{pr_node}))
+            ,parent_id = #{p_node}
+          ,lv = ifnull((select b.lv+1 from tree as b where b.nm = #{p_node}),1)
+        WHERE nm = #{m_node}
+    </update>
+
+    <!-- 계층형 카테고리 drag(drag한 node 자식 lv차 set)-->
+    <update id="drag_child_Tcategory1" parameterType="java.util.List">
+        UPDATE tree as a
+        set lv = (select a.lv-b.lv from tree as b where b.nm = a.parent_id)
+        WHERE nm in
+        <foreach collection="list" item="arr" open="(" close=")" separator=",">
+            #{arr}
+        </foreach>
+    </update>
+
+    <!-- 계층형 카테고리 drag(drag한 node 자식 lv차 + 바뀐lv)-->
+    <update id="drag_child_Tcategory2" parameterType="java.util.List">
+        UPDATE tree as a
+        set lv = (select a.lv+b.lv from tree as b where b.nm = a.parent_id)
+        WHERE nm in
+        <foreach collection="list" item="arr" open="(" close=")" separator=",">
+            #{arr}
+        </foreach>
+    </update>
+
+    <!-- 이동시 seq++(n_node)-->
+    <update id="Tcategory_nposition" parameterType="String">
+        UPDATE tree
+        set seq = seq + 100
+        WHERE seq >= (select seq from tree where nm = #{n_node})
+    </update>
+
+    <!-- 이동시 seq++(pr_node)-->
+    <update id="Tcategory_prposition" parameterType="String">
+        UPDATE tree
+        set seq = seq + 100
+        WHERE seq > (select seq from tree where nm = #{pr_node})
+    </update>
+
+<!--    <select id="pr_seqs" parameterType="String" resultType="int">-->
+<!--    select seq-->
+<!--    from tree-->
+<!--    where seq > (select seq from tree where nm = #{pr_node})-->
+<!--    </select>-->
+
+<!--    <select id="n_seqs" parameterType="String" resultType="int">-->
+<!--        select seq-->
+<!--        from tree-->
+<!--        where seq >= (select seq from tree where nm = #{pr_node})-->
+<!--    </select>-->
 </mapper>
